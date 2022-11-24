@@ -28,7 +28,7 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
 
-                var customer = dbContext.Customer.Where(x => x.Email == request.Email).FirstOrDefault();
+                var customer = localgoodsdbcontext.Customer.Where(x => x.Email == request.Email).FirstOrDefault();
                 if(customer != null)
                 {
                     response.Status = false;
@@ -52,7 +52,7 @@ namespace LocalGoods.Main.Controllers
                 var result=await localgoodsdbcontext.Customer.AddAsync(_customer);
                 
                 localgoodsdbcontext.SaveChanges();
-                response.BaseModel = _customer;
+                response.Data = _customer;
                 response.Status = true;
                 response.Message = "Registration Success";
                 return Ok(response);
@@ -70,7 +70,7 @@ namespace LocalGoods.Main.Controllers
             {
                 
                 ResponseModel response = new ResponseModel();
-                var customer=dbContext.Customer.Where(x => x.Email == request.Email).FirstOrDefault();
+                var customer=localgoodsdbcontext.Customer.Where(x => x.Email == request.Email).FirstOrDefault();
                 if(customer==null)
                 {
                     response.Status = false;
