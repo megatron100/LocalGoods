@@ -8,11 +8,11 @@
 
         public string Name { get; set; }
 
-        public virtual Address Address { get; set; }
+        public virtual Address? Address { get; set; } 
 
-        public virtual CardDetail CardDetail { get; set; }
+        public virtual CardDetail? CardDetail { get; set; } = null;
 
-        public int Role { get; set; }
+        public int Role { get; set; } = 0;
 
 
 

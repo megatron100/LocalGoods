@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalGoods.Main.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    [Migration("20221123133919_First Migration")]
-    partial class FirstMigration
+    [Migration("20221124061532_clean1")]
+    partial class clean1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,6 @@ namespace LocalGoods.Main.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cordinates")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
@@ -124,18 +123,14 @@ namespace LocalGoods.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CardDetailId")
+                    b.Property<int?>("CardDetailId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -159,8 +154,6 @@ namespace LocalGoods.Main.Migrations
                     b.HasIndex("CardDetailId");
 
                     b.ToTable("Customer");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Customer");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.ProductCategory", b =>
@@ -210,32 +203,62 @@ namespace LocalGoods.Main.Migrations
 
             modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
                 {
-                    b.HasBaseType("LocalGoods.Main.Model.Customer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<int>("CertificationId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CardDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CertificationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<int>("SellerRating")
                         .HasColumnType("int");
 
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CardDetailId");
+
                     b.HasIndex("CertificationId");
 
-                    b.HasDiscriminator().HasValue("Seller");
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.Customer", b =>
                 {
                     b.HasOne("LocalGoods.Main.Model.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
                         .WithMany()
-                        .HasForeignKey("CardDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CardDetailId");
 
                     b.Navigation("Address");
 
@@ -244,11 +267,21 @@ namespace LocalGoods.Main.Migrations
 
             modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
                 {
+                    b.HasOne("LocalGoods.Main.Model.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
+                        .WithMany()
+                        .HasForeignKey("CardDetailId");
+
                     b.HasOne("LocalGoods.Main.Model.Certificate", "Certification")
                         .WithMany()
-                        .HasForeignKey("CertificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CertificationId");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("CardDetail");
 
                     b.Navigation("Certification");
                 });

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LocalGoods.Main.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class clean : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,7 @@ namespace LocalGoods.Main.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cordinates = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cordinates = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -41,22 +41,6 @@ namespace LocalGoods.Main.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CardDetails", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Certificate",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    QualityCertificateTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QualityCertificateDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Certificate", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,12 +82,9 @@ namespace LocalGoods.Main.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
-                    CardDetailId = table.Column<int>(type: "int", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: true),
+                    CardDetailId = table.Column<int>(type: "int", nullable: true),
                     Role = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CertificationId = table.Column<int>(type: "int", nullable: true),
-                    SellerRating = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -113,20 +94,12 @@ namespace LocalGoods.Main.Migrations
                         name: "FK_Customer_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Customer_CardDetails_CardDetailId",
                         column: x => x.CardDetailId,
                         principalTable: "CardDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Customer_Certificate_CertificationId",
-                        column: x => x.CertificationId,
-                        principalTable: "Certificate",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -138,11 +111,6 @@ namespace LocalGoods.Main.Migrations
                 name: "IX_Customer_CardDetailId",
                 table: "Customer",
                 column: "CardDetailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customer_CertificationId",
-                table: "Customer",
-                column: "CertificationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -161,9 +129,6 @@ namespace LocalGoods.Main.Migrations
 
             migrationBuilder.DropTable(
                 name: "CardDetails");
-
-            migrationBuilder.DropTable(
-                name: "Certificate");
         }
     }
 }

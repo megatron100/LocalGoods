@@ -13,6 +13,11 @@ namespace LocalGoods.Main.DAL
         {
             optionBuilder.UseLazyLoadingProxies();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+             
+        }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<CardDetail> CardDetails { get; set; }
