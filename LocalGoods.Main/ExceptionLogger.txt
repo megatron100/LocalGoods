@@ -1,0 +1,6 @@
+=>24-11-2022 15:08:53  An Error occurred:    at LocalGoods.Main.Controllers.AuthController.Login(LoginModel request) in C:\Users\Shubham_Maurya\source\repos\megatron100\LocalGoods\LocalGoods.Main\Controllers\AuthController.cs:line 68 Message: Value cannot be null.
+
+=>24-11-2022 15:12:00  An Error occurred: 
+ StackTrace:     at LocalGoods.Main.Controllers.AuthController.Login(LoginModel request) in C:\Users\Shubham_Maurya\source\repos\megatron100\LocalGoods\LocalGoods.Main\Controllers\AuthController.cs:line 68
+ Message: Value cannot be null.
+
