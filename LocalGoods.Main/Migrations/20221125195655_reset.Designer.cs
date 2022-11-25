@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalGoods.Main.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    [Migration("20221124061532_clean1")]
-    partial class clean1
+    [Migration("20221125195655_reset")]
+    partial class reset
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,8 +98,13 @@ namespace LocalGoods.Main.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("QualityCertificateDeleteLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QualityCertificateDescription")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QualityCertificateLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QualityCertificateTitle")
@@ -113,47 +118,6 @@ namespace LocalGoods.Main.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Certificate");
-                });
-
-            modelBuilder.Entity("LocalGoods.Main.Model.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CardDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("CardDetailId");
-
-                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.ProductCategory", b =>
@@ -201,7 +165,7 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Rating");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,8 +197,9 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SellerRating")
                         .HasColumnType("int");
@@ -247,25 +212,10 @@ namespace LocalGoods.Main.Migrations
 
                     b.HasIndex("CertificationId");
 
-                    b.ToTable("Seller");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Customer", b =>
-                {
-                    b.HasOne("LocalGoods.Main.Model.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
-                        .WithMany()
-                        .HasForeignKey("CardDetailId");
-
-                    b.Navigation("Address");
-
-                    b.Navigation("CardDetail");
-                });
-
-            modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
                 {
                     b.HasOne("LocalGoods.Main.Model.Address", "Address")
                         .WithMany()

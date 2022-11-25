@@ -96,8 +96,13 @@ namespace LocalGoods.Main.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("QualityCertificateDeleteLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("QualityCertificateDescription")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QualityCertificateLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QualityCertificateTitle")
@@ -113,7 +118,7 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Certificate");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Customer", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,37 +126,48 @@ namespace LocalGoods.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CardDetailId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("DeleteImageLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LongDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("ProductCategoryId");
 
-                    b.HasIndex("CardDetailId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.ProductCategory", b =>
@@ -199,7 +215,7 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Rating");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,8 +247,9 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SellerRating")
                         .HasColumnType("int");
@@ -245,25 +262,29 @@ namespace LocalGoods.Main.Migrations
 
                     b.HasIndex("CertificationId");
 
-                    b.ToTable("Seller");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Customer", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
                 {
-                    b.HasOne("LocalGoods.Main.Model.Address", "Address")
+                    b.HasOne("LocalGoods.Main.Model.ProductCategory", "ProductCategory")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
+                    b.HasOne("LocalGoods.Main.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("CardDetailId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("ProductCategory");
 
-                    b.Navigation("CardDetail");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.Seller", b =>
+            modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
                 {
                     b.HasOne("LocalGoods.Main.Model.Address", "Address")
                         .WithMany()

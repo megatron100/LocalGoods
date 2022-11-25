@@ -12,10 +12,10 @@ namespace LocalGoods.Main.Services
             _dbContext = context;
         }
 
-        public Customer GetCustomerById(int id)
+        public User GetCustomerById(int id)
         {
 
-            Customer customer = _dbContext.Customer.Where(x => x.Id == id).FirstOrDefault();
+            User customer = _dbContext.User.Where(x => x.Id == id).FirstOrDefault();
             if (customer == null)
             {
                 return null;
@@ -24,11 +24,11 @@ namespace LocalGoods.Main.Services
 
         }
 
-        public Customer GetCustomerByEmail(string email)
+        public User GetCustomerByEmail(string email)
         {
             if (EmailValidator.Validate(email))
             {
-                Customer customer = _dbContext.Customer.Where(x => x.Email == email).FirstOrDefault();
+                User customer = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
                 if (customer != null)
                 {
                     return customer;
@@ -38,7 +38,7 @@ namespace LocalGoods.Main.Services
             return null;
         }
 
-        public bool ValidateCustomer(Customer customer)
+        public bool ValidateCustomer(User customer)
         {
             if (customer == null)
             {
@@ -52,7 +52,7 @@ namespace LocalGoods.Main.Services
             {
                 return false;
             }
-            bool isExist = _dbContext.Customer.Where(x => x.Email == customer.Email).Any();
+            bool isExist = _dbContext.User.Where(x => x.Email == customer.Email).Any();
             return isExist;
 
         }
@@ -61,7 +61,7 @@ namespace LocalGoods.Main.Services
 
         public bool ChangePassword(int customerId, string oldPassword, string newPassword)
         {
-            Customer customer = GetCustomerById(customerId);
+            User customer = GetCustomerById(customerId);
             if (customer == null)
             {
                 return false;
@@ -78,7 +78,7 @@ namespace LocalGoods.Main.Services
             customer.Password = newPassword;
             try
             {
-                _dbContext.Customer.Update(customer);
+                _dbContext.User.Update(customer);
                 _dbContext.SaveChanges();
                 return true;
             }

@@ -7,5 +7,6 @@ namespace LocalGoods.Main.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        
     }
 }

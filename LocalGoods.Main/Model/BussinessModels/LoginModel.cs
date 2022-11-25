@@ -9,5 +9,6 @@ namespace LocalGoods.Main.Model.BussinessModels
         public string Email { get; set; }
         [Required,PasswordPropertyText]
         public string Password { get; set; }
+
     }
 }
