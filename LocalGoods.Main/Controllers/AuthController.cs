@@ -1,6 +1,7 @@
 ﻿using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,6 @@ namespace LocalGoods.Main.Controllers
                     Password = request.Password,
                     Role = request.Role
                 };
-                
 
                 var result = await localgoodsdbcontext.User.AddAsync(_user);
                 
@@ -114,13 +114,14 @@ namespace LocalGoods.Main.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            }
+        }
 
+        
         [HttpGet("GetHello")]
         [Authorize(Roles ="seller")]
         public string Get()
         {
-            return "Hello";
+            return "Login Successfull..";
         }
 
     }

@@ -14,7 +14,10 @@ namespace LocalGoods.Main.Services
 
         public User GetCustomerById(int id)
         {
-
+            if(id == 0)
+            {
+                return null;
+            }
             User customer = _dbContext.User.Where(x => x.Id == id).FirstOrDefault();
             if (customer == null)
             {
