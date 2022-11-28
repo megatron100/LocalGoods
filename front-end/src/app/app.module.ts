@@ -10,6 +10,7 @@ import {SharedModule} from "./shared/shared.module";
 import { HomeComponent } from './pages/home/home.component';
 import { InfoComponent } from './pages/info/info.component';
 import { ShopComponent } from './pages/shop/shop.component';
+import {ProductCardComponent} from "./components/product-card/product-card.component";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ShopComponent } from './pages/shop/shop.component';
     HomeComponent,
     InfoComponent,
     ShopComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
