@@ -6,19 +6,49 @@
     <div class="navbar-nav">
       <ul>
         <li routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/home">Home</a></li>
-        <li routerLinkActive="active"><a (click)="collapsed = !collapsed" style="cursor: pointer" routerLink="/auth">Authenticate</a></li>
+        <li *ngIf='!isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/contacts">Contacts</a></li>
+        <li *ngIf='!isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/info">Info</a></li>
+        <li *ngIf='isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/shop">Shop</a></li>
       </ul>
     </div>
     <div class="navbar-nav navbar-right">
-      <ul>
-        <li><a (click)="collapsed = !collapsed">UserName</a></li>
-        <li><a style="cursor: pointer" (click)="onLogout()">Logout</a></li>
-      </ul>
+      <mat-icon *ngIf='isUserAuth' style='color: red'>favorite_border</mat-icon>
+      <mat-icon *ngIf='isUserAuth'>shopping_cart</mat-icon>
+      <mat-icon *ngIf='isUserAuth' [matMenuTriggerFor]="profile">person_outline</mat-icon>
+      <mat-icon *ngIf='!isUserAuth'><a (click)="collapsed = !collapsed" style="cursor: pointer" routerLink="/auth"></a>login</mat-icon>
     </div>
     <div class="burger">
-      <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
+      <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed" [matMenuTriggerFor]="menu">
         <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
       </button>
     </div>
   </div>
 </mat-toolbar>
+
+<mat-menu #profile>
+  <button mat-menu-item>
+    <mat-icon>person_outline</mat-icon>
+    Oleh Babiak
+  </button>
+  <button mat-menu-item>
+    <mat-icon>mail_outline</mat-icon>
+    oleg_bob@gmail.com
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    Exit
+  </button>
+</mat-menu>
+
+<mat-menu #menu>
+  <button mat-menu-item><mat-icon>home</mat-icon><a (click)="collapsed = !collapsed" routerLink="/home">Home</a></button>
+  <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>contacts</mat-icon><a (click)="collapsed = !collapsed" routerLink="/contacts">Contacts</a></button>
+  <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>info</mat-icon><a (click)="collapsed = !collapsed" routerLink="/info">Info</a></button>
+  <button *ngIf='isUserAuth' mat-menu-item><mat-icon>shopping_bag</mat-icon><a (click)="collapsed = !collapsed" routerLink="/shop">Shop</a></button>
+  <button *ngIf='isUserAuth' mat-menu-item><mat-icon>favorite_border</mat-icon><a (click)="collapsed = !collapsed" routerLink="/shop">Wish List</a></button>
+  <button *ngIf='isUserAuth' mat-menu-item><mat-icon>shopping_cart</mat-icon><a (click)="collapsed = !collapsed" routerLink="/shop">Cart</a></button>
+  <mat-divider></mat-divider>
+  <button *ngIf='isUserAuth' mat-menu-item><mat-icon>logout</mat-icon><a (click)="collapsed = !collapsed" routerLink="/shop">Logout</a></button>
+  <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>person_outline</mat-icon><a (click)="collapsed = !collapsed" style="cursor: pointer" routerLink="/auth">Authenticate</a></button>
+</mat-menu>

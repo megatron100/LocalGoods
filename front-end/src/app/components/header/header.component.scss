@@ -11,6 +11,11 @@ a {
   font-size: 24px;
 }
 
+
+.cdk-overlay-pane {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .mat-toolbar {
     background-color: #39a94b;
@@ -74,10 +79,16 @@ a {
       justify-content: space-between;
 
       .navbar-nav {
-
         ul {
           display: flex;
         }
+      }
+
+      .navbar-right {
+        align-self: center;
+      }
+      mat-icon {
+        margin-left: 20px;
       }
 
       .burger {

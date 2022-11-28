@@ -1,6 +1,7 @@
 ﻿using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
+using Microsoft.AspNetCore.Authentication;
 using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
