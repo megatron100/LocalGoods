@@ -19,17 +19,17 @@ namespace LocalGoods.Main.Controllers
     [Authorize(Roles = "seller")]
     public class SellerController : ControllerBase
     {
-        public LocalGoodsDbContext localgoodsdbcontext;
+        public LocalGoodsDbContext _dbContext;
 
         public SellerController(LocalGoodsDbContext _localgoodsdbcontext)
         {
-            localgoodsdbcontext = _localgoodsdbcontext;
+            _dbContext = _localgoodsdbcontext;
             
         }
         [HttpGet("GetProducts")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var products = localgoodsdbcontext.Product.Where(x=>x.IsAvailable==true).ToList();
+            var products = _dbContext.Product.Where(x=>x.IsAvailable==true).ToList();
             if (products == null)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, new {Message="Unauthorize Access Login Again To continue"});
@@ -44,9 +44,9 @@ namespace LocalGoods.Main.Controllers
             try 
             {
                 ResponseModel response = new ResponseModel();
-                var category = localgoodsdbcontext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
+                var category = _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
                 var email=HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-                var seller=localgoodsdbcontext.User.Where(x=>x.Email==email).FirstOrDefault();
+                var seller=_dbContext.User.Where(x=>x.Email==email).FirstOrDefault();
                 if(seller.Certification==null)
                 {
                    
@@ -68,8 +68,8 @@ namespace LocalGoods.Main.Controllers
                         ShortDescription = request.ShortDesc,
                         
                     };
-                    var result = await localgoodsdbcontext.Product.AddAsync(product);
-                    localgoodsdbcontext.SaveChanges();
+                    var result = await _dbContext.Product.AddAsync(product);
+                    _dbContext.SaveChanges();
 
                     response.Status = true;
                     response.Data = product;
@@ -91,7 +91,7 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 ResponseModel response = new ResponseModel();
-                var product=localgoodsdbcontext.Product.Where(x=>x.Id==product_id).FirstOrDefault();
+                var product=_dbContext.Product.Where(x=>x.Id==product_id).FirstOrDefault();
                 if (product == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new {Message= "Product Not Found" });
@@ -105,8 +105,8 @@ namespace LocalGoods.Main.Controllers
                         Price = request.Price,
                         ShortDescription = request.ShortDesc
                     };
-                    localgoodsdbcontext.Product.Update(newproduct);
-                    await localgoodsdbcontext.SaveChangesAsync();
+                    _dbContext.Product.Update(newproduct);
+                    await _dbContext.SaveChangesAsync();
 
                     response.Status = true;
                     response.Data = product;
@@ -127,13 +127,13 @@ namespace LocalGoods.Main.Controllers
         {
             try
             {
-                var product = localgoodsdbcontext.Product.Where(x => x.Id == id).FirstOrDefault();
+                var product = _dbContext.Product.Where(x => x.Id == id).FirstOrDefault();
                 if(product==null)
                 {
                     return NotFound($"Productwith Id = {id} not found");
                 }
-                localgoodsdbcontext.Product.Remove(product);
-                await localgoodsdbcontext.SaveChangesAsync();
+                _dbContext.Product.Remove(product);
+                await _dbContext.SaveChangesAsync();
                 return Ok(new {Message="Product Deleted Successfully.."});
             }
             catch (Exception)
@@ -142,8 +142,6 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        
-
         [HttpPost("AddCertificate")]
         public async Task<ActionResult<ResponseModel>> AddCertificate([FromBody] AddCertificateModel request)
         {
@@ -151,7 +149,7 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-                var seller = localgoodsdbcontext.User.Where(x => x.Email == email).FirstOrDefault();
+                var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
                 if (email==null || seller==null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
@@ -168,8 +166,8 @@ namespace LocalGoods.Main.Controllers
 
                     };
                     seller.Certification = certificate;
-                    var result = await localgoodsdbcontext.Certificate.AddAsync(certificate);
-                    localgoodsdbcontext.SaveChanges();
+                    var result = await _dbContext.Certificate.AddAsync(certificate);
+                    _dbContext.SaveChanges();
 
                     response.Status = true;
                     response.Data = certificate;
@@ -192,7 +190,7 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-                var seller = localgoodsdbcontext.User.Where(x => x.Email == email).FirstOrDefault();
+                var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
                 if (email == null || seller == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
@@ -207,8 +205,8 @@ namespace LocalGoods.Main.Controllers
 
                     };
                     seller.CardDetail = card;
-                    var result = await localgoodsdbcontext.CardDetails.AddAsync(card);
-                    localgoodsdbcontext.SaveChanges();
+                    var result = await _dbContext.CardDetails.AddAsync(card);
+                    _dbContext.SaveChanges();
 
                     response.Status = true;
                     response.Data = card;
