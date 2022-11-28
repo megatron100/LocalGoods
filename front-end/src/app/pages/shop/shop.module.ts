@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {SharedModule} from "../../shared/shared.module";
-
+import {ShopRoutingModule} from "./shop-routing.module";
 
 
 @NgModule({
@@ -9,7 +9,8 @@ import {SharedModule} from "../../shared/shared.module";
   imports: [
     SharedModule,
     CommonModule,
-
+    ShopRoutingModule
   ]
 })
-export class ShopModule { }
+export class ShopModule {
+}
