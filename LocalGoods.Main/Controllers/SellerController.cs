@@ -1,4 +1,5 @@
-﻿using LocalGoods.Main.DAL;
+﻿using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,18 @@ namespace LocalGoods.Main.Controllers
             localgoodsdbcontext = _localgoodsdbcontext;
             
         }
-        [HttpPost("/")]
+        [HttpGet("GetProducts")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        {
+            var products = localgoodsdbcontext.Product.Where(x=>x.IsAvailable==true).ToList();
+            if (products == null)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new {Message="Unauthorize Access Login Again To continue"});
+            }
+            return products;
+        }
+
+        [HttpPost("Addproduct")]
 
         public async Task<ActionResult<ResponseModel>> AddProduct([FromBody] AddProductModel request)
         {
@@ -35,7 +47,11 @@ namespace LocalGoods.Main.Controllers
                 var category = localgoodsdbcontext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
                 var email=HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
                 var seller=localgoodsdbcontext.User.Where(x=>x.Email==email).FirstOrDefault();
-                
+                if(seller.Certification==null)
+                {
+                   
+                    return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification to sell products" });
+                }
                 if (category == null || seller==null|| email==null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
@@ -49,7 +65,8 @@ namespace LocalGoods.Main.Controllers
                         ProductTitle = request.Name,
                         ProductCategory = category,
                         Price = request.Price,
-                        ShortDescription = request.ShortDesc
+                        ShortDescription = request.ShortDesc,
+                        
                     };
                     var result = await localgoodsdbcontext.Product.AddAsync(product);
                     localgoodsdbcontext.SaveChanges();
@@ -68,7 +85,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPost("EditProdcuct")]
+        [HttpPost("EditProdcuct/{id:int}")]
         public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request,int? product_id)
         {
             try
@@ -105,7 +122,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("DeleteProduct/{id:int}")]
         public async Task<ActionResult<ResponseModel>> DeleteProduct( int? id)
         {
             try
@@ -125,7 +142,9 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPost("/AddCertificate")]
+        
+
+        [HttpPost("AddCertificate")]
         public async Task<ActionResult<ResponseModel>> AddCertificate([FromBody] AddCertificateModel request)
         {
             try
@@ -166,7 +185,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPost("/AddPaymentCard")]
+        [HttpPost("AddPaymentCard")]
         public async Task<ActionResult<ResponseModel>> AddPaymentCard([FromBody] AddCardModel request)
         {
             try
