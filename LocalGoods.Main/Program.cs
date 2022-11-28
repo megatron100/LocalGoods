@@ -1,4 +1,5 @@
 using LocalGoods.Main.DAL;
+using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +46,8 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
                                     builder.Configuration.GetConnectionString("LocalGoodsConnection"))
                                                                        );
+builder.Services.AddScoped<UserService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
