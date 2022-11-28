@@ -5,12 +5,14 @@
 }
 
 .container {
+  margin-top: 7em;
   background-color: #919494;
   width: 90%;
   padding: 15px;
   margin-right: auto;
   margin-left: auto;
   height: 100%;
+  border-radius: 6px;
 
   .mat-form-field {
     margin-bottom: 15px;
