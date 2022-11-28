@@ -7,6 +7,7 @@ namespace LocalGoods.Main.Model
         [Key]
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
+        
         public BaseModel()
         {
             this.CreatedDate = DateTime.UtcNow;
