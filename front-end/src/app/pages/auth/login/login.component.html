@@ -1,0 +1,27 @@
+<div class='container'>
+  <form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        autocomplete="on"
+        matInput>
+    </mat-form-field>
+
+
+    <div>
+      <button mat-raised-button type="submit" color="accent">Login</button>
+    </div>
+  </form>
+</div>

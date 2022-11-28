@@ -11,7 +11,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
-import { AuthComponent } from './pages/auth/auth.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import {SharedModule} from "./shared/shared.module";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import { RegisterComponent } from './pages/auth/register/register.component';
 
 
 @NgModule({
@@ -19,7 +24,8 @@ import { AuthComponent } from './pages/auth/auth.component';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    AuthComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +35,11 @@ import { AuthComponent } from './pages/auth/auth.component';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    SharedModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

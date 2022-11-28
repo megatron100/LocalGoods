@@ -1,11 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .container {
+  background-color: #919494;
   width: 90%;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
   margin-right: auto;
   margin-left: auto;
+  height: 100%;
 
-
+  .mat-form-field {
+    margin-bottom: 15px;
+    display: block;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -13,21 +23,25 @@
     width: 60%;
   }
 }
+
 @media (min-width: 1024px) and (max-width: 1280px) {
   .container {
     width: 50%;
   }
 }
+
 @media (min-width: 1280px) and (max-width: 1600px) {
   .container {
     width: 40%;
   }
 }
+
 @media (min-width: 1600px) and (max-width: 1920px) {
   .container {
     width: 30%;
   }
 }
+
 @media (min-width: 1920px) {
   .container {
     width: 20%;
