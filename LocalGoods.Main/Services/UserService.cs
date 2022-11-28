@@ -1,21 +1,27 @@
-﻿using LocalGoods.Main.DAL;
+﻿using LocalGoods.Main.Controllers;
+using LocalGoods.Main.DAL;
 using LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Model;
+using System.Security.Claims;
+using System.Web;
 
 namespace LocalGoods.Main.Services
 {
-    public class CustomerService
+    public class UserService
     {
         private readonly LocalGoodsDbContext _dbContext;
-        public CustomerService(LocalGoodsDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UserService(LocalGoodsDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public User GetCustomerById(int id)
+        public User GetUserById(int id)
         {
 
-            User customer = _dbContext.User.Where(x => x.Id == id).FirstOrDefault();
+            var customer = _dbContext.User.Where(x => x.Id == id).Select(a => a).FirstOrDefault();
             if (customer == null)
             {
                 return null;
@@ -24,21 +30,19 @@ namespace LocalGoods.Main.Services
 
         }
 
-        public User GetCustomerByEmail(string email)
+        public User GetUserByEmail(string email)
         {
-            if (EmailValidator.Validate(email))
-            {
-                User customer = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
+
+                var customer = _dbContext.User.Where(x => x.Email == email.Trim()).Select(a => a).FirstOrDefault();
                 if (customer != null)
                 {
                     return customer;
                 }
-            }
 
-            return null;
+            return null ;
         }
 
-        public bool ValidateCustomer(User customer)
+        public bool ValidateUser(User customer)
         {
             if (customer == null)
             {
@@ -57,11 +61,19 @@ namespace LocalGoods.Main.Services
 
         }
 
+        public User CurrentUser()
+        {
+            string? currentUserEmail = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Email)?.Value;
+            if (currentUserEmail == null)
+                return null;
+            return GetUserByEmail(currentUserEmail);
+        }
+
         #region Password Related Methods
 
         public bool ChangePassword(int customerId, string oldPassword, string newPassword)
         {
-            User customer = GetCustomerById(customerId);
+            User customer = GetUserById(customerId);
             if (customer == null)
             {
                 return false;

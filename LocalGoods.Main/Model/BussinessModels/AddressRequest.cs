@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LocalGoods.Main.Model
+namespace LocalGoods.Main.Model.BussinessModels
 {
-    public class Address:BaseModel
+    public class AddressRequest
     {
-
         [Required]
         public string PinCode { get; set; }
         [Required]
@@ -14,7 +13,6 @@ namespace LocalGoods.Main.Model
         [Required]
         public string Area { get; set; }
         
-        public string? Cordinates { get; set; } 
-
+        public string? Cordinates { get; set; }
     }
 }

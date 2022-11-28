@@ -1,6 +1,8 @@
 ﻿using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
+using Microsoft.AspNetCore.Authentication;
+using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,23 +17,31 @@ namespace LocalGoods.Main.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public IConfiguration _configuration;
-        public LocalGoodsDbContext localgoodsdbcontext;
+        private IConfiguration _configuration;
+        private LocalGoodsDbContext localgoodsdbcontext;
+        private UserService _customerService;
 
-        public AuthController(LocalGoodsDbContext _localgoodsdbcontext, IConfiguration configuration)
+        public AuthController
+            (
+            LocalGoodsDbContext _localgoodsdbcontext,
+            IConfiguration configuration,
+            UserService customerService
+            )
         {
             localgoodsdbcontext = _localgoodsdbcontext;
             _configuration = configuration;
+            _customerService = customerService;
+
         }
         [HttpPost("Registration")]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> Register([FromBody] RegistrationModel request)
+        public async Task<ActionResult> Register([FromBody] RegistrationModel request)
         {
             ResponseModel response = new ResponseModel();
             try
             {
 
-                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
+                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
                 if (customer != null)
                 {
                     response.Status = false;
@@ -52,15 +62,21 @@ namespace LocalGoods.Main.Controllers
                     Password = request.Password,
                     Role = request.Role
                 };
-                
 
                 var result = await localgoodsdbcontext.User.AddAsync(_user);
-                
-                 
+
+                User _user2 = new User()
+                {
+                    CreatedDate = DateTime.UtcNow,
+                    Name = request.Name,
+                    Email = request.Email,
+
+                    Role = request.Role
+                };
 
                 localgoodsdbcontext.SaveChanges();
-                response.Data = _user;
-                 
+                response.Data = _user2;
+
                 response.Status = true;
                 response.Message = "Registration Success";
                 return Ok(response);
@@ -79,12 +95,12 @@ namespace LocalGoods.Main.Controllers
             {
 
                 ResponseModel response = new ResponseModel();
-                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
+                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
                 if (customer == null)
                 {
                     response.Status = false;
                     response.Message = "User Does Not Exists";
-                    return StatusCode(StatusCodes.Status401Unauthorized,response);
+                    return StatusCode(StatusCodes.Status401Unauthorized, response);
                 }
                 bool validatepassword = customer.Password == request.Password;
                 if (!validatepassword)
@@ -93,7 +109,7 @@ namespace LocalGoods.Main.Controllers
                     response.Message = "Incorrect Password";
                     return StatusCode(StatusCodes.Status401Unauthorized, response);
                 }
-                var authClaims = new List<Claim> 
+                var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, request.Email),
                     new Claim(ClaimTypes.Role, customer.Role),
@@ -114,13 +130,6 @@ namespace LocalGoods.Main.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            }
-
-        [HttpGet("GetHello")]
-        [Authorize(Roles ="seller")]
-        public string Get()
-        {
-            return "Hello";
         }
 
     }
