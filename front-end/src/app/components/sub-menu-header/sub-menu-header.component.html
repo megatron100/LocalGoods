@@ -1,1 +1,14 @@
-<p>sub-menu-header works!</p>
+<div class="selects">
+  <div class="select">
+    <label for="sort">Sort by: </label>
+    <select name="sort" id="sort" (change)="sortValueChange($event)">
+      <option *ngFor="let sortValue of sortValues" [value]="sortValue">{{ sortValue }}</option>
+    </select>
+  </div>
+
+  <div class="select">
+    <label for="search">Search: </label>
+    <input type="text" name="search" id="search" (input)="searchChange($event)">
+  </div>
+</div>
+
