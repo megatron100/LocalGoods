@@ -9,7 +9,7 @@
         <h4 class="product-seller">{{product.seller}}</h4>
     </a>
     <p class="product-description">{{product.description}}</p>
-    <p class="product-price">{{product.price}}$</p>
+    <p class="product-price">{{product.price | currency: 'USD'}}</p>
     <div class="product-add__container">
         <input type="number" name="product-quantity" id="product-quantity" value="1">
         <button class="product-add" (click)="onClickAdd()">
