@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ShopService} from "../../services/shop.service";
+import {IProduct} from "../../interfaces/product";
 
 @Component({
   selector: 'app-shop',
@@ -8,10 +9,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ShopComponent implements OnInit {
 
+  products: IProduct[] = []
 
-  constructor( private router: Router,  private route: ActivatedRoute,) { }
+  constructor(private shopService: ShopService) {
+  }
 
   ngOnInit(): void {
+    this.products = this.shopService.products
   }
 
 }
