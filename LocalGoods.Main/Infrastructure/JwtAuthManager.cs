@@ -77,6 +77,7 @@
                 };
                 /// _usersRefreshTokens.AddOrUpdate(refreshToken.TokenString, refreshToken);
                 _usersRefreshTokens.TryAdd(refreshToken.TokenString, refreshToken);
+                var allTokens = _usersRefreshTokens.Values.ToArray();
 
                 return new JwtAuthResult
                 {
@@ -99,8 +100,9 @@
                    {
                     throw new SecurityTokenException("Invalid token");
                    }
+                var existingRefreshToken = _usersRefreshTokens.Where(x => x.Key == refreshToken).Select(a => a).FirstOrDefault();
 
-                if (_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken))
+                if (_usersRefreshTokens.Where(x => x.Key==refreshToken).(refreshToken, out var existingRefreshToken))
                 {
                     throw new SecurityTokenException("Invalid token");
                 }

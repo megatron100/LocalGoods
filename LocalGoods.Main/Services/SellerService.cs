@@ -16,7 +16,7 @@ namespace LocalGoods.Main.Services
             {
                 return false;
             }
-            User seller=_dbContext.User.Where(x=>x.Id == userId).FirstOrDefault();
+            User seller=_dbContext.User.Where(x=>x.Id == userId).Select(a => a).FirstOrDefault();
             if(seller.Certification == null)
             {
                 return false;

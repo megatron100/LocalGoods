@@ -1,4 +1,7 @@
 ﻿using LocalGoods.Main.DAL;
+using LocalGoods.Main.Model;
+using LocalGoods.Main.Model.BussinessModels;
+using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,22 +11,63 @@ namespace LocalGoods.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="customer")]
+    [Authorize(Roles = "customer")]
     public class HomeController : ControllerBase
     {
         private readonly LocalGoodsDbContext _dbContext;
-        
-        public HomeController(LocalGoodsDbContext dbContext)
+        private readonly UserService _userService;
+
+        public HomeController(LocalGoodsDbContext dbContext, UserService userService)
         {
             _dbContext = dbContext;
-             
+            _userService = userService;
         }
+
         [HttpGet("GetProducts")]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProductList()
         {
-            
-            return Ok();
+            var response = new ResponseModel();
+            var products = _dbContext.Product.Where(x => x.IsPublished && x.IsAvailable && x.User.Role == Role.Seller).Select(y => y).ToList();
+            if (products == null)
+            {
+                response.Status = false;
+                response.Message = "No product available for sale";
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            var user = _userService.CurrentUser();
+            List<Product> nearByProduct = new List<Product>();
+            if (user.Address != null)
+            {
+                nearByProduct = products.Where(x => x.User.Address.City == user.Address.City).Select(a => a).ToList();
+            }
+            var otherProducts = products.Except(nearByProduct).ToList();
+            response.Status = true;
+            response.Message = "Products found";
+            response.Data = new { nearByProduct, otherProducts };
+            return Ok(response);
 
         }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            
+            var response = new ResponseModel();
+            
+            var product = _dbContext.Product.Where(x => x.Id == id).Select(y => y).FirstOrDefault();
+            if (product == null)
+            {
+                response.Status = false;
+                response.Message = "Product not found";
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            response.Status = true;
+            response.Message = "Product found";
+            product.User.Password = "";
+            response.Data = product;
+            return Ok(response);
+        }
+
     }
-}
+        
+    }
+
