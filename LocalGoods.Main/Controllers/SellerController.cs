@@ -2,6 +2,7 @@
 using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
+using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,20 @@ namespace LocalGoods.Main.Controllers
     [Authorize(Roles = "seller")]
     public class SellerController : ControllerBase
     {
-        public LocalGoodsDbContext _dbContext;
+        
+        private LocalGoodsDbContext _dbContext;
+        private UserService _customerService;
 
-        public SellerController(LocalGoodsDbContext _localgoodsdbcontext)
+        public SellerController
+            (
+            LocalGoodsDbContext _localgoodsdbcontext,
+            UserService customerService
+            )
         {
             _dbContext = _localgoodsdbcontext;
             
+            _customerService = customerService;
+
         }
         [HttpGet("GetProducts")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
@@ -45,7 +54,7 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var category = _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
-                var email=HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+                var email = _customerService.CurrentUser().Email;
                 var seller=_dbContext.User.Where(x=>x.Email==email).FirstOrDefault();
                 if(seller.Certification==null)
                 {
@@ -148,7 +157,7 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 ResponseModel response = new ResponseModel();
-                var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+                var email = _customerService.CurrentUser().Email;
                 var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
                 if (email==null || seller==null)
                 {
@@ -183,43 +192,6 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPost("AddPaymentCard")]
-        public async Task<ActionResult<ResponseModel>> AddPaymentCard([FromBody] AddCardModel request)
-        {
-            try
-            {
-                ResponseModel response = new ResponseModel();
-                var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-                var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
-                if (email == null || seller == null)
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-                else
-                {
-                    CardDetail card = new CardDetail()
-                    {
-                        CardProvider = request.CardProvider,
-                        Expiry = request.Expiry,
-                        CardNumber = request.CardNumber
-
-                    };
-                    seller.CardDetail = card;
-                    var result = await _dbContext.CardDetails.AddAsync(card);
-                    _dbContext.SaveChanges();
-
-                    response.Status = true;
-                    response.Data = card;
-                    response.Message = "Card Added Successfully...";
-
-                }
-
-                return Ok(response);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        
     }
 }

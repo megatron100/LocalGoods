@@ -12,7 +12,7 @@ namespace LocalGoods.Main.Model
 
         public virtual Address? Address { get; set; } 
 
-        public virtual CardDetail? CardDetail { get; set; }
+        public virtual List<CardDetail>? CardList { get; set; }
         [RoleValidation]
         public string Role { get; set; } = "customer";
 
