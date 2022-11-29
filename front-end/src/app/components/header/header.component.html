@@ -15,8 +15,8 @@
       <mat-icon *ngIf='isUserAuth' style='color: red'>favorite_border</mat-icon>
       <mat-icon *ngIf='isUserAuth'>shopping_cart</mat-icon>
       <mat-icon *ngIf='isUserAuth' [matMenuTriggerFor]="profile">person_outline</mat-icon>
-      <mat-icon routerLink="/login" *ngIf='!isUserAuth'><a (click)="collapsed = !collapsed" style="cursor: pointer"></a>login</mat-icon>
-      <mat-icon routerLink="/register" *ngIf='!isUserAuth'><a (click)="collapsed = !collapsed" style="cursor: pointer" ></a>lock_open</mat-icon>
+      <mat-icon style="cursor: pointer" routerLink="/login" *ngIf='!isUserAuth'><a (click)="collapsed = !collapsed"></a>login</mat-icon>
+      <mat-icon style="cursor: pointer" routerLink="/register" *ngIf='!isUserAuth'><a (click)="collapsed = !collapsed"></a>lock_open</mat-icon>
     </div>
     <div class="burger">
       <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed" [matMenuTriggerFor]="menu">
