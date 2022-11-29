@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PRODUCT_SORT_VALUES} from "../../constants/constants";
+import {Store} from "@ngrx/store";
+import * as fromShop from '../../pages/store/index';
+import * as ShopActions from '../../pages/store/shop.actions';
 
 @Component({
   selector: 'app-sub-menu-header',
@@ -10,16 +13,16 @@ export class SubMenuHeaderComponent implements OnInit {
 
   sortValues: string[] = PRODUCT_SORT_VALUES;
 
-  constructor() { }
+  constructor(private store: Store<fromShop.AppState>) { }
 
   ngOnInit(): void {
   }
 
   sortValueChange($event: any) {
-    console.log($event.target.value)
+    this.store.dispatch(new ShopActions.SortProducts($event.target.value))
   }
 
   searchChange($event: any) {
-    console.log($event.target.value)
+    this.store.dispatch(new ShopActions.SearchProducts($event.target.value))
   }
 }

@@ -1,33 +1,29 @@
 import * as ShopActions from './shop.actions'
 
-export interface State {
+export interface ShopState {
   sort: string,
   search: string
 }
 
-export interface ShopState {
-  shopState: State
-}
-
-const initialState: State = {
+const initialState: ShopState = {
   sort: '',
   search: ''
 }
 
-export function ShopReducer(
-  state: State = initialState,
-  action: ShopActions.ShopActions
-) {
-  switch (action.type) {
+export function shopReducer(
+  state: ShopState = initialState,
+  {payload, type}: ShopActions.ShopActions
+): ShopState {
+  switch (type) {
     case ShopActions.SORT_PRODUCTS:
       return {
         ...state,
-        sort: action.payload
+        sort: payload
       };
     case ShopActions.SEARCH_PRODUCTS:
       return {
         ...state,
-        search: action.payload
+        search: payload
       };
     default: return state
   }

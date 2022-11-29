@@ -10,11 +10,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {SearchPipe} from "../pipes/search.pipe";
+import {SortPipe} from "../pipes/sort.pipe";
 
 
 @NgModule({
   declarations: [
-    SearchPipe
+    SearchPipe,
+    SortPipe,
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import {SearchPipe} from "../pipes/search.pipe";
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    SearchPipe
+    SearchPipe,
+    SortPipe,
   ]
 })
 export class SharedModule { }

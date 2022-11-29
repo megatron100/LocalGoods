@@ -6,12 +6,11 @@ import {IProduct} from "../interfaces/product";
 })
 export class SearchPipe implements PipeTransform {
 
-  transform(products: IProduct[], args: string): unknown {
+  transform(products: IProduct[], args: string): IProduct[] {
     let search = [...products];
     if (args) {
       return search.filter(product => product.name.search(args) !== -1).slice()
     }
     return products.slice();
   }
-
 }
