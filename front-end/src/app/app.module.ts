@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { InfoComponent } from './pages/info/info.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import {ProductCardComponent} from "./components/product-card/product-card.component";
+import { SubMenuHeaderComponent } from './components/sub-menu-header/sub-menu-header.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {ProductCardComponent} from "./components/product-card/product-card.compo
     HomeComponent,
     InfoComponent,
     ShopComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    SubMenuHeaderComponent,
   ],
   imports: [
     BrowserModule,
