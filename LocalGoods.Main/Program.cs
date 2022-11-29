@@ -1,4 +1,5 @@
 using LocalGoods.Main.DAL;
+using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +48,9 @@ builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
                                     builder.Configuration.GetConnectionString("LocalGoodsConnection"))
                                                                        );
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,7 +70,9 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true
     };
 });
+
 builder.Services.AddAuthorization();
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

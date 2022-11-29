@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   collapsed: boolean = true;
-  isUserAuth: boolean = false
+  isUserAuth: boolean = true
 
   constructor() { }
 

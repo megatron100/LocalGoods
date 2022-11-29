@@ -1,0 +1,19 @@
+<div class="product-container">
+    <a href="#">
+        <img src="{{product.photo}}" alt="{{product.name}}" class="product-pic">
+    </a>
+    <a href="#" class="product-name__link">
+        <h3 class="product-name">{{product.name}}</h3>
+    </a>
+    <a href="#" class="product-seller__link">
+        <h4 class="product-seller">{{product.seller}}</h4>
+    </a>
+    <p class="product-description">{{product.description}}</p>
+    <p class="product-price">{{product.price}}$</p>
+    <div class="product-add__container">
+        <input type="number" name="product-quantity" id="product-quantity" value="1">
+        <button class="product-add" (click)="onClickAdd()">
+            Add to Cart
+        </button>
+    </div>
+</div>

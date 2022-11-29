@@ -6,28 +6,29 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/footer/footer.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatMenuModule} from "@angular/material/menu";
-import {MatDividerModule} from "@angular/material/divider";
+import {SharedModule} from "./shared/shared.module";
+import { HomeComponent } from './pages/home/home.component';
+import { InfoComponent } from './pages/info/info.component';
+import { ShopComponent } from './pages/shop/shop.component';
+import {ProductCardComponent} from "./components/product-card/product-card.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent,
+    InfoComponent,
+    ShopComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatDividerModule
+    SharedModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
