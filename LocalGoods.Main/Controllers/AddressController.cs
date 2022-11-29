@@ -42,7 +42,7 @@ namespace LocalGoods.Main.Controllers
             }
             if(user.Address is null)
             {
-                response.Status = true;
+                response.Status = false;
                 response.Message = "Address of given user Not Found";
 
                 return StatusCode(StatusCodes.Status404NotFound, response);

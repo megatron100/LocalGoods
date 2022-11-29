@@ -13,7 +13,7 @@ namespace LocalGoods.Main.Controllers
     {
         private readonly LocalGoodsDbContext _dbContext;
         
-        public HomeController(LocalGoodsDbContext dbContext   )
+        public HomeController(LocalGoodsDbContext dbContext)
         {
             _dbContext = dbContext;
              

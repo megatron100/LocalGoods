@@ -80,7 +80,12 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CardDetails");
                 });
@@ -116,6 +121,65 @@ namespace LocalGoods.Main.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Certificate");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<int>("AdressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("orderItems");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
@@ -226,9 +290,6 @@ namespace LocalGoods.Main.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CardDetailId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CertificationId")
                         .HasColumnType("int");
 
@@ -236,6 +297,10 @@ namespace LocalGoods.Main.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -258,11 +323,16 @@ namespace LocalGoods.Main.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CardDetailId");
-
                     b.HasIndex("CertificationId");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.CardDetail", b =>
+                {
+                    b.HasOne("LocalGoods.Main.Model.User", null)
+                        .WithMany("CardList")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
@@ -290,19 +360,18 @@ namespace LocalGoods.Main.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
-                        .WithMany()
-                        .HasForeignKey("CardDetailId");
-
                     b.HasOne("LocalGoods.Main.Model.Certificate", "Certification")
                         .WithMany()
                         .HasForeignKey("CertificationId");
 
                     b.Navigation("Address");
 
-                    b.Navigation("CardDetail");
-
                     b.Navigation("Certification");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
+                {
+                    b.Navigation("CardList");
                 });
 #pragma warning restore 612, 618
         }
