@@ -2,27 +2,25 @@ import {UserPaymentCardModel} from "./user-payment-card.model";
 
 export class User {
   constructor(
-    public data: {
-        address: {
-          pinCode: string,
-          country: string,
-          city: string,
-          area: string,
-          coordinates: string,
-          createdDate: string
-        },
-      cardList: UserPaymentCardModel[],
-      certification:[],
-      email: string,
-      name: string,
-      mobile: string,
-      role: string,
-      sellerRating: number
-    },
+    public email: string,
+    public role: string,
     private _token: string,
     private _refresh_token: string,
     private _tokenExpirationDate: Date,
-    private _refreshTokenExpirationDate: Date
+    private _refreshTokenExpirationDate: Date,
+    public cardList?: UserPaymentCardModel[],
+    public certification?: [],
+    public name?: string,
+    public mobile?: string,
+    public sellerRating?: number,
+    public address?: {
+      pinCode: string,
+      country: string,
+      city: string,
+      area: string,
+      coordinates: string,
+      createdDate: string
+    },
   ) {
   }
 
