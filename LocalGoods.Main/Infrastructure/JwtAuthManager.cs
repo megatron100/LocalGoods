@@ -100,9 +100,8 @@
                    {
                     throw new SecurityTokenException("Invalid token");
                    }
-                var existingRefreshToken = _usersRefreshTokens.Where(x => x.Key == refreshToken).Select(a => a).FirstOrDefault();
 
-                if (_usersRefreshTokens.Where(x => x.Key==refreshToken).(refreshToken, out var existingRefreshToken))
+                if (_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken))
                 {
                     throw new SecurityTokenException("Invalid token");
                 }

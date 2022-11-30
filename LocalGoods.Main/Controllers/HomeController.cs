@@ -5,6 +5,7 @@ using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace LocalGoods.Main.Controllers
@@ -34,6 +35,7 @@ namespace LocalGoods.Main.Controllers
                 response.Message = "No product available for sale";
                 return StatusCode(StatusCodes.Status404NotFound, response);
             }
+
             var user = _userService.CurrentUser();
             List<Product> nearByProduct = new List<Product>();
             if (user.Address != null)
@@ -47,12 +49,12 @@ namespace LocalGoods.Main.Controllers
             return Ok(response);
 
         }
-        [HttpGet("{id:int}")]
+        [HttpGet("GetProductById")]
         public async Task<IActionResult> GetProduct(int id)
         {
-            
+
             var response = new ResponseModel();
-            
+
             var product = _dbContext.Product.Where(x => x.Id == id).Select(y => y).FirstOrDefault();
             if (product == null)
             {
@@ -66,8 +68,35 @@ namespace LocalGoods.Main.Controllers
             response.Data = product;
             return Ok(response);
         }
+        [HttpGet("Sellers")]
+
+        public async Task<ActionResult> GetSellers()
+        {
+            var Sellerlist = await _dbContext.User.Where(x => x.Role == Role.Seller).ToListAsync();
+            if (Sellerlist == null || Sellerlist.Count == 0)
+            {
+                return Ok(new ResponseModel
+                {
+                    Status = false,
+                    Message = "No seller Found"
+
+                });
+            }
+            foreach (var seller in Sellerlist)
+            {
+                seller.Password = "";
+            }
+
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Sellers Found",
+                Data = Sellerlist
+            });
+
+        }
 
     }
-        
-    }
+
+}
 

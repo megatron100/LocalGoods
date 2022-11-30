@@ -27,20 +27,19 @@ namespace LocalGoods.Main.Controllers
             _customerService = customerService;
 
         }
-        [HttpPost("AddPaymentCard")]
+        [HttpPost("AddCard")]
         public async Task<ActionResult<ResponseModel>> AddPaymentCard([FromBody] AddCardModel request)
         {
             try
             {
                 ResponseModel response = new ResponseModel();
-                var curuseremail = _customerService.CurrentUser().Email;
-                var seller = _dbContext.User.Where(x => x.Email == curuseremail).FirstOrDefault();
-                if (curuseremail == null || seller == null)
+                var user = _customerService.CurrentUser();
+                
+                if (user == null )
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
-                else
-                {
+                 
                     CardDetail card = new CardDetail()
                     {
                         CardProvider = request.CardProvider,
@@ -48,19 +47,18 @@ namespace LocalGoods.Main.Controllers
                         CardNumber = request.CardNumber
 
                     };
-                    if(seller.CardList==null)
+                    if(user.CardList==null)
                     {
-                        seller.CardList = new List<CardDetail>();
+                        user.CardList = new List<CardDetail>();
                     }
-                    seller.CardList.Add(card);
-                    var result = await _dbContext.CardDetails.AddAsync(card);
+                    user.CardList.Add(card);
+                    await _dbContext.CardDetails.AddAsync(card);
+                    _dbContext.User.Update(user);
                     _dbContext.SaveChanges();
-
+                
                     response.Status = true;
                     response.Data = card;
                     response.Message = "Card Added Successfully...";
-
-                }
 
                 return Ok(response);
             }
@@ -86,7 +84,7 @@ namespace LocalGoods.Main.Controllers
             }
             return Ok(cards);            
         }
-        [HttpDelete("RemovePaymentCard")]
+        [HttpDelete("RemoveCard")]
         public async Task<ActionResult<ResponseModel>> RemovePaymentCard(int id)
         {
             var curuser = _customerService.CurrentUser();

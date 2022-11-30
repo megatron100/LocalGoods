@@ -301,7 +301,6 @@ namespace LocalGoods.Main.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mobile")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

@@ -178,7 +178,7 @@ namespace LocalGoods.Main.Controllers
            
         }
 
-        [HttpPost("refresh-token")]
+        [HttpPost("RefreshToken")]
         [Authorize]
         public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {

@@ -25,13 +25,12 @@ namespace LocalGoods.Main.Controllers
             _dbContext = dbContext;
             _userService = userService;
         }
-
         [HttpGet("Get")]
-        public async Task<ActionResult> Get([FromQuery]int UserId)
+        public async Task<ActionResult> Get()
         {
-          var user1=  _userService.CurrentUser();
+          var user=  _userService.CurrentUser();
             var response = new ResponseModel();
-            var user = _dbContext.User.Where(x => x.Id == UserId).Select(y => y).FirstOrDefault();
+           
             if (user is null)
             {
                 response.Status = false;
@@ -56,7 +55,7 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> Post(int UserId, [FromBody] AddressRequest addressRequest)
+        public async Task<ActionResult> Post(  [FromBody] AddressRequest addressRequest)
         {
             //for now anybody can change address of anybody
 
@@ -71,7 +70,7 @@ namespace LocalGoods.Main.Controllers
             try
             {
 
-                var user = _dbContext.User.Where(x => x.Id == UserId).Select(a => a).FirstOrDefault();
+                var user=_userService.CurrentUser();
                 if (user is null)
                 {
                     response.Status = false;
@@ -97,13 +96,13 @@ namespace LocalGoods.Main.Controllers
 
         // PUT api/<AddressController>/5
         [HttpPut("ChangeAddress")]
-        public IActionResult Put(int UserId, [FromBody] AddressRequest addressRequest)
+        public IActionResult Put( [FromBody] AddressRequest addressRequest)
         {
             ResponseModel response = new ResponseModel();
             try
             {
 
-                var user = _dbContext.User.Where(x => x.Id == UserId).Select(a => a ).FirstOrDefault();
+                var user = _userService.CurrentUser();  
 
                 if (user == null)
                 {
@@ -155,10 +154,10 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpDelete("Delete")]
-        public ActionResult Delete(int UserId)
+        public ActionResult Delete( )
         {
-            
-            var user = _dbContext.User.Where(x => x.Id == UserId).Select(a => a).FirstOrDefault();
+
+            var user = _userService.CurrentUser();
             ResponseModel response = new ResponseModel();
             if(user is null)
             {
@@ -178,11 +177,11 @@ namespace LocalGoods.Main.Controllers
             _dbContext.User.Update(user);
 
             _dbContext.SaveChanges();
-
+            response.Status = true;
             response.Status = true;
             response.Message = "Address deleted successfull";
            
-            return StatusCode(StatusCodes.Status200OK, response);
+            return Ok( response);
 
         }
     }

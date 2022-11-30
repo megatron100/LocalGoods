@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LocalGoods.Main.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     [Authorize]
     public class CommonController : ControllerBase

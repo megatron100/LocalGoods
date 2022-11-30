@@ -33,16 +33,44 @@ namespace LocalGoods.Main.Controllers
         public async Task<ActionResult> GetSellerProducts()
         {
             var user = _customerService.CurrentUser();
-            var products = await _dbContext.Product.Where(x => x.User.Id == user.Id && x.IsAvailable == true && x.IsPublished).Select(a => a).ToListAsync();
+            var products = await _dbContext.Product.Where(x => x.User.Id == user.Id && x.IsAvailable  && x.IsPublished).Select(a => a).ToListAsync();
             if (products == null)
             {
-                return Ok(new { message = "No products found" });
+                return Ok(new ResponseModel { Message = "No products found" });
             }
-            return Ok(new
+            foreach (var product in products)
             {
-                products = products
-            });
+                product.User.Password = "";
+            }
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Products found",
+                Data = products
 
+            }) ;
+
+        }
+
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+
+            var response = new ResponseModel();
+            var user= _customerService.CurrentUser();
+
+            var product = _dbContext.Product.Where(x => x.Id == id && x.User.Id==user.Id).Select(y => y).FirstOrDefault();
+            if (product == null)
+            {
+                response.Status = false;
+                response.Message = "Product not found";
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            response.Status = true;
+            response.Message = "Product found";
+            product.User.Password = "";
+            response.Data = product;
+            return Ok(response);
         }
 
         [HttpPost("AddProduct")]
@@ -53,10 +81,9 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
-                var email = _customerService.CurrentUser().Email;
-                var seller = await _dbContext.User.Where(x => x.Email == email).FirstOrDefaultAsync();
-
-                if (seller == null || seller.Certification == null || seller.Address == null)
+                var user = _customerService.CurrentUser();
+                  
+                if (user == null ||   user.Address == null)
                 {
 
                     return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
@@ -65,11 +92,10 @@ namespace LocalGoods.Main.Controllers
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
-                seller.Password = "";
+                
                     Product product = new Product()
                     {
-                        User = seller,
-                        CreatedDate = DateTime.UtcNow,
+                        User = user,
                         ProductTitle = request.Name,
                         ProductCategory = category,
                         Price = request.Price,
@@ -93,7 +119,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPost("EditProdcuct/{id:int}")]
+        [HttpPut("EditProdcuct/{id:int}")]
         public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request, int? product_id)
         {
             try
@@ -102,22 +128,30 @@ namespace LocalGoods.Main.Controllers
                 var product = _dbContext.Product.Where(x => x.Id == product_id).FirstOrDefault();
                 if (product == null)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Product Not Found" });
+                    return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
                 }
                 else
                 {
-                    Product newproduct = new Product()
+                    Product newproduct = new Product();
+                    if (request.Name != null)
                     {
-                        CreatedDate = DateTime.UtcNow,
-                        ProductTitle = request.Name,
-                        Price = request.Price,
-                        ShortDescription = request.ShortDesc
-                    };
+                        newproduct.ProductTitle = request.Name;
+                    }
+                    if (request.Category != null)
+                    {
+                        var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                        if (category != null)
+
+                        { newproduct.ProductCategory = category; }
+                    }
+                    
+                        newproduct.Price = request.Price;
+
                     _dbContext.Product.Update(newproduct);
                     await _dbContext.SaveChangesAsync();
 
                     response.Status = true;
-                    response.Data = product;
+                    
                     response.Message = "ProductDetails Updated Successfully";
 
                 }
@@ -138,7 +172,7 @@ namespace LocalGoods.Main.Controllers
                 var product = _dbContext.Product.Where(x => x.Id == id).FirstOrDefault();
                 if (product == null)
                 {
-                    return NotFound($"Productwith Id = {id} not found");
+                    return NotFound(new ResponseModel {Status=false, Message = "Product Not Found" });
                 }
                 _dbContext.Product.Remove(product);
                 await _dbContext.SaveChangesAsync();
@@ -156,9 +190,9 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 ResponseModel response = new ResponseModel();
-                var email = _customerService.CurrentUser().Email;
-                var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
-                if (email == null || seller == null)
+                var seller = _customerService.CurrentUser();
+               
+                if (  seller == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
