@@ -29,8 +29,8 @@ export class AuthService {
     return this.http.post<AuthResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
         tap(
-          ({userEmail, role, accessToken, refreshToken}) => {
-            this.handleAuth(userEmail, role, accessToken, refreshToken);
+          ({userId, userEmail, role, nickName, accessToken, refreshToken}) => {
+            this.handleAuth(userId, userEmail, role, nickName, accessToken, refreshToken);
             this.router.navigate(['./home']);
           }
         )
@@ -57,8 +57,10 @@ export class AuthService {
 
   autoLogin() {
     const userData: {
+      userId: string,
       email: string,
       role: string,
+      nickName: string,
       _token: string,
       _refresh_token: string,
       _tokenExpirationDate: string,
@@ -69,8 +71,10 @@ export class AuthService {
     }
 
     const loadedUserFromLS = new User(
+      userData.userId,
       userData.email,
       userData.role,
+      userData.nickName,
       userData._token,
       userData._refresh_token,
       new Date(userData._tokenExpirationDate),
@@ -85,15 +89,17 @@ export class AuthService {
   }
 
   private handleAuth(
+    userId: string,
     userEmail: string,
     role: string,
+    nickName: string,
     accessToken: string,
     refreshToken: string,
   ) {
     const expirationDate = new Date(new Date().getTime() + EXPIRE_IN * this.millisecondsInMinute);
     const refreshExpirationDate = new Date(new Date().getTime() + REFRESH_EXPIRE_IN * this.millisecondsInMinute);
 
-    const user = new User(userEmail, role, accessToken, refreshToken, expirationDate, refreshExpirationDate);
+    const user = new User(userId, userEmail, role, nickName, accessToken, refreshToken, expirationDate, refreshExpirationDate);
 
     this.user.next(user);
 

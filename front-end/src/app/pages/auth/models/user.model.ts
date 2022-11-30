@@ -2,8 +2,10 @@ import {UserPaymentCardModel} from "./user-payment-card.model";
 
 export class User {
   constructor(
+    public userId: string,
     public email: string,
     public role: string,
+    public nickName: string,
     private _token: string,
     private _refresh_token: string,
     private _tokenExpirationDate: Date,
