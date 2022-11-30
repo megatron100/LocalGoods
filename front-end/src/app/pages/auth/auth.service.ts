@@ -37,6 +37,11 @@ export class AuthService {
       )
   };
 
+  loginTest(body: AuthResponseData) {
+    this.handleAuth(body.userId, body.userEmail, body.role, body.nickName, body.accessToken, body.refreshToken);
+    this.router.navigate(['./home']);
+  };
+
   logout() {
     //Remove the user from the LS if the token is not finished clearing Timeout after which autoLogout will take place
     this.user.next(null);

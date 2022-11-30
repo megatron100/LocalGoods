@@ -29,14 +29,14 @@
 <mat-menu #profile>
   <button mat-menu-item>
     <mat-icon>person_outline</mat-icon>
-    Oleh Babiak
+    {{ user?.nickName }}
   </button>
   <button mat-menu-item>
     <mat-icon>mail_outline</mat-icon>
-    oleg_bob@gmail.com
+    {{ user?.email }}
   </button>
   <mat-divider></mat-divider>
-  <button mat-menu-item>
+  <button (click)='onLogout()' mat-menu-item>
     <mat-icon>logout</mat-icon>
     Exit
   </button>

@@ -13,7 +13,9 @@ import {ShopComponent} from './pages/shop/shop.component';
 import {ProductCardComponent} from "./components/product-card/product-card.component";
 import {SubMenuHeaderComponent} from './components/sub-menu-header/sub-menu-header.component';
 import {StoreModule} from "@ngrx/store";
-import {reducers} from "./pages/store";
+import {reducers} from "./store";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 
 @NgModule({
@@ -30,11 +32,14 @@ import {reducers} from "./pages/store";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
     StoreModule.forRoot(reducers)
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
