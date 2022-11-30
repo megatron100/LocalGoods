@@ -4,3 +4,5 @@ export const API = 'http://';
 export const API_PATH_AUTH = 'api/auth';
 export const PATH_LOGIN = 'login';
 export const PATH_REGISTER = 'register';
+export const EXPIRE_IN = 1440;
+export const REFRESH_EXPIRE_IN = 14400;
