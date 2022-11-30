@@ -1,9 +1,3 @@
 <div class="product-section">
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
-  <app-product-card></app-product-card>
+  <app-product-card *ngFor='let product of products | search: searchValue | sort: sortValue' [product]='product'></app-product-card>
 </div>

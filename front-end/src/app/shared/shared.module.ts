@@ -9,10 +9,15 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import {SearchPipe} from "../pipes/search.pipe";
+import {SortPipe} from "../pipes/sort.pipe";
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SearchPipe,
+    SortPipe,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -37,6 +42,8 @@ import {MatInputModule} from "@angular/material/input";
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    SearchPipe,
+    SortPipe,
   ]
 })
 export class SharedModule { }
