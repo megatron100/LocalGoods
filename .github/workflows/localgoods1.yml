@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Restore
-      run: cd Localgoods.Main & dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      run:   dotnet restore LocalGoods/LocalGoods.Main/LocalGoods.Main.csproj
     - name: Build
       
       run:  dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
