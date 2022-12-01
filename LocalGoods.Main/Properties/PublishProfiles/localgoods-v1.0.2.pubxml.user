@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA6heTLBRZkUedIO3hlT4ZZgAAAAACAAAAAAAQZgAAAAEAACAAAACGX6hfF6U2LnP0gVkEZa+XKuRAo4XAFMUjLP8aqE/R2gAAAAAOgAAAAAIAACAAAAB0BUOKt9DCyJbMfauBcF9cy4gpEKRMod9QjbdqEM64loAAAAAjK50b3mXMWTUjFLqV9GaZBFmdgb8DU/WIXd6QK6Nuhi+KKZtG2clgQhx7xKHDAcFZ3J9IFTLYmX4fW3IpmvDxNvLxR5CexqZTeaBPGVzP9sW0CQtgEp5YaE3FdAde4BnChAaXfSufh92sTpd1SLeGHqqShAPvdpxkYrI1615SB0AAAABz7FPp7MP7aif01CgAB337xYjHdj0epZ2zH7+tuXqzp0x+I4hhnnCOCJBolADjGhtn3wkBcIGAZaMG6jg//2gR</EncryptedPassword>
+    <History>True|2022-12-01T18:50:17.6210949Z;True|2022-12-01T23:17:59.6306384+05:30;True|2022-12-01T21:44:47.1725443+05:30;True|2022-12-01T14:56:44.8877201+05:30;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="LocalGoodsConnection">
+      <Value>Server=tcp:localgoodsmaindb.database.windows.net,1433%3bInitial Catalog=LocalGoods.Main_db%3bPersist Security Info=False%3bUser ID=shubham%3bPassword=Localgoods%401%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="LocalGoods.Main.DAL.LocalGoodsDbContext">
+      <Value>Server=tcp:localgoodsmaindb.database.windows.net,1433%3bInitial Catalog=LocalGoods.Main_db%3bPersist Security Info=False%3bUser ID=shubham%3bPassword=Localgoods%401%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
