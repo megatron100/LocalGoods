@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.valid) {
       return
     }
+    this.isLoading = true;
     this.authService.register(this.registerForm.value)
       .subscribe(value => {
         this.isLoading = false;

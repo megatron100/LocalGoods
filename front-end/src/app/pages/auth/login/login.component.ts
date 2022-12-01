@@ -31,11 +31,9 @@ export class LoginComponent implements OnInit {
 
     this.isLoading = true
 
-    this.authService.login(this.loginForm.value).subscribe(value => {
-      this.isLoading = false;
-      console.log('log', value)
-    })
-
-    this.loginForm.reset();
+    this.authService.login(this.loginForm.value)
+      .subscribe(value => {
+        this.isLoading = true
+      })
   }
 }

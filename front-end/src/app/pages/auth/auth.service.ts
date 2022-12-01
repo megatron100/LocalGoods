@@ -37,7 +37,8 @@ export class AuthService {
       .pipe(
         tap(
           ({data}) => {
-            this.handleAuth(data.userId, data.userEmail, data.role, data.nickName, data.accessToken, data.refreshToken);
+            console.log('LS', data)
+            this.handleAuth(data.id, data.email, data.role, data.name, data.accessToken, data.refreshToken);
             this.router.navigate(['./home']);
           }
         )
