@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EMAIL_PATTERN} from "../../../constants/constants";
-import {User} from "../models/user.model";
 import {AuthService} from "../auth.service";
-import {AuthResponseData} from "../../../interfaces/auth-response-data";
-
 
 @Component({
   selector: 'app-login',
@@ -18,15 +15,6 @@ export class LoginComponent implements OnInit {
     'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
-  user: AuthResponseData = {
-    userId: '47fvj5h57yhjghrt75yhg',
-    userEmail: 'oleg_bob@ukr.net',
-    role: 'buyer',
-    nickName: 'Oleh Babiak!!!',
-    accessToken: 'kjvjvdkjhkdf!!!',
-    refreshToken: 'jlfjglkdfjlkrrre',
-    }
-
   constructor(private authService: AuthService) {
   }
 
@@ -38,7 +26,10 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return
     }
-    this.authService.loginTest(this.user)
+    this.authService.login(this.loginForm.value).subscribe(value => {
+      console.log('log', value)
+    })
+
     this.loginForm.reset();
   }
 }

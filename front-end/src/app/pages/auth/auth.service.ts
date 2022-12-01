@@ -13,6 +13,7 @@ import {AuthResponseData} from "../../interfaces/auth-response-data";
 })
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
+  roleAs!: string;
   private millisecondsInMinute = 60000;
   private tokenExpirationTimer: any;
 
@@ -21,7 +22,13 @@ export class AuthService {
 
   register(body: RegisterModel) {
     return this.http.post<any>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
-      .pipe()
+      .pipe(
+        tap(
+          () => {
+            this.router.navigate(['./login'])
+          }
+        )
+      )
   };
 
 
@@ -29,18 +36,12 @@ export class AuthService {
     return this.http.post<AuthResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
         tap(
-          ({userId, userEmail, role, nickName, accessToken, refreshToken}) => {
-            this.handleAuth(userId, userEmail, role, nickName, accessToken, refreshToken);
+          ({data}) => {
+            this.handleAuth(data.userId, data.userEmail, data.role, data.nickName, data.accessToken, data.refreshToken);
             this.router.navigate(['./home']);
           }
         )
       )
-  };
-
-  //Test method
-  loginTest(body: AuthResponseData) {
-    this.handleAuth(body.userId, body.userEmail, body.role, body.nickName, body.accessToken, body.refreshToken);
-    this.router.navigate(['./home']);
   };
 
   logout() {
@@ -86,7 +87,7 @@ export class AuthService {
       new Date(userData._tokenExpirationDate),
       new Date(userData._refreshTokenExpirationDate)
     )
-//We check whether our token is still active, if so we activate the user
+//We check whether our token is still active, if yes, so we activate the user
     if(loadedUserFromLS.token) {
       const expirationTime = new Date(userData._refreshTokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationTime);
@@ -111,5 +112,13 @@ export class AuthService {
 
     this.autoLogout(REFRESH_EXPIRE_IN * this.millisecondsInMinute)
     localStorage.setItem('userData', JSON.stringify(user))
+  }
+
+  getRole() {
+    const user: {
+      role: string,
+    } = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.roleAs = user.role;
+    return this.roleAs;
   }
 }
