@@ -1,4 +1,9 @@
-<div class='container'>
+<div class='container' style='background-color: inherit'>
+  <div *ngIf="isLoading" style="text-align: center" >
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</div>
+<div class='container' *ngIf="!isLoading">
   <form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
     <mat-form-field color='accent' appearance="outline">
       <mat-label>Email</mat-label>

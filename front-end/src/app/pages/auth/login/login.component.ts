@@ -10,6 +10,8 @@ import {AuthService} from "../auth.service";
 })
 export class LoginComponent implements OnInit {
 
+  isLoading = false;
+
   loginForm: FormGroup = new FormGroup({
     'email': new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
     'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
@@ -26,7 +28,11 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return
     }
+
+    this.isLoading = true
+
     this.authService.login(this.loginForm.value).subscribe(value => {
+      this.isLoading = false;
       console.log('log', value)
     })
 

@@ -1,5 +1,11 @@
-<div class='container'>
-  <form *ngIf='registerForm' class='example-form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
+<div class='container' style='background-color: inherit'>
+  <div *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</div>
+
+<div class='container' *ngIf="!isLoading">
+  <form *ngIf='isLoading' class='example-form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
     <mat-form-field color='accent' appearance="outline">
       <mat-label>Nickname</mat-label>
       <input

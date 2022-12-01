@@ -12,6 +12,8 @@ import {AuthService} from "../auth.service";
 export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
+  isLoading = false;
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class RegisterComponent implements OnInit {
     }
     this.authService.register(this.registerForm.value)
       .subscribe(value => {
+        this.isLoading = false;
         console.log('reg', value)
       })
 

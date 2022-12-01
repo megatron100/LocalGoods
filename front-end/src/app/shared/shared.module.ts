@@ -11,12 +11,14 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {SearchPipe} from "../pipes/search.pipe";
 import {SortPipe} from "../pipes/sort.pipe";
+import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.component";
 
 
 @NgModule({
   declarations: [
     SearchPipe,
     SortPipe,
+    LoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import {SortPipe} from "../pipes/sort.pipe";
   ],
   exports: [
     ReactiveFormsModule,
+    LoadingSpinnerComponent,
     FormsModule,
     MatToolbarModule,
     MatIconModule,
