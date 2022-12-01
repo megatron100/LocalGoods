@@ -4,8 +4,8 @@
       <mat-label>Nickname</mat-label>
       <input
         type='text'
-        id='nickName'
-        formControlName='nickName'
+        id='name'
+        formControlName='name'
         matInput
       >
       <mat-error
@@ -81,8 +81,8 @@
       <mat-label>Confirm password</mat-label>
       <input
         type="password"
-        id="password-confirm"
-        formControlName="password-confirm"
+        id="rePassword"
+        formControlName="rePassword"
         autocomplete="on"
         matInput
       >
@@ -108,7 +108,7 @@
       <mat-select
         formControlName="role"
       >
-        <mat-option value="buyer">Buyer</mat-option>
+        <mat-option value="customer">Buyer</mat-option>
         <mat-option value="seller">Seller</mat-option>
       </mat-select>
       <mat-error
