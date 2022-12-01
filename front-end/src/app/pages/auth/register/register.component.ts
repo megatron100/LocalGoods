@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EMAIL_PATTERN} from "../../../constants/constants";
+import {AuthService} from "../auth.service";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {EMAIL_PATTERN} from "../../../constants/constants";
 export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -27,7 +28,10 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.valid) {
       return
     }
-    console.log(this.registerForm)
+    this.authService.register(this.registerForm.value)
+      .subscribe(value => {
+        console.log('reg', value)
+      })
 
   }
 }
