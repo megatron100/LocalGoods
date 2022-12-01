@@ -96,7 +96,7 @@ namespace LocalGoods.Main.Controllers
 
         // PUT api/<AddressController>/5
         [HttpPut("ChangeAddress")]
-        public IActionResult Put( [FromBody] AddressRequest addressRequest)
+        public IActionResult Put( [FromBody] AddressChangeRequest addressRequest)
         {
             ResponseModel response = new ResponseModel();
             try
