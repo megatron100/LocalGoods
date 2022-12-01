@@ -3,12 +3,16 @@ import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ShopComponent} from "./shop.component";
 import {AuthGuard} from "../auth/auth.guard";
+import {USER_ROLES} from "../../constants/constants";
 
 const routes: Routes = [
   {
     path: '',
     component: ShopComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      role: USER_ROLES[1]
+    }
   },
 ]
 
