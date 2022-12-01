@@ -37,6 +37,7 @@ export class AuthService {
       )
   };
 
+  //Test method
   loginTest(body: AuthResponseData) {
     this.handleAuth(body.userId, body.userEmail, body.role, body.nickName, body.accessToken, body.refreshToken);
     this.router.navigate(['./home']);
@@ -54,7 +55,7 @@ export class AuthService {
   };
 
   autoLogout(expirationDuration: number) {
-    //expirationDuration - timer of token time end
+    //expirationDuration - timer of token time s over
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration)
