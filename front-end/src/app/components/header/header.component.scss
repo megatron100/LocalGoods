@@ -21,6 +21,22 @@ a {
   font-weight: 500;
 }
 
+.cart-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  font-size: 12px;
+  background: #ff0000;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 1;
+}
+
 @media (max-width: 768px) {
   .mat-toolbar {
     background-color: #39a94b;

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { CartService } from 'src/app/services/cart.service';
 import { IProduct } from '../../interfaces/product'
 
 @Component({
@@ -9,19 +9,20 @@ import { IProduct } from '../../interfaces/product'
 })
 export class ProductCardComponent implements OnInit {
 
-  filmIcon = faFilm;
 
-  products: IProduct[] = [];
   @Input() product!: IProduct;
 
-  constructor() { }
+  constructor( private cartService: CartService ) { }
 
   ngOnInit(): void {
 
   }
 
-  onClickAdd() {
-    console.log('Added');
+  onClickAdd(prod: IProduct) {
+
+    this.cartService.addToCart(prod);
+    console.log(prod);
+    
 
   }
 }
