@@ -33,10 +33,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
 
-  onSettingsShow() {
-
-  }
-
   ngOnDestroy() {
     this.userSub.unsubscribe()
   }

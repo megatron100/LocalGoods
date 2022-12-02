@@ -11,8 +11,7 @@ export class User {
     private _tokenExpirationDate: Date,
     private _refreshTokenExpirationDate: Date,
     public cardList?: UserPaymentCardModel[],
-    public certification?: [],
-    public name?: string,
+    public certification?: [] | null,
     public mobile?: string,
     public sellerRating?: number,
     public address?: {
