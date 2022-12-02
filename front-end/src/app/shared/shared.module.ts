@@ -14,6 +14,7 @@ import {SortPipe} from "../pipes/sort.pipe";
 import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.component";
 import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
+import {MatDialogModule} from '@angular/material/dialog'
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { CdkColumnDef } from '@angular/cdk/table';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -49,6 +51,7 @@ import { CdkColumnDef } from '@angular/cdk/table';
     MatSelectModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
     SearchPipe,
     SortPipe,
   ],

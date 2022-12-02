@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {User} from "../auth/models/user.model";
 import {AuthService} from "../auth/auth.service";
+import {MatDialog} from "@angular/material/dialog";
+import {UserDataUpdateDialogComponent} from "./user-data-update-dialog/user-data-update-dialog.component";
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +15,7 @@ export class SettingsComponent implements OnInit {
   user!: User;
 
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, public dialog: MatDialog) {
 
   }
 
@@ -26,4 +28,11 @@ export class SettingsComponent implements OnInit {
       })
   }
 
+  openDialog() {
+      const dialogRef = this.dialog.open(UserDataUpdateDialogComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
 }
