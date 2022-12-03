@@ -1,0 +1,54 @@
+.form {
+  min-width: 150px;
+  width: 100%;
+}
+
+.container {
+  width: 800px;
+  .form {
+    width: 100%;
+  }
+  margin-top: 7em;
+  background-color: #919494;
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+  border-radius: 6px;
+
+  .mat-form-field {
+    margin-bottom: 15px;
+    display: block;
+  }
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .container {
+    width: 200px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+  .container {
+    width: 300px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    width: 500px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1920px) {
+  .container {
+    width: 600px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    width: 800px;
+  }
+}
