@@ -5,7 +5,7 @@
 </div>
 
 <div class='container' *ngIf="!isLoading">
-  <form class='example-form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
+  <form class='form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
     <mat-form-field color='accent' appearance="outline">
       <mat-label>Nickname</mat-label>
       <input
@@ -31,7 +31,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" color='accent' appearance="outline">
+    <mat-form-field class="full-width" color='accent' appearance="outline">
       <mat-label>Email</mat-label>
       <input
         type="email"
