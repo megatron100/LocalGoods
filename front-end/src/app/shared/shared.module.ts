@@ -14,7 +14,8 @@ import {SortPipe} from "../pipes/sort.pipe";
 import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.component";
 import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
-import {MatDialogModule} from '@angular/material/dialog'
+import {MatDialogModule} from '@angular/material/dialog';
+import { FormInputComponent } from './form-input/form-input.component'
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog'
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
+    FormInputComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import {MatDialogModule} from '@angular/material/dialog'
     MatDialogModule,
     SearchPipe,
     SortPipe,
+    FormInputComponent,
   ],
   providers:[CdkColumnDef]
 })
