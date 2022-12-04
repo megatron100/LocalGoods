@@ -1,34 +1,17 @@
 <h2 mat-dialog-title>Edit my credentials</h2>
 <div mat-dialog-content class='container'>
-  <form class='form' [formGroup]='updateUserForm' (ngSubmit)="onSubmit()">
-    <app-form-input [type]=inputType[0] [name]='inputName[0]'></app-form-input>
-    <app-form-input [type]=inputType[0] [name]='inputName[1]'></app-form-input>
-    <app-form-input [type]=inputType[0] [name]='inputName[2]'></app-form-input>
-    <mat-form-field style='width: 100%' appearance="outline">
-      <mat-label>credit card</mat-label>
-      <input
-        id='cardNumber'
-        formControlName="cardNumber"
-        type="tel"
-        placeholder='XXXX XXXX XXXX XXXX'
-        #ccNumber
-        (keyup)="creditCardNumberSpacing()"
-        matInput
-      >
-    </mat-form-field>
+  <form class='form' [formGroup]='userForm' (ngSubmit)="onSubmit()">
+    <app-basic-info formGroupName="basicInfo"></app-basic-info>
     <hr>
     <br>
     <br>
-    <p>Address:</p>
     <hr>
-    <app-form-input [type]=inputType[0] [name]='inputName[4]'></app-form-input>
-    <app-form-input [type]=inputType[0] [name]='inputName[5]'></app-form-input>
-    <app-form-input [type]=inputType[0] [name]='inputName[6]'></app-form-input>
-    <app-form-input [type]=inputType[0] [name]='inputName[7]'></app-form-input>
+    <app-address formGroupName="address"></app-address>
   </form>
 </div>
+
 <mat-dialog-actions>
-  <button [disabled]='!updateUserForm.valid' type='submit' (click)='onSubmit()' mat-button mat-dialog-close=true>
+  <button [disabled]='!userForm.valid' type='submit' (click)='onSubmit()' mat-button mat-dialog-close=true>
     Update
   </button>
 </mat-dialog-actions>
