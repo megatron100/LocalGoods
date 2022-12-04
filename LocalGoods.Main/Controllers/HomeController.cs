@@ -28,7 +28,7 @@ namespace LocalGoods.Main.Controllers
         public async Task<IActionResult> GetProductList()
         {
             var response = new ResponseModel();
-            var products = _dbContext.Product.Where(x => x.IsPublished && x.IsAvailable && x.User.Role == Role.Seller).Select(y => y).ToList();
+            var products = await _dbContext.Product.Where(x => x.IsPublished && x.IsAvailable && x.User.Role == Role.Seller).Select(y => y).ToListAsync();
             if (products == null)
             {
                 response.Status = false;
@@ -55,7 +55,7 @@ namespace LocalGoods.Main.Controllers
 
             var response = new ResponseModel();
 
-            var product = _dbContext.Product.Where(x => x.Id == id).Select(y => y).FirstOrDefault();
+            var product = await _dbContext.Product.Where(x => x.Id == id).Select(y => y).FirstOrDefaultAsync();
             if (product == null)
             {
                 response.Status = false;
@@ -82,10 +82,6 @@ namespace LocalGoods.Main.Controllers
 
                 });
             }
-            foreach (var seller in Sellerlist)
-            {
-                seller.Password = "";
-            }
 
             return Ok(new ResponseModel
             {
@@ -94,6 +90,49 @@ namespace LocalGoods.Main.Controllers
                 Data = Sellerlist
             });
 
+        }
+
+        [HttpGet("RateSeller")]
+        public async Task<ActionResult> RateSeller(int id, int rating)
+        {
+
+            var user = _userService.CurrentUser();
+            var seller = await _dbContext.User.Where(x => x.Id == id).Select(a => a).FirstOrDefaultAsync();
+            if (seller == null)
+            {
+                return NotFound(new ResponseModel
+                {
+                    Status = false,
+                    Message = "Seller not found"
+                });
+            }
+            if (rating < 1 || rating > 5)
+            {
+                return BadRequest(new ResponseModel
+                {
+                    Status = false,
+                    Message = "Rating should be between 1 to 5"
+                });
+            }
+            var ratingModel = new Rating
+            {
+                CustomerId = user.Id,
+                SellerId = seller.Id,
+                Stars = rating
+            };
+            await _dbContext.Rating.AddAsync(ratingModel);
+            var average = _dbContext.Rating.Where(x => x.SellerId == seller.Id).Select(a => a.Stars).Average();
+            seller.SellerRating = average;
+            _dbContext.User.Update(seller);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Seller rated successfully",
+                Data = seller
+
+            });
         }
 
     }

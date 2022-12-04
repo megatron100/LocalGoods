@@ -1,8 +1,10 @@
-﻿using LocalGoods.Main.Model.BussinessModels.Validation;
+﻿using RoleNameSpace=LocalGoods.Main.Model.BussinessModels;
+using LocalGoods.Main.Model.BussinessModels.Validation;
 using System.Text.Json.Serialization;
 
 namespace LocalGoods.Main.Model
 {
+     
     public class User :BaseModel
     {
   
@@ -14,14 +16,14 @@ namespace LocalGoods.Main.Model
         public string Name { get; set; }
         public string? Mobile { get; set; }
 
-        public virtual Address? Address { get; set; } 
+        public virtual Address? Address { get; set; }
 
         public virtual  List<CardDetail>? CardList { get; set; }
         [RoleValidation]
-        public string Role { get; set; } = "customer";
+        public string Role { get; set; } = RoleNameSpace.Role.Customer;
 
         public virtual Certificate? Certification { get; set; }
-        public int SellerRating { get; set; } = 0;
+        public double SellerRating { get; set; } = 0;
 
     }
 }

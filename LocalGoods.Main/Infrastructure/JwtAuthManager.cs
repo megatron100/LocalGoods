@@ -9,13 +9,15 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.Json.Serialization;
+    using global::LocalGoods.Main.DAL;
+    using global::LocalGoods.Main.Model;
     using Microsoft.IdentityModel.Tokens;
 
     namespace LocalGoods.Main.Infrastructure
     {
         public interface IJwtAuthManager
         {
-            IImmutableDictionary<string, RefreshToken> UsersRefreshTokensReadOnlyDictionary { get; }
+            
             JwtAuthResult GenerateTokens(string userEmail, Claim[] claims, DateTime now);
             JwtAuthResult Refresh(string refreshToken, string accessToken, DateTime now);
             void RemoveExpiredRefreshTokens(DateTime now);
@@ -25,38 +27,40 @@
 
         public class JwtAuthManager : IJwtAuthManager
         {
-            public IImmutableDictionary<string, RefreshToken> UsersRefreshTokensReadOnlyDictionary => _usersRefreshTokens.ToImmutableDictionary();
-            private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens;  // can store in a database or a distributed cache
+            
+            private   LocalGoodsDbContext _dbContext;  // can store in a database or a distributed cache
             private IConfiguration _configuration;
 
-            public JwtAuthManager(IConfiguration configuration)
+            public JwtAuthManager(IConfiguration configuration, LocalGoodsDbContext dbContext)
             {
                 _configuration = configuration;
-                _usersRefreshTokens = new ConcurrentDictionary<string, RefreshToken>();
+                _dbContext = dbContext;
 
             }
 
             // optional: clean up expired refresh tokens
             public void RemoveExpiredRefreshTokens(DateTime now)
             {
-                var expiredTokens = _usersRefreshTokens.Where(x => x.Value.ExpireAt < now).ToList();
+                var expiredTokens = _dbContext.Token.Where(x => x.ExpireAt < now).ToList();
                 foreach (var expiredToken in expiredTokens)
                 {
-                    _usersRefreshTokens.TryRemove(expiredToken.Key, out _);
+                    _dbContext.Token.Remove(expiredToken);
                 }
+                _dbContext.SaveChanges();
             }
 
             // can be more specific to ip, user agent, device name, etc.
             public void RemoveRefreshTokenByUserEmail(string userEmail)
             {
-                var refreshTokens = _usersRefreshTokens.Where(x => x.Value.UserEmail==userEmail).ToList();
+                var refreshTokens = _dbContext.Token.Where(x => x.UserEmail==userEmail).ToList();
                 foreach (var refreshToken in refreshTokens)
                 {
-                    _usersRefreshTokens.TryRemove(refreshToken.Key, out _);
+                    _dbContext.Token.Remove(refreshToken);
                 }
+                _dbContext.SaveChanges();
             }
 
-            public JwtAuthResult GenerateTokens(string userEmail, Claim[] claims, DateTime now)
+            public JwtAuthResult  GenerateTokens(string userEmail, Claim[] claims, DateTime now)
             {
 
                // var shouldAddAudienceClaim = string.IsNullOrWhiteSpace(claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Aud)?.Value);
@@ -75,15 +79,15 @@
                     TokenString = GenerateRefreshTokenString(),
                     ExpireAt = now.AddMinutes(Convert.ToInt32(_configuration["JWT:RefreshTokenExpiration"]))
                 };
-                /// _usersRefreshTokens.AddOrUpdate(refreshToken.TokenString, refreshToken);
-                _usersRefreshTokens.TryAdd(refreshToken.TokenString, refreshToken);
-                var allTokens = _usersRefreshTokens.Values.ToArray();
+                
+                _dbContext.Token.Add(refreshToken);
 
                 return new JwtAuthResult
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken
                 };
+                _dbContext.SaveChanges();
             }
 
             public JwtAuthResult Refresh(string refreshToken, string accessToken, DateTime now)
@@ -100,12 +104,12 @@
                    {
                     throw new SecurityTokenException("Invalid token");
                    }
-
-                if (_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken))
+                var userTokens = _dbContext.Token.Where(x => x.TokenString == refreshToken.Trim()).Select(a => a);
+                if (!userTokens.Any()  )
                 {
                     throw new SecurityTokenException("Invalid token");
                 }
-                if (existingRefreshToken.UserEmail != userEmail || existingRefreshToken.ExpireAt < now)
+                if (userTokens.FirstOrDefault().UserEmail != userEmail || userTokens.FirstOrDefault().ExpireAt < now)
                 {
 
                     throw new SecurityTokenException("Invalid token");
@@ -155,18 +159,6 @@
             public RefreshToken? RefreshToken { get; set; }
         }
 
-        public class RefreshToken
-        {
-            [JsonPropertyName("useremail")]
-            public string? UserEmail { get; set; }    // can be used for usage tracking
-                                                      // can optionally include other metadata, such as user agent, ip address, device name, and so on
-
-            [JsonPropertyName("tokenString")]
-            public string? TokenString { get; set; }
-
-            [JsonPropertyName("expireAt")]
-            public DateTime ExpireAt { get; set; }
-        }
     }
 
 }
