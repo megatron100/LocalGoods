@@ -28,11 +28,12 @@ export class SettingsComponent implements OnInit {
       })
   }
 
-  openDialog() {
+  openUserEditDialog() {
       const dialogRef = this.dialog.open(UserDataUpdateDialogComponent);
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
       });
     }
+
 }
