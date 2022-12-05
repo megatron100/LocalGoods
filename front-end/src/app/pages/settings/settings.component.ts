@@ -4,6 +4,7 @@ import {User} from "../auth/models/user.model";
 import {AuthService} from "../auth/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserDataUpdateDialogComponent} from "./user-data-update-dialog/user-data-update-dialog.component";
+import {UserUpdatePassDialogComponent} from "./user-update-pass-dialog/user-update-pass-dialog.component";
 
 @Component({
   selector: 'app-settings',
@@ -36,4 +37,11 @@ export class SettingsComponent implements OnInit {
       });
     }
 
+  openPassChangeDialog() {
+    const dialogRef = this.dialog.open(UserUpdatePassDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
