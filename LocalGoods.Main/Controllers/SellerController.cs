@@ -33,14 +33,14 @@ namespace LocalGoods.Main.Controllers
         public async Task<ActionResult> GetSellerProducts()
         {
             var user = _customerService.CurrentUser();
-            var products = await _dbContext.Product.Where(x => x.User.Id == user.Id && x.IsAvailable  && x.IsPublished).Select(a => a).ToListAsync();
+            var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable  && x.IsPublished).Select(a => a).ToListAsync();
             if (products == null)
             {
                 return Ok(new ResponseModel { Message = "No products found" });
             }
             foreach (var product in products)
             {
-                product.User.Password = "";
+                product.Seller.Password = "";
             }
             return Ok(new ResponseModel
             {
@@ -59,7 +59,7 @@ namespace LocalGoods.Main.Controllers
             var response = new ResponseModel();
             var user= _customerService.CurrentUser();
 
-            var product = _dbContext.Product.Where(x => x.Id == id && x.User.Id==user.Id).Select(y => y).FirstOrDefault();
+            var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id==user.Id).Select(y => y).FirstOrDefault();
             if (product == null)
             {
                 response.Status = false;
@@ -68,7 +68,7 @@ namespace LocalGoods.Main.Controllers
             }
             response.Status = true;
             response.Message = "Product found";
-            product.User.Password = "";
+            product.Seller.Password = "";
             response.Data = product;
             return Ok(response);
         }
@@ -95,7 +95,7 @@ namespace LocalGoods.Main.Controllers
                 
                     Product product = new Product()
                     {
-                        User = user,
+                        Seller = user,
                         ProductTitle = request.Name,
                         ProductCategory = category,
                         Price = request.Price,
@@ -105,7 +105,7 @@ namespace LocalGoods.Main.Controllers
                     };
                     var result = await _dbContext.Product.AddAsync(product);
                     _dbContext.SaveChanges();
-                    product.User.Password = "";
+                    product.Seller.Password = "";
 
                     response.Status = true;
                     response.Data = product;

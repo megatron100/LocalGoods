@@ -18,7 +18,7 @@ namespace LocalGoods.Main.Model
 
         public virtual Address? Address { get; set; }
 
-        public virtual  List<CardDetail>? CardList { get; set; }
+        public virtual  CardDetail? Card { get; set; }
         [RoleValidation]
         public string Role { get; set; } = RoleNameSpace.Role.Customer;
 

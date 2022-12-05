@@ -7,7 +7,7 @@ namespace LocalGoods.Main.Model
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public virtual User user { get; set; }
+      
         public virtual ICollection<ShoppingCartItem>? CartProducts { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal TotalAmount
@@ -17,7 +17,7 @@ namespace LocalGoods.Main.Model
                     decimal total = 0;
                     foreach (var item in CartProducts)
                     {
-                        total += item.Total;
+                        total += item.TotalAmount;
                     }
                     return total;
                 }

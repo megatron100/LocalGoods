@@ -44,11 +44,11 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpPost("AddToCart")]
-        public async Task<ActionResult> AddProductToCart([FromBody] AddProductToCartRequest request)
+        public async Task<ActionResult> AddProductToCart(int ProductId)
 
         {
             var user = _userService.CurrentUser();
-            var product = await _dbContext.Product.Where(x => x.Id == request.ProductId && x.IsAvailable && x.IsPublished).FirstOrDefaultAsync();
+            var product = await _dbContext.Product.Where(x => x.Id == ProductId && x.IsAvailable && x.IsPublished).FirstOrDefaultAsync();
             if (product == null)
             {
                 return BadRequest(new ResponseModel
@@ -57,67 +57,91 @@ namespace LocalGoods.Main.Controllers
                     Message = "Product Not found"
                 });
             }
-            ShoppingCartItem item = new ShoppingCartItem
+            //check if cart is null?
+            var cart = _dbContext.ShoppingCart.Where(x => x.UserId == user.Id).LastOrDefault();
+            if(cart==null)
             {
-                Product = product,
-                Quantity = request.Quantity,
+                cart = new ShoppingCart
+                {
 
-            };
-            await _dbContext.ShoppingCartItem.AddAsync(item);
-
-            var cart = await _dbContext.ShoppingCart.Where(x => x.UserId == user.Id).Select(a => a).LastOrDefaultAsync();
-            if (cart == null)
-            {
-                cart = new ShoppingCart();
-                cart.CartProducts = new List<ShoppingCartItem>();
-                cart.CartProducts.Add(item);
+                    UserId = user.Id,
+                    CartProducts = new List<ShoppingCartItem>()
+                   
+                };
                 _dbContext.ShoppingCart.Add(cart);
+                _dbContext.SaveChanges();
             }
-              cart.CartProducts.Add(item);
-            _dbContext.ShoppingCart.Update(cart);
-            _dbContext.SaveChangesAsync();
+            //if product already in cart
+            var cartItem = cart.CartProducts.LastOrDefault(x => x.Product.Id == ProductId);
+            if (cartItem != null)
+            {
+                cart.CartProducts.Remove(cartItem);
+                cartItem.Quantity++;
+                _dbContext.ShoppingCartItem.Update(cartItem);
+                cart.CartProducts.Add(cartItem);
+                _dbContext.ShoppingCart.Update(cart);
+            }
+            //if not in cart then
+            else
+            {
+                cartItem = new ShoppingCartItem
+                {
+                    UserId = user.Id,
+                    Product = product,
+                    Quantity = 1
 
+                };
+                _dbContext.ShoppingCartItem.Add(cartItem);
+                cart.CartProducts.Add(cartItem);
+                _dbContext.ShoppingCart.Update(cart);
+            }
+            _dbContext.SaveChanges();
             return Ok(new ResponseModel
             {
                 Status = true,
                 Message = "Product Added to Cart",
                 Data = cart
             });
+
         }
+
         [HttpDelete("remove")]
-        public async Task<ActionResult> DeleteProductFromCart(int ProductId)
+        public async Task<ActionResult> DeleteProductFromCart(int CartItemId)
         {
             var user = _userService.CurrentUser();
-            var product = await _dbContext.Product.Where(x => x.Id == ProductId).FirstOrDefaultAsync();
-            if(product==null)
+            var cart = await _dbContext.ShoppingCart.Where(x => x.UserId == user.Id).Select(a => a).LastOrDefaultAsync();
+            if (cart == null)
             {
-                return BadRequest();
-            }
+                cart = new ShoppingCart
+                {
 
-            var cart = await _dbContext.ShoppingCart.Where(x => x.UserId==user.Id && x.CartProducts.Select(a => a.Product).Contains(product)).FirstOrDefaultAsync();
-            if(cart==null)
-            {
-                return BadRequest();
+                    UserId = user.Id,
+                    CartProducts = new List<ShoppingCartItem>()
+
+                };
+                _dbContext.ShoppingCart.Add(cart);
+                _dbContext.SaveChanges();
             }
-            if(cart.CartProducts==null)
+            var cartItem = cart.CartProducts.LastOrDefault(x => x.Id == CartItemId);
+            if (cartItem == null)
             {
-                return BadRequest();
+                return BadRequest(new ResponseModel
+                {
+                    Status = false,
+                    Message = "Cart Item Not found"
+                    
+                });
             }
-            var cartItem = cart.CartProducts.FirstOrDefault(a => a.Product.Id == ProductId);
-            if(cartItem==null)
-            {
-                return BadRequest();
-            }
-            cart.CartProducts.Remove(cartItem);
+             cart.CartProducts.Remove(cartItem);
             _dbContext.ShoppingCartItem.Remove(cartItem);
-
+            _dbContext.ShoppingCart.Update(cart);
+            _dbContext.SaveChanges();
             return Ok(new ResponseModel
             {
                 Status = true,
-                Message = "Product Removed from Cart"
-
+                Message = "Product Removed from Cart",
+                Data = cart
             });
-            
         }
 
     }

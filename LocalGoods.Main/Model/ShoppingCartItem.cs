@@ -6,9 +6,11 @@ namespace LocalGoods.Main.Model
     {
 
         public virtual Product Product { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
         public int Quantity { get; set; }
         [Column(TypeName = "decimal(18,4)")]
-        public decimal Total
+        public decimal TotalAmount
         {
 
             get
@@ -17,7 +19,7 @@ namespace LocalGoods.Main.Model
             }
             set
             {
-                Total = value;
+                TotalAmount = value;
             }
         }
 

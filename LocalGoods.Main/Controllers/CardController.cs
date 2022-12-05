@@ -47,11 +47,10 @@ namespace LocalGoods.Main.Controllers
                         CardNumber = request.CardNumber
 
                     };
-                    if(user.CardList==null)
-                    {
-                        user.CardList = new List<CardDetail>();
-                    }
-                    user.CardList.Add(card);
+                   
+                        user.Card = new CardDetail();
+              
+                    user.Card=card;
                     await _dbContext.CardDetails.AddAsync(card);
                     _dbContext.User.Update(user);
                     _dbContext.SaveChanges();
@@ -68,33 +67,42 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpGet("GetCards")]
-        public ActionResult<IEnumerable<CardDetail>> GetCards()
+        [HttpGet("GetCard")]
+        public ActionResult<IEnumerable<CardDetail>> GetCard()
         {
             User curuser =_customerService.CurrentUser();
-            if (curuser.CardList == null)
+            if (curuser.Card == null)
             {
-                curuser.CardList = new List<CardDetail>();
+                return Ok(new ResponseModel
+                { 
+                    Status = false,
+                    Message = "No Card Found"
+                  
+            });
+
             }
-            List<CardDetail> cards = curuser.CardList;
-            if(cards.Count==0)
+            return Ok(new ResponseModel
             {
-            
-                return BadRequest(new { Message = "User Has no Card.." });
-            }
-            return Ok(cards);            
+                Status = true,
+                Message = "Card Found",
+                Data = curuser.Card
+            });
+
         }
         [HttpDelete("RemoveCard")]
-        public async Task<ActionResult<ResponseModel>> RemovePaymentCard(int id)
+        public async Task<ActionResult<ResponseModel>> RemovePaymentCard()
         {
             var curuser = _customerService.CurrentUser();
-            var card = _dbContext.CardDetails.Where(x => x.Id == id).FirstOrDefault();
-            if (card == null)
+             
+            if (curuser.Card == null)
             {
-                return NotFound($"Productwith Id = {id} not found");
+                return NotFound($"Cart not found");
             }
-            _dbContext.CardDetails.Remove(card);
-            await _dbContext.SaveChangesAsync();
+              curuser.Card = null;
+            
+            _dbContext.CardDetails.Remove(curuser.Card);
+            _dbContext.User.Update(curuser);
+            _dbContext.SaveChangesAsync();
             return Ok(new { Message = "Card Deleted Successfully.." });
         }
     }
