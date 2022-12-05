@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'seller-admin-panel', loadChildren: () => import('./pages/seller-admin-panel/seller-admin-panel.module')
       .then(m => m.SellerAdminPanelModule)
+  },
+  {
+    path: 'private/settings', loadChildren: () => import('./pages/settings/settings.module')
+      .then(m => m.SettingsModule)
   }
 ];
 

@@ -12,6 +12,12 @@ import {MatInputModule} from "@angular/material/input";
 import {SearchPipe} from "../pipes/search.pipe";
 import {SortPipe} from "../pipes/sort.pipe";
 import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.component";
+import {MatTableModule} from '@angular/material/table';
+import { CdkColumnDef } from '@angular/cdk/table';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card'
+import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive'
+
 
 
 @NgModule({
@@ -19,6 +25,7 @@ import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.compone
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
+    MyErrorStateMatcherDirective
   ],
   imports: [
     CommonModule,
@@ -32,6 +39,9 @@ import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.compone
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatTableModule,
+    MatDialogModule,
+    MatCardModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -45,8 +55,13 @@ import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.compone
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatTableModule,
+    MatDialogModule,
     SearchPipe,
     SortPipe,
-  ]
+    MatCardModule,
+    MyErrorStateMatcherDirective
+  ],
+  providers:[CdkColumnDef]
 })
 export class SharedModule { }
