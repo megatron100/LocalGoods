@@ -5,10 +5,11 @@ using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalGoods.Main.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     [Authorize]
     public class ProfileController : ControllerBase
@@ -31,61 +32,82 @@ namespace LocalGoods.Main.Controllers
         [HttpGet("")]
         public ActionResult<ResponseModel> Get()
         {
-            var curuser = _customerService.CurrentUser();
-            if (curuser == null)
+            var user = _customerService.CurrentUser();
+            if (user == null)
                 return new ResponseModel()
                 {
                     Message = "User does not exists. Please Login to Continue.. ",
                     Status = false,
                     Data = null,
                 };
+            user.Password = "";
             return new ResponseModel()
             {
                 Message = "User Found ",
                 Status = true,
-                Data = curuser
+                Data = user
             };
 
         }
-        [HttpPut("Edit")]
-        public async Task<ActionResult<ResponseModel>> EditUser([FromBody] User request, int? product_id)
-        {
-            try
-            {
-                ResponseModel response = new ResponseModel();
-                var product = _dbContext.Product.Where(x => x.Id == product_id).FirstOrDefault();
-                if (product == null)
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Product Not Found" });
-                }
-                else
-                {
-                    User edituser = new User()
-                    {
-                        Name=request.Name,
-                        Mobile=request.Mobile,
-                    };
-                    _dbContext.User.Update(edituser);
-                    await _dbContext.SaveChangesAsync();
-                    response.Status = true;
-                    response.Data = product;
-                    response.Message = "UserDetails Updated Successfully";
-                }
 
-                return Ok(response);
-            }
-            catch (Exception)
+        [HttpGet("User")]
+        [Authorize(Roles =Role.Customer)]
+        public async Task<ActionResult> GetProfileById(int id)
+        {
+             
+            var user = await _dbContext.User.Where(x => x.Id == id).Select(y => y).FirstOrDefaultAsync();
+            if (user is null)
             {
-                return BadRequest();
+                return NotFound(new ResponseModel
+                {
+                    Status = false,
+                    Message = "User Not Found"
+                    
+                });
             }
+            user.Password = "";
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "User Found",
+                Data = user
+            });
+        }
+
+        [HttpPut("Edit")]
+        public async Task<ActionResult<ResponseModel>> EditUser([FromBody] EditProfileRequest request)
+        {
+            var user = _customerService.CurrentUser();
+            if (user == null)
+                return new ResponseModel()
+                {
+                    Message = "User does not exists. Please Login to Continue.. ",
+                    Status = false,
+                    
+                };
+            if (!string.IsNullOrEmpty(request.Name))
+            { user.Name = request.Name; }
+            
+            if (!string.IsNullOrEmpty(request.MobileNum))
+            { user.Mobile = request.MobileNum; }
+             
+            _dbContext.User.Update(user);
+            await _dbContext.SaveChangesAsync();
+            
+            return new ResponseModel()
+            {
+                Message = "User Updated Successfully ",
+                Status = true,
+                
+            };
         }
         [HttpPut("ChangePassword")]
         public async Task<ActionResult<ResponseModel>> ChangePassword([FromBody] ChangePasswordModel changePassword)
         {
             try
             {
-                var curuser = _customerService.CurrentUser();
-                if(changePassword.Email!=curuser.Email)
+                var user = _customerService.CurrentUser();
+                if(changePassword.Email!=user.Email)
                     return new ResponseModel()
                     {
                         Message="Incorrect EmailId..",
@@ -99,8 +121,8 @@ namespace LocalGoods.Main.Controllers
                         Status=false,
                         Message="Password does not Match.."
                     };
-                curuser.Password = changePassword.Password;
-                _dbContext.User.Update(curuser);
+                user.Password = changePassword.Password;
+                _dbContext.User.Update(user);
                 await _dbContext.SaveChangesAsync();
 
                 return Ok(new ResponseModel()
@@ -116,7 +138,6 @@ namespace LocalGoods.Main.Controllers
         }
 
         //Profile Picture Actikon Method need to be Implemented
-
 
     }
 }

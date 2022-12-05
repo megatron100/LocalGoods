@@ -1,17 +1,11 @@
-﻿using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
-using LocalGoods.Main.DAL;
+﻿using LocalGoods.Main.DAL;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
 using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -20,7 +14,7 @@ namespace LocalGoods.Main.Controllers
     [Authorize(Roles = "seller")]
     public class SellerController : ControllerBase
     {
-        
+
         private LocalGoodsDbContext _dbContext;
         private UserService _customerService;
 
@@ -31,94 +25,133 @@ namespace LocalGoods.Main.Controllers
             )
         {
             _dbContext = _localgoodsdbcontext;
-            
+
             _customerService = customerService;
 
         }
-        [HttpGet("GetProducts")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        [HttpGet("GetSellerProducts")]
+        public async Task<ActionResult> GetSellerProducts()
         {
-            var products = _dbContext.Product.Where(x=>x.IsAvailable==true).ToList();
+            var user = _customerService.CurrentUser();
+            var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable  && x.IsPublished).Select(a => a).ToListAsync();
             if (products == null)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new {Message="Unauthorize Access Login Again To continue"});
+                return Ok(new ResponseModel { Message = "No products found" });
             }
-            return products;
+            foreach (var product in products)
+            {
+                product.Seller.Password = "";
+            }
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Products found",
+                Data = products
+
+            }) ;
+
         }
 
-        [HttpPost("Addproduct")]
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+
+            var response = new ResponseModel();
+            var user= _customerService.CurrentUser();
+
+            var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id==user.Id).Select(y => y).FirstOrDefault();
+            if (product == null)
+            {
+                response.Status = false;
+                response.Message = "Product not found";
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            response.Status = true;
+            response.Message = "Product found";
+            product.Seller.Password = "";
+            response.Data = product;
+            return Ok(response);
+        }
+
+        [HttpPost("AddProduct")]
 
         public async Task<ActionResult<ResponseModel>> AddProduct([FromBody] AddProductModel request)
         {
-            try 
+            try
             {
                 ResponseModel response = new ResponseModel();
-                var category = _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
-                var email = _customerService.CurrentUser().Email;
-                var seller=_dbContext.User.Where(x=>x.Email==email).FirstOrDefault();
-                if(seller.Certification==null)
+                var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                var user = _customerService.CurrentUser();
+                  
+                if (user == null ||   user.Address == null)
                 {
-                   
-                    return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification to sell products" });
+
+                    return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
                 }
-                if (category == null || seller==null|| email==null)
+                if (category == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
-                else
-                {
+                
                     Product product = new Product()
                     {
-                        User =seller,
-                        CreatedDate = DateTime.UtcNow,
+                        Seller = user,
                         ProductTitle = request.Name,
                         ProductCategory = category,
                         Price = request.Price,
                         ShortDescription = request.ShortDesc,
-                        
+                        LongDescription = request.LongDescription
+
                     };
                     var result = await _dbContext.Product.AddAsync(product);
                     _dbContext.SaveChanges();
+                    product.Seller.Password = "";
 
                     response.Status = true;
                     response.Data = product;
                     response.Message = "Product Added Successfully";
 
-                }
-
                 return Ok(response);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest();
             }
         }
 
-        [HttpPost("EditProdcuct/{id:int}")]
-        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request,int? product_id)
+        [HttpPut("EditProdcuct/{id:int}")]
+        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request, int? product_id)
         {
             try
             {
                 ResponseModel response = new ResponseModel();
-                var product=_dbContext.Product.Where(x=>x.Id==product_id).FirstOrDefault();
+                var product = _dbContext.Product.Where(x => x.Id == product_id).FirstOrDefault();
                 if (product == null)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new {Message= "Product Not Found" });
+                    return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
                 }
                 else
                 {
-                    Product newproduct = new Product()
+                    Product newproduct = new Product();
+                    if (request.Name != null)
                     {
-                        CreatedDate = DateTime.UtcNow,
-                        ProductTitle = request.Name,
-                        Price = request.Price,
-                        ShortDescription = request.ShortDesc
-                    };
+                        newproduct.ProductTitle = request.Name;
+                    }
+                    if (request.Category != null)
+                    {
+                        var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                        if (category != null)
+
+                        { newproduct.ProductCategory = category; }
+                    }
+                    
+                        newproduct.Price = request.Price;
+
                     _dbContext.Product.Update(newproduct);
                     await _dbContext.SaveChangesAsync();
 
                     response.Status = true;
-                    response.Data = product;
+                    
                     response.Message = "ProductDetails Updated Successfully";
 
                 }
@@ -132,18 +165,18 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpDelete("DeleteProduct/{id:int}")]
-        public async Task<ActionResult<ResponseModel>> DeleteProduct( int? id)
+        public async Task<ActionResult<ResponseModel>> DeleteProduct(int? id)
         {
             try
             {
                 var product = _dbContext.Product.Where(x => x.Id == id).FirstOrDefault();
-                if(product==null)
+                if (product == null)
                 {
-                    return NotFound($"Productwith Id = {id} not found");
+                    return NotFound(new ResponseModel {Status=false, Message = "Product Not Found" });
                 }
                 _dbContext.Product.Remove(product);
                 await _dbContext.SaveChangesAsync();
-                return Ok(new {Message="Product Deleted Successfully.."});
+                return Ok(new { Message = "Product Deleted Successfully.." });
             }
             catch (Exception)
             {
@@ -157,9 +190,9 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 ResponseModel response = new ResponseModel();
-                var email = _customerService.CurrentUser().Email;
-                var seller = _dbContext.User.Where(x => x.Email == email).FirstOrDefault();
-                if (email==null || seller==null)
+                var seller = _customerService.CurrentUser();
+               
+                if (  seller == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
@@ -167,8 +200,8 @@ namespace LocalGoods.Main.Controllers
                 {
                     Certificate certificate = new Certificate()
                     {
-                       QualityCertificateTitle=request.QualityCertificateTitle,
-                       QualityCertificateDescription = request.QualityCertificateDescription,
+                        QualityCertificateTitle = request.QualityCertificateTitle,
+                        QualityCertificateDescription = request.QualityCertificateDescription,
                         QualityCertificateLink = request.QualityCertificateLink,
                         QualityCertificateDeleteLink = request.QualityCertificateLink,
                         TaxNumber = request.TaxNumber,
@@ -192,6 +225,5 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        
     }
 }
