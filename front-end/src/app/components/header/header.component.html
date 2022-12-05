@@ -8,7 +8,8 @@
         <li routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/home">Home</a></li>
         <li *ngIf='!isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/contacts">Contacts</a></li>
         <li *ngIf='!isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/info">Info</a></li>
-        <li *ngIf='isUserAuth' routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/shop">Shop</a></li>
+        <li *ngIf="isUserAuth && user.role === 'customer'" routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/shop">Shop</a></li>
+        <li *ngIf="isUserAuth && user.role === 'seller'" routerLinkActive="active"><a (click)="collapsed = !collapsed" routerLink="/seller-admin-panel">Admin Panel</a></li>
       </ul>
     </div>
     <div class="navbar-nav navbar-right">
@@ -30,14 +31,14 @@
 <mat-menu #profile>
   <button mat-menu-item>
     <mat-icon>person_outline</mat-icon>
-    Oleh Babiak
+    {{ user?.nickName }}
   </button>
   <button mat-menu-item>
     <mat-icon>mail_outline</mat-icon>
-    oleg_bob@gmail.com
+    {{ user?.email }}
   </button>
   <mat-divider></mat-divider>
-  <button mat-menu-item>
+  <button (click)='onLogout()' mat-menu-item>
     <mat-icon>logout</mat-icon>
     Exit
   </button>

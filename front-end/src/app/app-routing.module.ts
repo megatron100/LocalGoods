@@ -21,6 +21,10 @@ const routes: Routes = [
   {path: 'shop', loadChildren: () => import('./pages/shop/shop.module')
       .then(m => m.ShopModule)
   },
+  {
+    path: 'seller-admin-panel', loadChildren: () => import('./pages/seller-admin-panel/seller-admin-panel.module')
+      .then(m => m.SellerAdminPanelModule)
+  }
 ];
 
 @NgModule({
