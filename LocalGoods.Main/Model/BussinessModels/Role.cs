@@ -1,8 +1,8 @@
 ﻿namespace LocalGoods.Main.Model.BussinessModels
 {
-    public class Role
+    public static class Role
     {
-        public static string Customer = "customer";
-        public static string Seller = "seller";
+        public const   string Customer = "customer";
+        public const   string Seller = "seller";
     }
 }

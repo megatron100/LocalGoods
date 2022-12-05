@@ -6,8 +6,9 @@ namespace LocalGoods.Main.Model
     public class BaseModel
     {
         [Key]
-        [JsonIgnore]
+      
         public int Id { get; set; }
+        [JsonIgnore]
         public DateTime CreatedDate { get; set; }
         
         public BaseModel()

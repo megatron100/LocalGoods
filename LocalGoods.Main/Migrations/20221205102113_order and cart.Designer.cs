@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalGoods.Main.Migrations
 {
     [DbContext(typeof(LocalGoodsDbContext))]
-    [Migration("20221125200444_Product table")]
-    partial class Producttable
+    [Migration("20221205102113_order and cart")]
+    partial class orderandcart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -120,6 +120,52 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Certificate");
                 });
 
+            modelBuilder.Entity("LocalGoods.Main.Model.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DropAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DropAddressId");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -156,18 +202,18 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SellerId");
 
                     b.ToTable("Product");
                 });
@@ -217,6 +263,88 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Rating");
                 });
 
+            modelBuilder.Entity("LocalGoods.Main.Model.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Token");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCart");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("ShoppingCartItem");
+                });
+
             modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -228,7 +356,7 @@ namespace LocalGoods.Main.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CardDetailId")
+                    b.Property<int?>("CardId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CertificationId")
@@ -239,6 +367,9 @@ namespace LocalGoods.Main.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -253,18 +384,37 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SellerRating")
-                        .HasColumnType("int");
+                    b.Property<double>("SellerRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CardDetailId");
+                    b.HasIndex("CardId");
 
                     b.HasIndex("CertificationId");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.Order", b =>
+                {
+                    b.HasOne("LocalGoods.Main.Model.Address", "DropAddress")
+                        .WithMany()
+                        .HasForeignKey("DropAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocalGoods.Main.Model.Product", "OrderItem")
+                        .WithMany()
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DropAddress");
+
+                    b.Navigation("OrderItem");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.Product", b =>
@@ -275,15 +425,30 @@ namespace LocalGoods.Main.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LocalGoods.Main.Model.User", "User")
+                    b.HasOne("LocalGoods.Main.Model.User", "Seller")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
 
-                    b.Navigation("User");
+                    b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCartItem", b =>
+                {
+                    b.HasOne("LocalGoods.Main.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LocalGoods.Main.Model.ShoppingCart", null)
+                        .WithMany("CartProducts")
+                        .HasForeignKey("ShoppingCartId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
@@ -292,9 +457,9 @@ namespace LocalGoods.Main.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("LocalGoods.Main.Model.CardDetail", "CardDetail")
+                    b.HasOne("LocalGoods.Main.Model.CardDetail", "Card")
                         .WithMany()
-                        .HasForeignKey("CardDetailId");
+                        .HasForeignKey("CardId");
 
                     b.HasOne("LocalGoods.Main.Model.Certificate", "Certification")
                         .WithMany()
@@ -302,9 +467,14 @@ namespace LocalGoods.Main.Migrations
 
                     b.Navigation("Address");
 
-                    b.Navigation("CardDetail");
+                    b.Navigation("Card");
 
                     b.Navigation("Certification");
+                });
+
+            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCart", b =>
+                {
+                    b.Navigation("CartProducts");
                 });
 #pragma warning restore 612, 618
         }
