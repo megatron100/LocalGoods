@@ -5,6 +5,7 @@ import {SharedModule} from "../../shared/shared.module";
 import { UserDataUpdateDialogComponent } from './user-data-update-dialog/user-data-update-dialog.component';
 import { BasicInfoComponent } from './user-data-update-dialog/basic-info/basic-info.component';
 import { AddressComponent } from './user-data-update-dialog/address/address.component';
+import { UserUpdatePassDialogComponent } from './user-update-pass-dialog/user-update-pass-dialog.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { AddressComponent } from './user-data-update-dialog/address/address.comp
     UserDataUpdateDialogComponent,
     BasicInfoComponent,
     AddressComponent,
+    UserUpdatePassDialogComponent,
   ],
   imports: [
     SharedModule,

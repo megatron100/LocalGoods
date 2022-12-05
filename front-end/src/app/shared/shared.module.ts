@@ -16,6 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card'
+import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive'
 
 
 
@@ -24,6 +25,7 @@ import {MatCardModule} from '@angular/material/card'
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
+    MyErrorStateMatcherDirective
   ],
   imports: [
     CommonModule,
@@ -57,7 +59,8 @@ import {MatCardModule} from '@angular/material/card'
     MatDialogModule,
     SearchPipe,
     SortPipe,
-    MatCardModule
+    MatCardModule,
+    MyErrorStateMatcherDirective
   ],
   providers:[CdkColumnDef]
 })
