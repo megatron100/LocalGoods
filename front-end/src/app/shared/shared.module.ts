@@ -15,7 +15,8 @@ import {LoadingSpinnerComponent} from "./loading-spinner/loading-spinner.compone
 import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
 import {MatDialogModule} from '@angular/material/dialog';
-import { FormInputComponent } from './form-input/form-input.component'
+import {MatCardModule} from '@angular/material/card'
+
 
 
 @NgModule({
@@ -23,7 +24,6 @@ import { FormInputComponent } from './form-input/form-input.component'
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
-    FormInputComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,8 @@ import { FormInputComponent } from './form-input/form-input.component'
     MatSelectModule,
     MatInputModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCardModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -56,7 +57,7 @@ import { FormInputComponent } from './form-input/form-input.component'
     MatDialogModule,
     SearchPipe,
     SortPipe,
-    FormInputComponent,
+    MatCardModule
   ],
   providers:[CdkColumnDef]
 })
