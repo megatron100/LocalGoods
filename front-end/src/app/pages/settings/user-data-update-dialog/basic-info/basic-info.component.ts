@@ -16,5 +16,4 @@ export class BasicInfoComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup
   }
-
 }

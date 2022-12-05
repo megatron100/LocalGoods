@@ -6,20 +6,32 @@
     <mat-form-field color='accent'>
       <mat-label>First name</mat-label>
       <input matInput placeholder="Ex. Jane" formControlName="name" />
+      <mat-error *ngIf="form.hasError('required', 'email')">
+        This field is require!
+      </mat-error>
+      <mat-error *ngIf="form.hasError('minLength', 'email')">
+        Name should have 3 characters minimum!
+      </mat-error>
     </mat-form-field>
     <!-- /First name -->
 
     <!-- email -->
     <mat-form-field color='accent'>
-      <mat-label>e-mail</mat-label>
+      <mat-label>E-mail</mat-label>
       <input type="email" matInput placeholder="Ex. jane@doe.com" formControlName="email" />
+      <mat-error *ngIf="form.hasError('required', 'email')">
+        This field is require!
+      </mat-error>
+      <mat-error *ngIf="form.hasError('pattern', 'email')">
+        This email not valid!
+      </mat-error>
     </mat-form-field>
     <!-- /email -->
 
     <!-- Mobile -->
     <mat-form-field color='accent'>
-      <mat-label>Age</mat-label>
-      <input type="number" matInput placeholder="Ex. +381111111111" formControlName="mobile" />
+      <mat-label>Mobile</mat-label>
+      <input type="phone" matInput placeholder="Ex. +381111111111" formControlName="mobile" />
     </mat-form-field>
     <!-- /Mobile -->
   </mat-card>
