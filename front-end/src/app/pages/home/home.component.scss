@@ -1,6 +1,41 @@
-.home {
-  height: 100%;
+.home,
+.container,
+.home-content,
+.home-banner {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.home-banner {
+  height: 600px;
+  background-image: url('/assets/images/grocery.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 48px;
+  text-transform: capitalize;
+}
+
+.shop-link {
+  color: #fff;
+  // width: 300px;
+  font-size: 22px;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+  background-color: #39a94b;
+  padding: 10px 15px;
+  transition: all 0.3s linear;
+}
+
+.shop-link:hover {
+  border-color: #fff;
+  background: transparent;
 }
