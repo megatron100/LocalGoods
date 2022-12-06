@@ -24,6 +24,7 @@ export class SettingsComponent implements OnInit {
     this.userSub = this.authService.user
       .subscribe(user => {
         if (user) {
+          console.log(user)
           this.user = user;
         }
       })
