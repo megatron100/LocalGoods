@@ -2,6 +2,7 @@
 
 namespace LocalGoods.Main.Model.BussinessModels
 {
+    [Serializable]
     public class EditProfileRequest
     {
         [Required]
