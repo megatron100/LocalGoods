@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PRODUCT_SORT_VALUES} from "../../constants/constants";
 import {Store} from "@ngrx/store";
-import * as fromShop from '../../pages/store/index';
-import * as ShopActions from '../../pages/store/shop.actions';
+import * as fromShop from '../../store/index';
+import * as ShopActions from '../../store/shop.actions';
 
 @Component({
   selector: 'app-sub-menu-header',

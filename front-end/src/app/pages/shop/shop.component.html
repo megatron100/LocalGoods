@@ -1,3 +1,8 @@
-<div class="product-section">
-  <app-product-card *ngFor='let product of products | search: searchValue | sort: sortValue' [product]='product'></app-product-card>
+<div>
+  <app-sub-menu-header></app-sub-menu-header>
+  <div class="product-section">
+    <app-product-card
+      *ngFor='let product of products | search: searchValue | sort: sortValue' [product]='product'
+    ></app-product-card>
+  </div>
 </div>

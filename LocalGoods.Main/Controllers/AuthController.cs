@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
+using LocalGoods.Main.Infrastructure;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -38,6 +39,13 @@ namespace LocalGoods.Main.Controllers
             _jwtAuthManager = jwtAuthManager;
 
         }
+
+        [HttpGet("Test")]
+        public ActionResult Employee()
+        {
+            string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
+            return Ok(Employees);
+        }
         [HttpPost("Registration")]
         [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] RegistrationModel request)
@@ -45,6 +53,25 @@ namespace LocalGoods.Main.Controllers
             ResponseModel response = new ResponseModel();
             try
             {
+                if (string.IsNullOrEmpty(request.Name))
+                {
+                    response.Status = false;
+                    response.Message = "Invalid Credentials";
+                    return BadRequest(response);
+                }
+                request.Name = request.Name.ToUpper().Trim();
+                request.Email = request.Email.ToLower().Trim();
+                request.Password = request.Password.Trim();
+                request.RePassword = request.RePassword.Trim();
+                request.Role = request.Role.Trim();
+
+                if (!EmailValidator.Validate(request.Email))
+                {
+                    response.Status = false;
+                    response.Message = "Invalid Email";
+                    return BadRequest(response);
+
+                }
 
                 var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
                 if (customer != null)
@@ -59,6 +86,14 @@ namespace LocalGoods.Main.Controllers
                     response.Message = "Password Mismatch";
                     return StatusCode(StatusCodes.Status401Unauthorized, response);
                 }
+
+                if (PasswordValidator.CheckStrength(request.Password) < PasswordScore.Medium)
+
+                {
+                    response.Status = false;
+                    response.Message = "Password is not strong enough";
+                    return StatusCode(StatusCodes.Status401Unauthorized, response);
+                }
                 User _user = new User()
                 {
                     CreatedDate = DateTime.UtcNow,
@@ -70,17 +105,14 @@ namespace LocalGoods.Main.Controllers
 
                 var result = await localgoodsdbcontext.User.AddAsync(_user);
 
-                User _user2 = new User()
+                localgoodsdbcontext.SaveChanges();
+                response.Data = new
                 {
-                    CreatedDate = DateTime.UtcNow,
                     Name = request.Name,
                     Email = request.Email,
 
                     Role = request.Role
                 };
-
-                localgoodsdbcontext.SaveChanges();
-                response.Data = _user2;
 
                 response.Status = true;
                 response.Message = "Registration Success";
@@ -93,12 +125,13 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpPost("Login")]
-        [AllowAnonymous]
+
         public async Task<ActionResult<string>> Login([FromBody] LoginModel request)
         {
             try
             {
-
+                request.Email = request.Email.ToLower().Trim();
+                request.Password = request.Password.Trim();
                 ResponseModel response = new ResponseModel();
                 var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
                 if (customer == null)
@@ -122,17 +155,6 @@ namespace LocalGoods.Main.Controllers
                     new Claim(ClaimTypes.Role, customer.Role),
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
                 };
-                //var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
-                //var token = new JwtSecurityToken(
-                //    issuer: _configuration["JWT:ValidIssuer"],
-                //    audience: _configuration["JWT:ValidAudience"],
-                //    expires: DateTime.Now.AddDays(1),
-                //    claims: authClaims,
-                //    signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
-                //    );
-                //return new JwtSecurityTokenHandler().WriteToken(token);
-
-                //New Jwt
 
                 var jwtResult = _jwtAuthManager.GenerateTokens(request.Email, authClaims, DateTime.Now);
 
@@ -142,9 +164,10 @@ namespace LocalGoods.Main.Controllers
                     Message = "Login Successfull",
                     Data = new
                     {
-
-                        userEmail = customer.Email,
+                        name = customer.Name,
+                        email = customer.Email,
                         Role = customer.Role,
+                        Id = customer.Id,
                         AccessToken = jwtResult.AccessToken,
                         RefreshToken = jwtResult.RefreshToken.TokenString
 
@@ -157,6 +180,7 @@ namespace LocalGoods.Main.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
         [HttpDelete("Logout")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Authorize]
@@ -172,13 +196,13 @@ namespace LocalGoods.Main.Controllers
             {
                 Status = true,
                 Message = "Logged Out Success. Please visit Login page"
-                
+
             }
                 );
-           
+
         }
 
-        [HttpPost("refresh-token")]
+        [HttpPost("RefreshToken")]
         [Authorize]
         public async Task<ActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {

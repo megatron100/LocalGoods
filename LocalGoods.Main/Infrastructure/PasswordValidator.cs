@@ -25,7 +25,7 @@ namespace LocalGoods.Main.Infrastructure
             if (password.Length < 4)
                 return PasswordScore.VeryWeak;
 
-            if (password.Length >= 8)
+            if (password.Length >= 6)
                 return PasswordScore.Medium;
 
             if (Regex.Match(password, @"/[a-z]/", RegexOptions.ECMAScript).Success &&

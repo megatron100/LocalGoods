@@ -102,6 +102,23 @@ namespace LocalGoods.Main.Services
            
         }
 
+        public bool CheckSellerCertification(int userId)
+        {
+            if (userId == 0)
+            {
+                return false;
+            }
+            var seller = _dbContext.User.Where(x => x.Id == userId).Select(a => a).FirstOrDefault();
+            if (seller.Certification == null)
+            {
+                return false;
+            }
+            Certificate sellercerti = seller.Certification;
+
+            var certificate = _dbContext.Certificate.Where(x => x.Id == sellercerti.Id);
+            return true;
+        }
+
         #endregion
     }
 
