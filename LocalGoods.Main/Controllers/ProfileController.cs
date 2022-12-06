@@ -85,6 +85,10 @@ namespace LocalGoods.Main.Controllers
                     Status = false,
                     
                 };
+            if(user.Address==null)
+            {
+                user.Address = new Address();
+            }
             if(!string.IsNullOrEmpty(request.address.postCode))
             {
                 user.Address.PinCode=request.address.postCode;
@@ -100,6 +104,11 @@ namespace LocalGoods.Main.Controllers
             if (!string.IsNullOrEmpty(request.address.area))
             {
                 user.Address.Area = request.address.area;
+            }
+
+            if (!string.IsNullOrEmpty(request.address.Cordinates))
+            {
+                user.Address.Cordinates = request.address.Cordinates;
             }
 
             if (!string.IsNullOrEmpty(request.basicInfo.Name))
