@@ -4,9 +4,14 @@ namespace LocalGoods.Main.Model.BussinessModels
 {
     public class EditProfileRequest
     {
-        
-        public string Name { get; set; }
-        [StringLength(12, ErrorMessage = "Give 10 digit for mobile Number", MinimumLength =10)]
-        public string MobileNum { get; set; }
+        [Required]
+        public AddressChangeRequest2 address { get; set; }
+        public Basicinfo basicInfo { get; set; }
+       
+    }
+    public class Basicinfo
+    {
+        public string Name { get; set; }    
+        public string mobile { get; set; }
     }
 }

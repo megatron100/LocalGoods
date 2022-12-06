@@ -129,7 +129,7 @@ namespace LocalGoods.Main.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<int>("DropAddressId")
@@ -156,6 +156,8 @@ namespace LocalGoods.Main.Migrations
                         .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("DropAddressId");
 
@@ -200,7 +202,7 @@ namespace LocalGoods.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SellerId")
+                    b.Property<int?>("SellerId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShortDescription")
@@ -286,28 +288,6 @@ namespace LocalGoods.Main.Migrations
                     b.ToTable("Token");
                 });
 
-            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCart");
-                });
-
             modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
@@ -325,20 +305,17 @@ namespace LocalGoods.Main.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("ShoppingCartId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ShoppingCartItem");
                 });
@@ -398,6 +375,10 @@ namespace LocalGoods.Main.Migrations
 
             modelBuilder.Entity("LocalGoods.Main.Model.Order", b =>
                 {
+                    b.HasOne("LocalGoods.Main.Model.User", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
                     b.HasOne("LocalGoods.Main.Model.Address", "DropAddress")
                         .WithMany()
                         .HasForeignKey("DropAddressId")
@@ -409,6 +390,8 @@ namespace LocalGoods.Main.Migrations
                         .HasForeignKey("OrderItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
 
                     b.Navigation("DropAddress");
 
@@ -425,9 +408,7 @@ namespace LocalGoods.Main.Migrations
 
                     b.HasOne("LocalGoods.Main.Model.User", "Seller")
                         .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SellerId");
 
                     b.Navigation("ProductCategory");
 
@@ -442,11 +423,13 @@ namespace LocalGoods.Main.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LocalGoods.Main.Model.ShoppingCart", null)
-                        .WithMany("CartProducts")
-                        .HasForeignKey("ShoppingCartId");
+                    b.HasOne("LocalGoods.Main.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LocalGoods.Main.Model.User", b =>
@@ -468,11 +451,6 @@ namespace LocalGoods.Main.Migrations
                     b.Navigation("Card");
 
                     b.Navigation("Certification");
-                });
-
-            modelBuilder.Entity("LocalGoods.Main.Model.ShoppingCart", b =>
-                {
-                    b.Navigation("CartProducts");
                 });
 #pragma warning restore 612, 618
         }

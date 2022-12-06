@@ -38,10 +38,7 @@ namespace LocalGoods.Main.Controllers
             {
                 return Ok(new ResponseModel { Message = "No products found" });
             }
-            foreach (var product in products)
-            {
-                product.Seller.Password = "";
-            }
+             
             return Ok(new ResponseModel
             {
                 Status = true,
@@ -52,7 +49,7 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpGet("GetProductById")]
+        [HttpGet("GetProductById/{id:int}")]
         public async Task<IActionResult> GetProductById(int id)
         {
 
@@ -68,7 +65,7 @@ namespace LocalGoods.Main.Controllers
             }
             response.Status = true;
             response.Message = "Product found";
-            product.Seller.Password = "";
+           
             response.Data = product;
             return Ok(response);
         }
@@ -105,10 +102,10 @@ namespace LocalGoods.Main.Controllers
                     };
                     var result = await _dbContext.Product.AddAsync(product);
                     _dbContext.SaveChanges();
-                    product.Seller.Password = "";
+                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
 
-                    response.Status = true;
-                    response.Data = product;
+                response.Status = true;
+                    response.Data = products;
                     response.Message = "Product Added Successfully";
 
                 return Ok(response);
@@ -120,12 +117,13 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpPut("EditProdcuct/{id:int}")]
-        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request, int? product_id)
+        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] EditProductRequest request)
         {
             try
             {
                 ResponseModel response = new ResponseModel();
-                var product = _dbContext.Product.Where(x => x.Id == product_id).FirstOrDefault();
+                var user = _customerService.CurrentUser();
+                var product = _dbContext.Product.Where(x => x.Id == request.ProductId && x.Seller.Id==user.Id).FirstOrDefault();
                 if (product == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
@@ -149,10 +147,12 @@ namespace LocalGoods.Main.Controllers
 
                     _dbContext.Product.Update(newproduct);
                     await _dbContext.SaveChangesAsync();
+                    var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
 
                     response.Status = true;
                     
                     response.Message = "ProductDetails Updated Successfully";
+                    response.Data = products;
 
                 }
 
@@ -169,14 +169,22 @@ namespace LocalGoods.Main.Controllers
         {
             try
             {
-                var product = _dbContext.Product.Where(x => x.Id == id).FirstOrDefault();
+                var user = _customerService.CurrentUser();
+                var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id==user.Id).FirstOrDefault();
                 if (product == null)
                 {
                     return NotFound(new ResponseModel {Status=false, Message = "Product Not Found" });
                 }
                 _dbContext.Product.Remove(product);
                 await _dbContext.SaveChangesAsync();
-                return Ok(new { Message = "Product Deleted Successfully.." });
+                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+
+                return Ok(new ResponseModel
+                {
+                    Status = true,
+                    Message="Product Deleted Success",
+                    Data=products
+                });
             }
             catch (Exception)
             {

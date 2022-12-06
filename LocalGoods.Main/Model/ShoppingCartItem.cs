@@ -6,21 +6,14 @@ namespace LocalGoods.Main.Model
     {
 
         public virtual Product Product { get; set; }
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+         
+        public virtual User? User { get; set; }
         public int Quantity { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal TotalAmount
         {
 
-            get
-            {
-                return  (Product.Price * Quantity);
-            }
-            set
-            {
-                TotalAmount = value;
-            }
+            get;set;
         }
 
     }

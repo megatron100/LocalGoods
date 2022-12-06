@@ -50,7 +50,7 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpGet("User")]
+        [HttpGet("User/{id:int}")]
         [Authorize(Roles =Role.Customer)]
         public async Task<ActionResult> GetProfileById(int id)
         {
@@ -85,19 +85,37 @@ namespace LocalGoods.Main.Controllers
                     Status = false,
                     
                 };
-            if (!string.IsNullOrEmpty(request.Name))
-            { user.Name = request.Name; }
+            if(!string.IsNullOrEmpty(request.address.postCode))
+            {
+                user.Address.PinCode=request.address.postCode;
+            }
+            if(!string.IsNullOrEmpty(request.address.country))
+            {
+                user.Address.Country=request.address.country;
+            }
+            if(!string.IsNullOrEmpty(request.address.city))
+            {
+                user.Address.City=request.address.city;
+            }
+            if (!string.IsNullOrEmpty(request.address.area))
+            {
+                user.Address.Area = request.address.area;
+            }
+
+            if (!string.IsNullOrEmpty(request.basicInfo.Name))
+            { user.Name = request.basicInfo.Name; }
             
-            if (!string.IsNullOrEmpty(request.MobileNum))
-            { user.Mobile = request.MobileNum; }
+            if (!string.IsNullOrEmpty(request.basicInfo.mobile))
+            { user.Mobile = request.basicInfo.mobile; }
              
             _dbContext.User.Update(user);
             await _dbContext.SaveChangesAsync();
-            
+
             return new ResponseModel()
             {
                 Message = "User Updated Successfully ",
                 Status = true,
+                Data = user
                 
             };
         }
@@ -107,21 +125,25 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 var user = _customerService.CurrentUser();
-                if(changePassword.Email!=user.Email)
-                    return new ResponseModel()
-                    {
-                        Message="Incorrect EmailId..",
-                        Status=false
 
-                    };
-                
-                if(changePassword.Password!=changePassword.ConfirmPassword)
+                if (changePassword.newPassword != changePassword.passConfirm)
+                {
                     return new ResponseModel()
                     {
-                        Status=false,
-                        Message="Password does not Match.."
+                        Status = false,
+                        Message = "Password does not Match.."
                     };
-                user.Password = changePassword.Password;
+                }
+
+                if(changePassword.existingPassword!=user.Password)
+                {
+                    return new ResponseModel()
+                    {
+                        Status = false,
+                        Message = " Existing Password Incorrect"
+                    };
+                }
+                user.Password = changePassword.newPassword;
                 _dbContext.User.Update(user);
                 await _dbContext.SaveChangesAsync();
 

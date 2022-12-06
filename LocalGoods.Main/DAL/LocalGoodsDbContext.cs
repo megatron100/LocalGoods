@@ -25,7 +25,7 @@ namespace LocalGoods.Main.DAL
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Product> Product { get; set; }
-        public DbSet<ShoppingCart> ShoppingCart { get; set; }
+       
         public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<RefreshToken> Token { get; set; }  

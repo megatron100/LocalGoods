@@ -4,6 +4,7 @@ namespace LocalGoods.Main.Model.BussinessModels
 {
     public class AddProductModel
     {
+        
         [Required]
         public string Name { get; set; }
         [Required]

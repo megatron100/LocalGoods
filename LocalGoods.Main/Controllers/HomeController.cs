@@ -28,7 +28,7 @@ namespace LocalGoods.Main.Controllers
         public async Task<IActionResult> GetProductList()
         {
             var response = new ResponseModel();
-            var products = await _dbContext.Product.Where(x => x.IsPublished && x.IsAvailable && x.Seller.Role == Role.Seller).Select(y => y).ToListAsync();
+            var products = await _dbContext.Product.Where(x => x.IsPublished && x.IsAvailable ).Select(y => y).ToListAsync();
             if (products == null)
             {
                 response.Status = false;
@@ -40,16 +40,16 @@ namespace LocalGoods.Main.Controllers
             List<Product> nearByProduct = new List<Product>();
             if (user.Address != null)
             {
-                nearByProduct = products.Where(x => x.Seller.Address.City == user.Address.City).Select(a => a).ToList();
+                nearByProduct = products.Where(x => x.Seller.Address.City == user.Address.City).ToList();
             }
-            var otherProducts = products.Except(nearByProduct).ToList();
-            response.Status = true;
-            response.Message = "Products found";
-            response.Data = new { nearByProduct, otherProducts };
-            return Ok(response);
-
+                var otherProducts = products.Except(nearByProduct).ToList();
+                response.Status = true;
+                response.Message = "Products found";
+                response.Data = new { nearByProduct, otherProducts };
+                return Ok(response);
+             
         }
-        [HttpGet("GetProductById")]
+        [HttpGet("GetProductById/{id:int}")]
         public async Task<IActionResult> GetProduct(int id)
         {
 
@@ -64,7 +64,7 @@ namespace LocalGoods.Main.Controllers
             }
             response.Status = true;
             response.Message = "Product found";
-            product.Seller.Password = "";
+            
             response.Data = product;
             return Ok(response);
         }
