@@ -4,6 +4,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AuthGuard} from "../auth/auth.guard";
 import {USER_ROLES} from "../../constants/constants";
 import {SellerAdminPanelComponent} from "./seller-admin-panel.component";
+import {SellerNewProductFormComponent} from "./seller-new-product-form/seller-new-product-form.component";
 
 const routes: Routes = [
   {
@@ -12,7 +13,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       role: USER_ROLES[0]
-    }
+    },
+    children: [
+      {path: 'new', component: SellerNewProductFormComponent},
+      {path: 'new', component: SellerNewProductFormComponent},
+    ]
   },
 ]
 

@@ -12,4 +12,7 @@ export class SellerAdminPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onProductCreate() {
+
+  }
 }
