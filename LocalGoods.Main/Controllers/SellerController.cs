@@ -116,7 +116,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPut("EditProdcuct/{id:int}")]
+        [HttpPut("EditProduct/{id:int}")]
         public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] EditProductRequest request)
         {
             try
