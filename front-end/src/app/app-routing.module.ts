@@ -21,6 +21,18 @@ const routes: Routes = [
   {path: 'shop', loadChildren: () => import('./pages/shop/shop.module')
       .then(m => m.ShopModule)
   },
+
+  {path: 'cart', loadChildren: () => import('./pages/cart/cart.module')
+      .then(m => m.CartModule)
+  },
+  {
+    path: 'seller-admin-panel', loadChildren: () => import('./pages/seller-admin-panel/seller-admin-panel.module')
+      .then(m => m.SellerAdminPanelModule)
+  },
+  {
+    path: 'private/settings', loadChildren: () => import('./pages/settings/settings.module')
+      .then(m => m.SettingsModule)
+  }
 ];
 
 @NgModule({

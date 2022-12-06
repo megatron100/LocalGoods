@@ -1,0 +1,69 @@
+<div class='account'>
+  <h3>User account {{ user.nickName }}</h3>
+</div>
+<div class='setting-container'>
+  <div class='user-info'>
+    <table class="resp-tab">
+      <tr>
+        <td>address</td>
+        <td>
+          <table class="resp-tab">
+            <tr>
+              <td>pinCode</td>
+              <td>{{ user?.address?.pinCode || 'no info' }}</td>
+            </tr>
+            <tr>
+              <td>country</td>
+              <td>{{ user?.address?.country || 'no info' }}</td>
+            </tr>
+            <tr>
+              <td>city</td>
+              <td>{{ user?.address?.city || 'no info' }}</td>
+            </tr>
+            <tr>
+              <td>area</td>
+              <td>{{ user?.address?.area || 'no info' }}</td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>cardList</td>
+        <td>
+          <span *ngFor='let card of user.cardList'>{{ card || 'no info' }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>certification</td>
+        <td>{{ user.certification || 'no info' }}</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>{{ user.email || 'no info' }}</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>{{user.nickName || 'no info'}}</td>
+      </tr>
+      <tr>
+        <td>mobile</td>
+        <td>{{ user.mobile || 'no info'}}</td>
+      </tr>
+    </table>
+    <div class="panel-footer">
+      <button mat-raised-button (click)="openUserEditDialog()" type="button" color="accent">
+        Update
+      </button>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">Primary password</div>
+    <div class="panel-body">
+      <div class="alert alert-info">
+        <span>Your primary password can be changed by pressing the button below</span>
+      </div>
+      <button mat-raised-button type="button" color="accent" (click)="openPassChangeDialog()">Change the primary password</button>
+    </div>
+  </div>
+</div>

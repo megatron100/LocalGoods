@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EMAIL_PATTERN} from "../../../constants/constants";
-
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,15 @@ import {EMAIL_PATTERN} from "../../../constants/constants";
 })
 export class LoginComponent implements OnInit {
 
+  isLoading = false;
+
   loginForm: FormGroup = new FormGroup({
     'email': new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
     'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit(): void {
 
@@ -25,7 +28,12 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return
     }
-    console.log(this.loginForm.value)
-    this.loginForm.reset();
+
+    this.isLoading = true
+
+    this.authService.login(this.loginForm.value)
+      .subscribe(value => {
+        this.isLoading = true
+      })
   }
 }

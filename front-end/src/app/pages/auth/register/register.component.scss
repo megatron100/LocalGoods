@@ -8,58 +8,13 @@
   color: red
 }
 
-.example-form {
+.form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
 }
 
-.example-full-width {
+.full-width {
   width: 100%;
 }
 
-.container {
-  margin-top: 7em;
-  background-color: #919494;
-  width: 90%;
-  padding: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  height: 100%;
-  border-radius: 6px;
-
-  .mat-form-field {
-    margin-bottom: 15px;
-    display: block;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .container {
-    width: 60%;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1280px) {
-  .container {
-    width: 50%;
-  }
-}
-
-@media (min-width: 1280px) and (max-width: 1600px) {
-  .container {
-    width: 40%;
-  }
-}
-
-@media (min-width: 1600px) and (max-width: 1920px) {
-  .container {
-    width: 30%;
-  }
-}
-
-@media (min-width: 1920px) {
-  .container {
-    width: 20%;
-  }
-}

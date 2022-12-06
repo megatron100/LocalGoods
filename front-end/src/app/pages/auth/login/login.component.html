@@ -1,58 +1,68 @@
-<div class='container'>
+<div *ngIf="isLoading" class='container' style='background-color: inherit'>
+  <div style="text-align: center" >
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</div>
+<div class='container' *ngIf="!isLoading">
   <form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
-    <mat-form-field color='accent' appearance="outline">
-      <mat-label>Email</mat-label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        placeholder="Ex. pat@example.com"
-        matInput>
-      <mat-error
-        class='help-block'
-        *ngIf="!loginForm.get('email')?.valid && loginForm.get('email')?.touched"
-      >
+    <mat-card>
+      <mat-form-field color='accent' appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Ex. pat@example.com"
+          matInput
+        >
         <mat-error
-          class="help-block"
-          *ngIf="loginForm.get('email')?.errors?.['required']"
-        > This field is required!
+          class='help-block'
+          *ngIf="!loginForm.get('email')?.valid && loginForm.get('email')?.touched"
+        >
+          <mat-error
+            class="help-block"
+            *ngIf="loginForm.get('email')?.errors?.['required']"
+          > This field is required!
+          </mat-error>
+          <mat-error
+            class="help-block"
+            *ngIf="loginForm.get('email')?.errors?.['pattern']"
+          > This email is not valid!
+          </mat-error>
         </mat-error>
-        <mat-error
-          class="help-block"
-          *ngIf="loginForm.get('email')?.errors?.['pattern']"
-        > This email is not valid!
-        </mat-error>
-      </mat-error>
-    </mat-form-field>
+      </mat-form-field>
 
-    <mat-form-field color='accent' appearance="outline">
-      <mat-label>Password</mat-label>
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        autocomplete="on"
-        matInput>
-      <mat-error
-        class='help-block'
-        *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"
-      >
+      <mat-form-field color='accent' appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          autocomplete="on"
+          matInput
+        >
         <mat-error
-          class="help-block"
-          *ngIf="loginForm.get('password')?.errors?.['required']"
-        > This field is required!
+          class='help-block'
+          *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"
+        >
+          <mat-error
+            class="help-block"
+            *ngIf="loginForm.get('password')?.errors?.['required']"
+          > This field is required!
+          </mat-error>
+          <mat-error
+            class="help-block"
+            *ngIf="loginForm.get('password')?.errors?.['minlength']"
+          > Password should have 6 characters minimum!
+          </mat-error>
         </mat-error>
-        <mat-error
-          class="help-block"
-          *ngIf="loginForm.get('password')?.errors?.['minlength']"
-        > Password should have 6 characters minimum!
-        </mat-error>
-      </mat-error>
-    </mat-form-field>
+      </mat-form-field>
+      <div>
+        <button [disabled]='!loginForm.valid' mat-raised-button type="submit" color="accent">Login</button>
+      </div>
+    </mat-card>
 
 
-    <div>
-      <button [disabled]='!loginForm.valid' mat-raised-button type="submit" color="accent">Login</button>
-    </div>
+
   </form>
 </div>

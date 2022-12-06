@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IProduct } from 'src/app/interfaces/product';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public topProds!: IProduct[];
+
+  constructor( public shopService: ShopService ) { }
 
   ngOnInit(): void {
+    this.topProds = this.shopService.products;
   }
 
 }
