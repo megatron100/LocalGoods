@@ -15,7 +15,6 @@
     <div class="navbar-nav navbar-right">
       <mat-icon  *ngIf='isUserAuth' style='color: red; cursor: pointer'>favorite_border</mat-icon>
       <mat-icon style="cursor: pointer; position: relative" *ngIf='isUserAuth' routerLinkActive="cart">shopping_cart</mat-icon>
-      <span class="cart-num" *ngIf="cart.length">{{cart.length}}</span>
       <mat-icon style="cursor: pointer" *ngIf='isUserAuth' [matMenuTriggerFor]="profile">person_outline</mat-icon>
       <mat-icon style="cursor: pointer" routerLink="/login" *ngIf='!isUserAuth'>login</mat-icon>
       <mat-icon style="cursor: pointer" routerLink="/register" *ngIf='!isUserAuth'>lock_open</mat-icon>
