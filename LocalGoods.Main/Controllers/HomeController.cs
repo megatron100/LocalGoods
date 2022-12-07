@@ -121,8 +121,12 @@ namespace LocalGoods.Main.Controllers
                 Stars = rating
             };
             await _dbContext.Rating.AddAsync(ratingModel);
-            var average = _dbContext.Rating.Where(x => x.SellerId == seller.Id).Select(a => a.Stars).Average();
-            seller.SellerRating = average;
+            await _dbContext.SaveChangesAsync();
+            //if there are any existing rating then take average of it
+            
+                var average = _dbContext.Rating.Where(x => x.SellerId == seller.Id).Select(a => a.Stars).Average();
+                seller.SellerRating = average;
+
             _dbContext.User.Update(seller);
             await _dbContext.SaveChangesAsync();
 

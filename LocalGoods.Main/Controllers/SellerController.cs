@@ -116,7 +116,7 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPut("EditProduct/{id:int}")]
+        [HttpPut("EditProduct")]
         public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] EditProductRequest request)
         {
             try
@@ -128,24 +128,22 @@ namespace LocalGoods.Main.Controllers
                 {
                     return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
                 }
-                else
-                {
-                    Product newproduct = new Product();
+
                     if (request.Name != null)
                     {
-                        newproduct.ProductTitle = request.Name;
+                        product.ProductTitle = request.Name;
                     }
                     if (request.Category != null)
                     {
                         var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
                         if (category != null)
 
-                        { newproduct.ProductCategory = category; }
+                        { product.ProductCategory = category; }
                     }
                     
-                        newproduct.Price = request.Price;
+                        product.Price = request.Price;
 
-                    _dbContext.Product.Update(newproduct);
+                    _dbContext.Product.Update(product);
                     await _dbContext.SaveChangesAsync();
                     var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
 
@@ -153,8 +151,6 @@ namespace LocalGoods.Main.Controllers
                     
                     response.Message = "ProductDetails Updated Successfully";
                     response.Data = products;
-
-                }
 
                 return Ok(response);
             }
