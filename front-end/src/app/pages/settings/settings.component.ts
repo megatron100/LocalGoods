@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {User} from "../auth/models/user.model";
-import {AuthService} from "../auth/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserDataUpdateDialogComponent} from "./user-data-update-dialog/user-data-update-dialog.component";
 import {UserUpdatePassDialogComponent} from "./user-update-pass-dialog/user-update-pass-dialog.component";
@@ -19,7 +18,7 @@ export class SettingsComponent implements OnInit {
   user!: User;
 
 
-  constructor(public authService: AuthService, public dialog: MatDialog, private store: Store<fromShop.AppState>) {
+  constructor(public dialog: MatDialog, private store: Store<fromShop.AppState>) {
 
   }
 
@@ -35,13 +34,11 @@ export class SettingsComponent implements OnInit {
 
   openUserEditDialog() {
       const dialogRef = this.dialog.open(UserDataUpdateDialogComponent);
-
       dialogRef.afterClosed()
     }
 
   openPassChangeDialog() {
     const dialogRef = this.dialog.open(UserUpdatePassDialogComponent);
-
     dialogRef.afterClosed()
   }
 }
