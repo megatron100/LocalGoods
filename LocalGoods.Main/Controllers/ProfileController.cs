@@ -29,7 +29,7 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("Profile")]
 
         public ActionResult<ResponseModel> Get()
         {
