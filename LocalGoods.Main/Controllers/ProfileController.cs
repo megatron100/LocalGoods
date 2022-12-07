@@ -29,7 +29,8 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpGet("")]
+        [HttpGet]
+
         public ActionResult<ResponseModel> Get()
         {
             var user = _customerService.CurrentUser();
