@@ -31,31 +31,23 @@ namespace LocalGoods.Main.Controllers
 
         [HttpGet("Profile")]
 
-        public ActionResult<ResponseModel> Get()
+        public async Task<ActionResult> Get()
         {
             var user = _customerService.CurrentUser();
-            if (user == null)
-                return new ResponseModel()
-                {
-                    Message = "User does not exists. Please Login to Continue.. ",
-                    Status = false,
-                    Data = null,
-                };
-            user.Password = "";
-            return new ResponseModel()
+
+            return Ok(new ResponseModel()
             {
                 Message = "User Found ",
                 Status = true,
                 Data = user
-            };
-
+            });
         }
 
         [HttpGet("User/{id:int}")]
-        [Authorize(Roles =Role.Customer)]
+        [Authorize(Roles = Role.Customer)]
         public async Task<ActionResult> GetProfileById(int id)
         {
-             
+
             var user = await _dbContext.User.Where(x => x.Id == id).Select(y => y).FirstOrDefaultAsync();
             if (user is null)
             {
@@ -63,7 +55,7 @@ namespace LocalGoods.Main.Controllers
                 {
                     Status = false,
                     Message = "User Not Found"
-                    
+
                 });
             }
             user.Password = "";
@@ -84,23 +76,23 @@ namespace LocalGoods.Main.Controllers
                 {
                     Message = "User does not exists. Please Login to Continue.. ",
                     Status = false,
-                    
+
                 };
-            if(user.Address==null)
+            if (user.Address == null)
             {
                 user.Address = new Address();
             }
-            if(!string.IsNullOrEmpty(request.address.postCode))
+            if (!string.IsNullOrEmpty(request.address.postCode))
             {
-                user.Address.PinCode=request.address.postCode;
+                user.Address.PinCode = request.address.postCode;
             }
-            if(!string.IsNullOrEmpty(request.address.country))
+            if (!string.IsNullOrEmpty(request.address.country))
             {
-                user.Address.Country=request.address.country;
+                user.Address.Country = request.address.country;
             }
-            if(!string.IsNullOrEmpty(request.address.city))
+            if (!string.IsNullOrEmpty(request.address.city))
             {
-                user.Address.City=request.address.city;
+                user.Address.City = request.address.city;
             }
             if (!string.IsNullOrEmpty(request.address.area))
             {
@@ -114,10 +106,10 @@ namespace LocalGoods.Main.Controllers
 
             if (!string.IsNullOrEmpty(request.basicInfo.Name))
             { user.Name = request.basicInfo.Name; }
-            
+
             if (!string.IsNullOrEmpty(request.basicInfo.mobile))
             { user.Mobile = request.basicInfo.mobile; }
-             
+
             _dbContext.User.Update(user);
             await _dbContext.SaveChangesAsync();
 
@@ -126,7 +118,7 @@ namespace LocalGoods.Main.Controllers
                 Message = "User Updated Successfully ",
                 Status = true,
                 Data = user
-                
+
             };
         }
         [HttpPut("ChangePassword")]
@@ -145,7 +137,7 @@ namespace LocalGoods.Main.Controllers
                     };
                 }
 
-                if(changePassword.existingPassword!=user.Password)
+                if (changePassword.existingPassword != user.Password)
                 {
                     return new ResponseModel()
                     {
@@ -161,7 +153,7 @@ namespace LocalGoods.Main.Controllers
                 {
                     Message = "Password Changed Successfully",
                     Status = true
-                }) ;
+                });
             }
             catch (Exception)
             {
