@@ -5,6 +5,9 @@ import {AuthService} from "../auth/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserDataUpdateDialogComponent} from "./user-data-update-dialog/user-data-update-dialog.component";
 import {UserUpdatePassDialogComponent} from "./user-update-pass-dialog/user-update-pass-dialog.component";
+import {Store} from "@ngrx/store";
+import * as fromShop from "../../store";
+import {UserState} from "../../store/user.reducer";
 
 @Component({
   selector: 'app-settings',
@@ -16,16 +19,16 @@ export class SettingsComponent implements OnInit {
   user!: User;
 
 
-  constructor(public authService: AuthService, public dialog: MatDialog) {
+  constructor(public authService: AuthService, public dialog: MatDialog, private store: Store<fromShop.AppState>) {
 
   }
 
   ngOnInit(): void {
-    this.userSub = this.authService.user
-      .subscribe(user => {
-        if (user) {
-          console.log(user)
-          this.user = user;
+    this.userSub = this.store.select('userData')
+      .subscribe((state: UserState) => {
+        if (state.user) {
+          console.log('user from state', state.user)
+          this.user = state.user;
         }
       })
   }
@@ -33,16 +36,12 @@ export class SettingsComponent implements OnInit {
   openUserEditDialog() {
       const dialogRef = this.dialog.open(UserDataUpdateDialogComponent);
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
+      dialogRef.afterClosed()
     }
 
   openPassChangeDialog() {
     const dialogRef = this.dialog.open(UserUpdatePassDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed()
   }
 }

@@ -13,6 +13,7 @@ export const PATH_GET_PRODUCTS = 'GetSellerProducts';
 export const PATH_GET_PRODUCT_BY_ID = 'GetProductById';
 export const PATH_EDIT_PRODUCT_BY_ID = 'EditProduct';
 export const PATH_DELETE_PRODUCT_BY_ID = 'DeleteProduct';
+export const PATH_ADD_CERTIFICATE = 'AddCertificate';
 export const EXPIRE_IN = 1440;
 export const REFRESH_EXPIRE_IN = 14400;
 export const USER_ROLES = ['seller', 'customer'];
