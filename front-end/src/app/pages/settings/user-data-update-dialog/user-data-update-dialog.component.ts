@@ -7,6 +7,8 @@ import {Store} from "@ngrx/store";
 import * as fromShop from "../../../store";
 import {UserState} from "../../../store/user.reducer";
 import * as UserActions from '../../../store/user.actions';
+import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-data-update-dialog',
@@ -22,7 +24,8 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private authService: AuthService,
-    private store: Store<fromShop.AppState>) {
+    private store: Store<fromShop.AppState>,
+    public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -79,7 +82,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
      this.settingsService.updateUserInfo(this.userForm.value)
-      .subscribe(({data}) => {
+      .subscribe(({data, message}) => {
         const updatedUserData = {
           "address": {
             "postCode": '',
@@ -101,6 +104,8 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
           updatedUserData.basicInfo.mobile = data.mobile;
         }
         this.store.dispatch(new UserActions.UpdateUser(updatedUserData))
+        const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+        dialogRef.afterClosed()
       })
   }
 
