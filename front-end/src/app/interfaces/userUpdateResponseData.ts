@@ -1,4 +1,5 @@
 export interface UserUpdateResponseData {
+  message: string
   data: {
     "address": {
       "pinCode": string,
