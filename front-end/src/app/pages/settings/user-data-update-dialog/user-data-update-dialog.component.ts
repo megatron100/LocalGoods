@@ -6,9 +6,9 @@ import {AuthService} from "../../auth/auth.service";
 import {Store} from "@ngrx/store";
 import * as fromShop from "../../../store";
 import {UserState} from "../../../store/user.reducer";
-import * as UserActions from '../../../store/user.actions';
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-user-data-update-dialog',
@@ -25,7 +25,9 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private authService: AuthService,
     private store: Store<fromShop.AppState>,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public userService: UserService
+    ) {
   }
 
   ngOnInit(): void {
@@ -83,27 +85,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
      this.settingsService.updateUserInfo(this.userForm.value)
       .subscribe(({data, message}) => {
-        const updatedUserData = {
-          "address": {
-            "postCode": '',
-            "country": '',
-            "city": '',
-            "area": ''
-          },
-          "basicInfo": {
-            "name": '',
-            "mobile": ''
-          }
-        }
-        if(data) {
-          updatedUserData.address.area = data.address.area;
-          updatedUserData.address.postCode = data.address.pinCode;
-          updatedUserData.address.country = data.address.country;
-          updatedUserData.address.city = data.address.city;
-          updatedUserData.basicInfo.name = data.name;
-          updatedUserData.basicInfo.mobile = data.mobile;
-        }
-        this.store.dispatch(new UserActions.UpdateUser(updatedUserData))
+     this.userService.updateUserInStore(data)
         const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
         dialogRef.afterClosed()
       })
