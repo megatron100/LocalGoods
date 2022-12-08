@@ -58,7 +58,7 @@ export class UserService {
   transformProductArrResponse(data: any) {
     let newProductArr: SellerProductItemModel[] = [];
     data.forEach((product: any) => {
-      const productEl = new SellerProductItemModel(product.productTitle, product.imageLink, product.productCategory.productCategoryName, product.price, product.shortDescription, product.longDescription);
+      const productEl = new SellerProductItemModel(product.productTitle, product.imageLink, product.productCategory.productCategoryName, product.price, product.shortDescription, product.longDescription, product.id);
       newProductArr.push(productEl)
     })
     return newProductArr
