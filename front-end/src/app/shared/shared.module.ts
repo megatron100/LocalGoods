@@ -17,7 +17,8 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card'
 import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive';
-import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component'
+import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 
@@ -43,7 +44,8 @@ import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.
     MatInputModule,
     MatTableModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonToggleModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -62,7 +64,8 @@ import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.
     SearchPipe,
     SortPipe,
     MatCardModule,
-    MyErrorStateMatcherDirective
+    MyErrorStateMatcherDirective,
+    MatButtonToggleModule
   ],
   providers:[CdkColumnDef]
 })

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   API,
-  API_PATH_SELLER,
+  API_PATH_SELLER, PATH_ADD_CERTIFICATE,
   PATH_ADD_PRODUCT,
   PATH_DELETE_PRODUCT_BY_ID,
   PATH_EDIT_PRODUCT_BY_ID,
@@ -10,6 +10,7 @@ import {
 } from "../constants/constants";
 import {IProduct} from "../interfaces/product";
 import {HttpClient} from "@angular/common/http";
+import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,13 @@ export class SellerProductStorageService {
 
   getProducts() {
     return this.http.get<IProduct[]>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
+      .pipe(
+
+      )
+  };
+
+  addCertificate(body: CertificateModel) {
+    return this.http.put<IProduct[]>(`${API}/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
       .pipe(
 
       )

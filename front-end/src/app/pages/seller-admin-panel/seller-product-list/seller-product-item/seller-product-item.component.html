@@ -1,1 +1,19 @@
-<p>seller-product-item works!</p>
+<a  [routerLink]="[index]">
+  <mat-card class="mat-card">
+    <mat-card-header class='mat-card-header'>
+      <mat-card-title-group style='width: 100%'>
+        <mat-card-title class='card-title'>{{ sellerProduct.name }}</mat-card-title>
+        <mat-card-subtitle class='mat-card-subtitle'>{{ sellerProduct.shortDesc }}</mat-card-subtitle>
+        <img mat-card-sm-image [src]='sellerProduct.photo' alt='{{ sellerProduct.name }}'>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content class='mat-card-content'>
+      {{sellerProduct.longDescription}}
+    </mat-card-content>
+
+    <div class='card-buttons'>
+      <button style='background-color: red' mat-raised-button>Delete</button>
+      <button style='background-color: #39a94b' mat-raised-button>Update</button>
+    </div>
+  </mat-card>
+</a>

@@ -7,6 +7,7 @@ import {UserUpdatePassDialogComponent} from "./user-update-pass-dialog/user-upda
 import {Store} from "@ngrx/store";
 import * as fromShop from "../../store";
 import {UserState} from "../../store/user.reducer";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-settings',
@@ -18,15 +19,15 @@ export class SettingsComponent implements OnInit {
   user!: User;
 
 
-  constructor(public dialog: MatDialog, private store: Store<fromShop.AppState>) {
+  constructor(public dialog: MatDialog, private store: Store<fromShop.AppState>, private userService: UserService) {
 
   }
 
   ngOnInit(): void {
+    this.userService.updateUser()
     this.userSub = this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
-          console.log('user from state', state.user)
           this.user = state.user;
         }
       })

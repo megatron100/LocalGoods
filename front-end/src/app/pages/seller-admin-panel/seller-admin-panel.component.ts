@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-seller-admin-panel',
@@ -7,12 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SellerAdminPanelComponent implements OnInit {
 
-  constructor() { }
+  isCertificateExist: boolean = true
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
+
   }
 
   onProductCreate() {
-
+    this.router.navigate(['new'], {relativeTo: this.route})
   }
 }
