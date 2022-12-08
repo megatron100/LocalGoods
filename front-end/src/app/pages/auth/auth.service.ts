@@ -4,12 +4,20 @@ import {HttpClient} from "@angular/common/http";
 import {RegisterModel} from "./models/register.model";
 import {BehaviorSubject, catchError, tap} from "rxjs";
 import {User} from "./models/user.model";
-import {API, API_PATH_AUTH, EXPIRE_IN, PATH_LOGIN, PATH_REGISTER, REFRESH_EXPIRE_IN} from "../../constants/constants";
+import {
+  API,
+  API_PATH_AUTH,
+  EXPIRE_IN,
+  PATH_LOGIN,
+  PATH_REGISTER,
+  REFRESH_EXPIRE_IN
+} from "../../constants/constants";
 import {Router} from "@angular/router";
 import {AuthResponseData} from "../../interfaces/auth-response-data";
 import * as fromShop from '../../store/index'
 import {Store} from "@ngrx/store";
 import * as UserActions from '../../store/user.actions';
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +28,7 @@ export class AuthService {
   private millisecondsInMinute = 60000;
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router,  private store: Store<fromShop.AppState>) {
+  constructor(private http: HttpClient, private router: Router,  private store: Store<fromShop.AppState>, public dialog: MatDialog) {
   }
 
   register(body: RegisterModel) {
