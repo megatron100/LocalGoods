@@ -1,14 +1,16 @@
 <div class='card-list-wrapper'>
-  <div class='card-list'>
-    <app-seller-product-item></app-seller-product-item>
-    <app-seller-product-item></app-seller-product-item>
-    <app-seller-product-item></app-seller-product-item>
-    <app-seller-product-item></app-seller-product-item>
+  <div class='card-list' *ngIf='products else loading'>
+    <app-seller-product-item *ngFor='let product of products' [sellerProduct] = product></app-seller-product-item>
   </div>
   <mat-divider class='mat-divider' vertical></mat-divider>
   <div class='card-list-side-bar'>
     <router-outlet></router-outlet>
   </div>
+  <ng-template #loading>
+    <div style="text-align: center" >
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-template>
 </div>
 
 

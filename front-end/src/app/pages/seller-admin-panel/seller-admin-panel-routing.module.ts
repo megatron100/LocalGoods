@@ -19,7 +19,14 @@ const routes: Routes = [
     },
     children: [{path: ':id', component: SellerProductDetailsComponent},]
   },
-  {path: '', component: SellerProductStartComponent},
+  {
+    path: '',
+    component: SellerProductStartComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: USER_ROLES[0]
+    },
+  },
   // {path: 'new', component: SellerNewProductFormComponent},
   // {path: 'add-certificate', component: SellerAddCertificateFormComponent},
   // {path: ':id/edit', component: SellerNewProductFormComponent},

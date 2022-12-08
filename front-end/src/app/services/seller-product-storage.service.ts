@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   API,
   API_PATH_SELLER, PATH_ADD_CERTIFICATE,
@@ -11,13 +11,16 @@ import {
 import {IProduct} from "../interfaces/product";
 import {HttpClient} from "@angular/common/http";
 import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
+import {map} from "rxjs";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SellerProductStorageService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) {
+  }
 
   storeProduct(product: IProduct) {
     return this.http.post<IProduct[]>(`${API}/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
@@ -48,9 +51,11 @@ export class SellerProductStorageService {
   };
 
   getProducts() {
-    return this.http.get<IProduct[]>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
+    return this.http.get<any>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
       .pipe(
-
+        map(({data}) => {
+          return this.userService.transformProductArrResponse(data)
+        })
       )
   };
 
