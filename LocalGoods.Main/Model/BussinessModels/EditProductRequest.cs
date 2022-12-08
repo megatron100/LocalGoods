@@ -15,5 +15,6 @@ namespace LocalGoods.Main.Model.BussinessModels
         [Required]
         public string ShortDesc { get; set; }
         public string LongDescription { get; set; }
+        public string Photo { get; set; }
     }
 }

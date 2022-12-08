@@ -158,6 +158,17 @@ namespace LocalGoods.Main.Controllers
                 }
 
                 product.Price = request.Price;
+                if (!string.IsNullOrEmpty(request.ShortDesc))
+
+                { product.ShortDescription = request.ShortDesc; }
+                if(!string.IsNullOrEmpty(request.LongDescription))
+                {
+                    product.LongDescription = request.LongDescription;
+
+                }
+                if (!string.IsNullOrEmpty(request.Photo))
+
+                { product.ImageLink = request.Photo; }
 
                 _dbContext.Product.Update(product);
                 await _dbContext.SaveChangesAsync();
@@ -172,7 +183,7 @@ namespace LocalGoods.Main.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
