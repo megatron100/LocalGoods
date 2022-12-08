@@ -101,6 +101,7 @@ namespace LocalGoods.Main.Controllers
                     Seller = user,
                     ProductTitle = request.Name,
                     ProductCategory = category,
+                    ImageLink=request.Photo,
                     Price = request.Price,
                     ShortDescription = request.ShortDesc,
                     LongDescription = request.LongDescription
