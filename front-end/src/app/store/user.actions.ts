@@ -1,8 +1,10 @@
 import {Action} from "@ngrx/store";
 import {User} from "../pages/auth/models/user.model";
+import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
 
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const CREATE_CERTIFICATE = 'CREATE_CERTIFICATE';
 
 export class CreateUser implements Action{
   readonly type = CREATE_USER;
@@ -29,5 +31,12 @@ export class UpdateUser implements Action{
   }
 }
 
+export class CreateCertificate implements Action{
+  readonly type = CREATE_CERTIFICATE;
 
-export type UserActions = CreateUser | UpdateUser
+  constructor(public payload: CertificateModel | null) {
+  }
+}
+
+
+export type UserActions = CreateUser | UpdateUser | CreateCertificate

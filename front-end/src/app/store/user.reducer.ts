@@ -1,12 +1,15 @@
 import * as UserAction from './user.actions'
 import {User} from "../pages/auth/models/user.model";
+import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
 
 export interface UserState {
   user: User | null,
+  certification: CertificateModel | null
 }
 
 const initialState: UserState = {
   user: null,
+  certification: null
 }
 
 export function userReducer(
@@ -28,7 +31,7 @@ export function userReducer(
         _token: string,
         _refresh_token: string,
         _tokenExpirationDate: string,
-        _refreshTokenExpirationDate: string
+        _refreshTokenExpirationDate: string,
       } = JSON.parse(localStorage.getItem('userData') || '{}');
       const updatedUser = new User(
         userData.userId,
@@ -40,11 +43,16 @@ export function userReducer(
         new Date(userData._tokenExpirationDate),
         new Date(userData._refreshTokenExpirationDate),
         {pinCode: payload?.address.postCode, area: payload?.address?.area, city: payload?.address?.city, country: payload?.address?.country},
-        payload.basicInfo.mobile
+        payload.basicInfo.mobile,
       )
       return {
         ...state,
         user: updatedUser
+      };
+    case UserAction.CREATE_CERTIFICATE:
+      return {
+        ...state,
+        certification: payload
       };
     default:
       return state
