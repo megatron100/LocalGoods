@@ -7,6 +7,8 @@ import { SellerProductListComponent } from './seller-product-list/seller-product
 import { SellerProductItemComponent } from './seller-product-list/seller-product-item/seller-product-item.component';
 import { SellerProductDetailsComponent } from './seller-product-list/seller-product-details/seller-product-details.component';
 import { SellerProductStartComponent } from './seller-product-list/seller-product-start/seller-product-start.component';
+import { CreateSellerProductDialogComponent } from './seller-product-list/dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
+import { DeleteSellerProductDialogComponent } from './seller-product-list/dialogs/delete-seller-product-dialog/delete-seller-product-dialog.component';
 
 
 
@@ -16,7 +18,9 @@ import { SellerProductStartComponent } from './seller-product-list/seller-produc
     SellerProductListComponent,
     SellerProductItemComponent,
     SellerProductDetailsComponent,
-    SellerProductStartComponent
+    SellerProductStartComponent,
+    CreateSellerProductDialogComponent,
+    DeleteSellerProductDialogComponent
   ],
     imports: [
         SharedModule,

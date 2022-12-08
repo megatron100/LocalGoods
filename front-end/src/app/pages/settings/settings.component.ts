@@ -28,6 +28,7 @@ export class SettingsComponent implements OnInit {
     this.userSub = this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
+          state.user
           this.user = state.user;
         }
       })

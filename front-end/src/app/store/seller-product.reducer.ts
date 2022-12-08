@@ -3,12 +3,16 @@ import * as ProductAction from './seller-product.actions'
 
 export interface SellerProductState {
   sellerProducts: SellerProductItemModel[],
-  sellerProduct: SellerProductItemModel | null
+  sellerProduct: SellerProductItemModel | null,
+  isCreateMode: boolean,
+  categoryList: []
 }
 
 const initialState: SellerProductState = {
   sellerProducts: [],
-  sellerProduct: null
+  sellerProduct: null,
+  isCreateMode: true,
+  categoryList: []
 }
 
 export function sellerProductReducer(
@@ -26,6 +30,16 @@ export function sellerProductReducer(
         ...state,
         sellerProduct: payload
       };
+    case ProductAction.CHANGE_MODE:
+      return {
+        ...state,
+        isCreateMode: payload
+      };
+    case ProductAction.GET_CATEGORIES:
+      return {
+        ...state,
+        categoryList: [...payload]
+      }
     default:
       return state;
   }

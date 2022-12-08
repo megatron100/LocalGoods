@@ -5,7 +5,8 @@ export class SellerProductItemModel {
   public category: string,
   public price: number,
   public shortDesc: string,
-  public longDescription: string
+  public longDescription: string,
+  public id: number
   ) {
   }
 

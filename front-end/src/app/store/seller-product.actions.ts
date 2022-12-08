@@ -3,6 +3,8 @@ import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-
 
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_PRODUCT = 'SET_PRODUCT';
+export const CHANGE_MODE = 'CHANGE_MODE';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
 
 export class SetProducts implements Action {
   readonly type = SET_PRODUCTS;
@@ -18,4 +20,18 @@ export class SetProduct implements Action {
   }
 }
 
-export type SellerProductsActions = SetProducts | SetProduct
+export class ChangeMode implements Action {
+  readonly type = CHANGE_MODE;
+
+  constructor(public payload: boolean) {
+  }
+}
+
+export class GetCategories implements Action {
+  readonly type = GET_CATEGORIES;
+
+  constructor(public payload: []) {
+  }
+}
+
+export type SellerProductsActions = SetProducts | SetProduct | ChangeMode | GetCategories

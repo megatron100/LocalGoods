@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
+import {
+  CreateSellerProductDialogComponent
+} from "./seller-product-list/dialogs/create-seller-product-dialog/create-seller-product-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import * as ProductActions from '../../store/seller-product.actions';
+import * as fromSellerProductList from '../../store'
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-seller-admin-panel',
@@ -10,7 +17,7 @@ export class SellerAdminPanelComponent implements OnInit {
 
   isCertificateExist: boolean = true
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private dialog: MatDialog, public store: Store<fromSellerProductList.AppState>) {
   }
 
   ngOnInit(): void {
@@ -18,6 +25,8 @@ export class SellerAdminPanelComponent implements OnInit {
   }
 
   onProductCreate() {
-    this.router.navigate(['new'], {relativeTo: this.route})
+    this.store.dispatch(new ProductActions.ChangeMode(true));
+    const dialogRef = this.dialog.open(CreateSellerProductDialogComponent);
+    dialogRef.afterClosed()
   }
 }

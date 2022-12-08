@@ -27,9 +27,6 @@ const routes: Routes = [
       role: USER_ROLES[0]
     },
   },
-  // {path: 'new', component: SellerNewProductFormComponent},
-  // {path: 'add-certificate', component: SellerAddCertificateFormComponent},
-  // {path: ':id/edit', component: SellerNewProductFormComponent},
 ]
 
 @NgModule({
