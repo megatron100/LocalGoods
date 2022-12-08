@@ -32,27 +32,28 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     public sellerProductStorageService: SellerProductStorageService,
     @Inject(MAT_DIALOG_DATA) public data: SellerProductItemModel
   ) {
+    this.createProductForm = new FormGroup({
+      name: new FormControl(null, []),
+      photo: new FormControl(null, []),
+      category: new FormControl(null, []),
+      price: new FormControl(null, []),
+      shortDesc: new FormControl(null, []),
+      longDescription: new FormControl(null, []),
+    })
   }
 
   ngOnInit(): void {
-    if(this.isCreateMode) {
-      this.createProductForm = new FormGroup({
-        name: new FormControl(null, []),
-        photo: new FormControl(null, []),
-        category: new FormControl(null, []),
-        price: new FormControl(null, []),
-        shortDesc: new FormControl(null, []),
-        longDescription: new FormControl(null, []),
+    if(!this.isCreateMode) {
+      this.createProductForm.setValue({
+        name: this.data?.name,
+        photo: this.data?.photo,
+        category: this.data?.category,
+        price: this.data?.price,
+        shortDesc: this.data?.shortDesc,
+        longDescription: this.data?.longDescription,
       })
     }
-    this.createProductForm = new FormGroup({
-      name: new FormControl(this.data?.name, []),
-      photo: new FormControl(this.data?.photo, []),
-      category: new FormControl(this.data?.category, []),
-      price: new FormControl(this.data?.price, []),
-      shortDesc: new FormControl(this.data?.shortDesc, []),
-      longDescription: new FormControl(this.data?.longDescription, []),
-    })
+
     this.sellerProductStorageService.getCategories()
       .subscribe(({data}) => {
         this.categories = [...data as CategoryModel[]]
