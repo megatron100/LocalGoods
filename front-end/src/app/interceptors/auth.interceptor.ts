@@ -24,7 +24,12 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(request);
         }
         const modifiedReq = request
-          .clone({headers: new HttpHeaders({'Authorization': `Bearer ${state.user?.token}` as string})})
+          .clone({headers: new HttpHeaders({
+              'Authorization': `Bearer ${state.user?.token}` as string,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            })})
         return next.handle(modifiedReq)
       })
     );
