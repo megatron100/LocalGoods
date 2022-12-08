@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
-          console.log('user', state.user)
           this.user = state.user
         }
         this.isUserAuth = !!state.user;
