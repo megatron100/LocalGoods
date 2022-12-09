@@ -15,6 +15,7 @@
   align-items: center;
 }
 
+
 .home-banner {
   height: 600px;
   background-image: url('/assets/images/grocery.jpg');
@@ -27,7 +28,19 @@
   color: #fff;
   font-weight: 500;
   font-size: 48px;
+  margin: 25px auto;
   text-transform: capitalize;
+}
+
+.home-banner__desc {
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 25px auto;
 }
 
 .shop-link {
@@ -39,6 +52,7 @@
   background-color: #39a94b;
   padding: 10px 15px;
   transition: all 0.3s linear;
+  cursor: pointer;
 }
 
 .shop-link:hover,
@@ -50,14 +64,13 @@
 .home-objective {
   margin: 20px auto;
   padding: 15px 20px;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .objective-title,
 .sample-title {
   text-transform: capitalize;
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 400;
   color: #39a94b;
   width: 50%;
@@ -65,6 +78,9 @@
 
 .objective-text {
   font-size: 18px;
+  width: 50%;
+  text-align: center;
+  margin: auto 15px;
 }
 
 .sample-list {
@@ -75,7 +91,7 @@
 }
 
 .contact {
-  align-items: flex-end;
+  align-items: flex-start;
   margin: 20px auto;
   padding: 15px 20px;
 }
