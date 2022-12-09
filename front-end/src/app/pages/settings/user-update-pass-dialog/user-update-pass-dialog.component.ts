@@ -7,8 +7,6 @@ import {
 import {CustomValidators} from "../../../validators/check-pass-validator";
 import {MyErrorStateMatcherDirective} from "../../../directives/my-error-state-matcher.directive";
 import {SettingsService} from "../../../services/settings.service";
-import {MatDialog} from "@angular/material/dialog";
-import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 
 @Component({
   selector: 'app-user-update-pass-dialog',
@@ -19,7 +17,7 @@ export class UserUpdatePassDialogComponent implements OnInit {
   passForm!: FormGroup;
   matcher = new MyErrorStateMatcherDirective();
 
-  constructor(private settingsService: SettingsService, public dialog: MatDialog) {
+  constructor(private settingsService: SettingsService) {
 
   }
 
@@ -32,10 +30,8 @@ export class UserUpdatePassDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.passForm.value)
     this.settingsService.changePassword(this.passForm.value)
-      .subscribe(({message}) => {
-        const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
-        dialogRef.afterClosed()
-      })
+      .subscribe(value => console.log(value))
   }
 }
