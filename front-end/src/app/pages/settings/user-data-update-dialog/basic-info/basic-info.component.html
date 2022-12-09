@@ -15,19 +15,6 @@
     </mat-form-field>
     <!-- /First name -->
 
-    <!-- email -->
-    <mat-form-field color='accent'>
-      <mat-label>E-mail</mat-label>
-      <input type="email" matInput placeholder="Ex. jane@doe.com" formControlName="email" />
-      <mat-error *ngIf="form.hasError('required', 'email')">
-        This field is require!
-      </mat-error>
-      <mat-error *ngIf="form.hasError('pattern', 'email')">
-        This email not valid!
-      </mat-error>
-    </mat-form-field>
-    <!-- /email -->
-
     <!-- Mobile -->
     <mat-form-field color='accent'>
       <mat-label>Mobile</mat-label>
