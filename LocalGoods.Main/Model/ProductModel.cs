@@ -6,7 +6,8 @@ namespace LocalGoods.Main.Model
     {
 
         public string ProductTitle { get; set; }
-        public virtual User User { get; set; }
+         
+        public virtual User? Seller { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }

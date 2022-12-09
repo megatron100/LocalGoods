@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "ignored": "true",
+      "type": "identityapp"
+    },
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:LocalGoodsConnection",
+      "dynamicId": null
+    }
+  }
+}

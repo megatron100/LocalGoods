@@ -1,6 +1,97 @@
-.home {
-  height: 100%;
+.home,
+.container,
+.home-content,
+.home-banner,
+.home-objective,
+.objective-title,
+.product-samples,
+.sample-title,
+.sample-list,
+.contact {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+.home-banner {
+  height: 600px;
+  background-image: url('/assets/images/grocery.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 48px;
+  margin: 25px auto;
+  text-transform: capitalize;
+}
+
+.home-banner__desc {
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  margin: 25px auto;
+}
+
+.shop-link {
+  color: #fff;
+  // width: 300px;
+  font-size: 22px;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+  background-color: #39a94b;
+  padding: 10px 15px;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+
+.shop-link:hover,
+.shop-link:active {
+  border-color: #fff;
+  background: transparent;
+}
+
+.home-objective {
+  margin: 20px auto;
+  padding: 15px 20px;
+  flex-direction: column;
+}
+
+.objective-title,
+.sample-title {
+  text-transform: capitalize;
+  font-size: 30px;
+  font-weight: 400;
+  color: #39a94b;
+  width: 50%;
+}
+
+.objective-text {
+  font-size: 18px;
+  width: 50%;
+  text-align: center;
+  margin: auto 15px;
+}
+
+.sample-list {
+  margin: 20px auto;
+  padding: 15px 20px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.contact {
+  align-items: flex-start;
+  margin: 20px auto;
+  padding: 15px 20px;
 }

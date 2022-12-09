@@ -2,12 +2,19 @@
 
 namespace LocalGoods.Main.Model
 {
-    public class ShoppingCartItem:BaseModel
+    public class ShoppingCartItem : BaseModel
     {
-        [ForeignKey("Product")]
-        public int ShoppingCartItemId { get; set; }
+
+        public virtual Product Product { get; set; }
+         
+        public virtual User? User { get; set; }
         public int Quantity { get; set; }
-        public int Amount { get; set; }
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal TotalAmount
+        {
+
+            get;set;
+        }
 
     }
 }

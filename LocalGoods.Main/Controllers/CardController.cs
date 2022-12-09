@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using LocalGoods.Main.DAL;
 using LocalGoods.Main.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalGoods.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CardController : ControllerBase
     {
         
@@ -27,20 +29,19 @@ namespace LocalGoods.Main.Controllers
             _customerService = customerService;
 
         }
-        [HttpPost("AddPaymentCard")]
+        [HttpPost("AddCard")]
         public async Task<ActionResult<ResponseModel>> AddPaymentCard([FromBody] AddCardModel request)
         {
             try
             {
                 ResponseModel response = new ResponseModel();
-                var curuseremail = _customerService.CurrentUser().Email;
-                var seller = _dbContext.User.Where(x => x.Email == curuseremail).FirstOrDefault();
-                if (curuseremail == null || seller == null)
+                var user = _customerService.CurrentUser();
+                
+                if (user == null )
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }
-                else
-                {
+                 
                     CardDetail card = new CardDetail()
                     {
                         CardProvider = request.CardProvider,
@@ -48,19 +49,17 @@ namespace LocalGoods.Main.Controllers
                         CardNumber = request.CardNumber
 
                     };
-                    if(seller.CardList==null)
-                    {
-                        seller.CardList = new List<CardDetail>();
-                    }
-                    seller.CardList.Add(card);
-                    var result = await _dbContext.CardDetails.AddAsync(card);
+                   
+                        user.Card = new CardDetail();
+              
+                    user.Card=card;
+                    await _dbContext.CardDetails.AddAsync(card);
+                    _dbContext.User.Update(user);
                     _dbContext.SaveChanges();
-
+                
                     response.Status = true;
                     response.Data = card;
                     response.Message = "Card Added Successfully...";
-
-                }
 
                 return Ok(response);
             }
@@ -70,34 +69,44 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpGet("GetCards")]
-        public ActionResult<IEnumerable<CardDetail>> GetCards()
+        [HttpGet("GetCard")]
+        public ActionResult<IEnumerable<CardDetail>> GetCard()
         {
             User curuser =_customerService.CurrentUser();
-            if (curuser.CardList == null)
+            if (curuser.Card == null)
             {
-                curuser.CardList = new List<CardDetail>();
+                return Ok(new ResponseModel
+                { 
+                    Status = false,
+                    Message = "No Card Found"
+                  
+            });
+
             }
-            List<CardDetail> cards = curuser.CardList;
-            if(cards.Count==0)
+            return Ok(new ResponseModel
             {
-            
-                return BadRequest(new { Message = "User Has no Card.." });
-            }
-            return Ok(cards);            
+                Status = true,
+                Message = "Card Found",
+                Data = curuser.Card
+            });
+
         }
-        [HttpDelete("RemovePaymentCard")]
-        public async Task<ActionResult<ResponseModel>> RemovePaymentCard(int id)
+        [HttpDelete("RemoveCard")]
+        public async Task<ActionResult<ResponseModel>> RemovePaymentCard()
         {
             var curuser = _customerService.CurrentUser();
-            var card = _dbContext.CardDetails.Where(x => x.Id == id).FirstOrDefault();
-            if (card == null)
+             
+            if (curuser.Card == null)
             {
-                return NotFound($"Productwith Id = {id} not found");
+                return NotFound($"Cart not found");
             }
-            _dbContext.CardDetails.Remove(card);
-            await _dbContext.SaveChangesAsync();
+              curuser.Card = null;
+            
+            _dbContext.CardDetails.Remove(curuser.Card);
+            _dbContext.User.Update(curuser);
+            _dbContext.SaveChangesAsync();
             return Ok(new { Message = "Card Deleted Successfully.." });
         }
+
     }
 }

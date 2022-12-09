@@ -22,13 +22,12 @@ namespace LocalGoods.Main.DAL
         public DbSet<Address> Address { get; set; }
         public DbSet<CardDetail> CardDetails { get; set; }
         public DbSet<Rating> Rating { get; set; }
-       
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<Product> Product { get; set; }
-        
-        public DbSet<OrderItem> orderItems { get; set; }
+       
+        public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
         public DbSet<Order> Orders { get; set; }
-
+        public DbSet<RefreshToken> Token { get; set; }  
     }
 }
