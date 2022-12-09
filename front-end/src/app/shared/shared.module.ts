@@ -16,9 +16,7 @@ import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card'
-import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive';
-import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive'
 
 
 
@@ -27,8 +25,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
-    MyErrorStateMatcherDirective,
-    MessageDialogComponent
+    MyErrorStateMatcherDirective
   ],
   imports: [
     CommonModule,
@@ -44,8 +41,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MatInputModule,
     MatTableModule,
     MatDialogModule,
-    MatCardModule,
-    MatButtonToggleModule
+    MatCardModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -64,8 +60,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     SearchPipe,
     SortPipe,
     MatCardModule,
-    MyErrorStateMatcherDirective,
-    MatButtonToggleModule
+    MyErrorStateMatcherDirective
   ],
   providers:[CdkColumnDef]
 })

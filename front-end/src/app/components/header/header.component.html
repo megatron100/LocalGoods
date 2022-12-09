@@ -30,11 +30,11 @@
 <mat-menu #profile>
   <button mat-menu-item>
     <mat-icon>person_outline</mat-icon>
-    {{ user.nickName }}
+    {{ user?.nickName }}
   </button>
   <button mat-menu-item>
     <mat-icon>mail_outline</mat-icon>
-    {{ user.email }}
+    {{ user?.email }}
   </button>
   <button mat-menu-item style='cursor: pointer' routerLink='private/settings'>
     <mat-icon>settings</mat-icon>

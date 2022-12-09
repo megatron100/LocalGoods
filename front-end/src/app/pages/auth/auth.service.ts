@@ -4,20 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {RegisterModel} from "./models/register.model";
 import {BehaviorSubject, catchError, tap} from "rxjs";
 import {User} from "./models/user.model";
-import {
-  API,
-  API_PATH_AUTH,
-  EXPIRE_IN,
-  PATH_LOGIN,
-  PATH_REGISTER,
-  REFRESH_EXPIRE_IN
-} from "../../constants/constants";
+import {API, API_PATH_AUTH, EXPIRE_IN, PATH_LOGIN, PATH_REGISTER, REFRESH_EXPIRE_IN} from "../../constants/constants";
 import {Router} from "@angular/router";
 import {AuthResponseData} from "../../interfaces/auth-response-data";
-import * as fromShop from '../../store/index'
-import {Store} from "@ngrx/store";
-import * as UserActions from '../../store/user.actions';
-import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +17,7 @@ export class AuthService {
   private millisecondsInMinute = 60000;
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router,  private store: Store<fromShop.AppState>, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   register(body: RegisterModel) {
@@ -57,7 +46,7 @@ export class AuthService {
 
   logout() {
     //Remove the user from the LS if the token is not finished clearing Timeout after which autoLogout will take place
-    this.store.dispatch(new UserActions.CreateUser(null))
+    this.user.next(null);
     this.router.navigate(['./login']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -102,7 +91,7 @@ export class AuthService {
     if(loadedUserFromLS.token) {
       const expirationTime = new Date(userData._refreshTokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationTime);
-      this.store.dispatch(new UserActions.CreateUser(loadedUserFromLS))
+      this.user.next(loadedUserFromLS)
     }
   }
 
@@ -119,7 +108,7 @@ export class AuthService {
 
     const user = new User(userId, userEmail, role, nickName, accessToken, refreshToken, expirationDate, refreshExpirationDate);
 
-    this.store.dispatch(new UserActions.CreateUser(user))
+    this.user.next(user);
 
     this.autoLogout(REFRESH_EXPIRE_IN * this.millisecondsInMinute)
     localStorage.setItem('userData', JSON.stringify(user))
