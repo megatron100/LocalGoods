@@ -56,7 +56,9 @@ export class SellerProductStorageService {
   getProductById(id: string) {
     return this.http.get<any>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
       .pipe(
-
+        map(({data}) => {
+          return this.userService.transformProductResponse(data)
+        })
       )
   };
 

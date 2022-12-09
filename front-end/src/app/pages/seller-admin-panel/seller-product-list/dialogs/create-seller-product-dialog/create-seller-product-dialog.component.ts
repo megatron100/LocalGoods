@@ -4,7 +4,7 @@ import * as ProductActions from '../../../../../store/seller-product.actions'
 import {Store} from "@ngrx/store";
 import {Subscription} from "rxjs";
 import {SellerProductState} from "../../../../../store/seller-product.reducer";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SellerProductStorageService} from "../../../../../services/seller-product-storage.service";
 import {CategoryModel} from "../../../models/category.model";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -32,28 +32,27 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     public sellerProductStorageService: SellerProductStorageService,
     @Inject(MAT_DIALOG_DATA) public data: SellerProductItemModel
   ) {
-    this.createProductForm = new FormGroup({
-      name: new FormControl(null, []),
-      photo: new FormControl(null, []),
-      category: new FormControl(null, []),
-      price: new FormControl(null, []),
-      shortDesc: new FormControl(null, []),
-      longDescription: new FormControl(null, []),
-    })
   }
 
   ngOnInit(): void {
-    if(!this.isCreateMode) {
-      this.createProductForm.setValue({
-        name: this.data?.name,
-        photo: this.data?.photo,
-        category: this.data?.category,
-        price: this.data?.price,
-        shortDesc: this.data?.shortDesc,
-        longDescription: this.data?.longDescription,
+    if(this.isCreateMode) {
+      this.createProductForm = new FormGroup({
+        name: new FormControl(null, [Validators.required]),
+        photo: new FormControl(null, [Validators.required]),
+        category: new FormControl(null, [Validators.required]),
+        price: new FormControl(null, [Validators.required]),
+        shortDesc: new FormControl(null, [Validators.required]),
+        longDescription: new FormControl(null, [Validators.required]),
       })
     }
-
+    this.createProductForm = new FormGroup({
+      name: new FormControl(this.data?.name, [Validators.required]),
+      photo: new FormControl(this.data?.photo, [Validators.required]),
+      category: new FormControl(this.data?.category, [Validators.required]),
+      price: new FormControl(this.data?.price, [Validators.required]),
+      shortDesc: new FormControl(this.data?.shortDesc, [Validators.required]),
+      longDescription: new FormControl(this.data?.longDescription, [Validators.required]),
+    })
     this.sellerProductStorageService.getCategories()
       .subscribe(({data}) => {
         this.categories = [...data as CategoryModel[]]
