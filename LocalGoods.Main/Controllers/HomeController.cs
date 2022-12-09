@@ -12,7 +12,7 @@ namespace LocalGoods.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "customer")]
+   [AllowAnonymous]
     public class HomeController : ControllerBase
     {
         private readonly LocalGoodsDbContext _dbContext;
@@ -37,6 +37,14 @@ namespace LocalGoods.Main.Controllers
             }
 
             var user = _userService.CurrentUser();
+            if(user==null)
+            {
+                response.Status = true;
+                response.Message = "Products found For Guest Users";
+                response.Data = products.Take(3);
+                return Ok(response);
+            }
+            
             List<Product> nearByProduct = new List<Product>();
             if (user.Address != null)
             {
@@ -50,6 +58,7 @@ namespace LocalGoods.Main.Controllers
              
         }
         [HttpGet("GetProductById/{id:int}")]
+        [Authorize(Roles =Role.Customer )]
         public async Task<IActionResult> GetProduct(int id)
         {
 
@@ -69,7 +78,7 @@ namespace LocalGoods.Main.Controllers
             return Ok(response);
         }
         [HttpGet("Sellers")]
-
+        [Authorize(Roles = Role.Customer)]
         public async Task<ActionResult> GetSellers()
         {
             var Sellerlist = await _dbContext.User.Where(x => x.Role == Role.Seller).ToListAsync();
@@ -93,6 +102,7 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpGet("RateSeller")]
+        [Authorize(Roles = Role.Customer)]
         public async Task<ActionResult> RateSeller(int id, int rating)
         {
 
@@ -125,7 +135,7 @@ namespace LocalGoods.Main.Controllers
             //if there are any existing rating then take average of it
             
                 var average = _dbContext.Rating.Where(x => x.SellerId == seller.Id).Select(a => a.Stars).Average();
-                seller.SellerRating = average;
+                seller.SellerRating = Math.Round(average,2);
 
             _dbContext.User.Update(seller);
             await _dbContext.SaveChangesAsync();
