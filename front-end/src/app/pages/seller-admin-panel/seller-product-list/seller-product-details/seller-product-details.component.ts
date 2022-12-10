@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SellerProductItemModel} from "../../models/seller-product-item.model";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SellerProductStorageService} from "../../../../services/seller-product-storage.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-seller-product-details',
@@ -10,7 +11,7 @@ import {SellerProductStorageService} from "../../../../services/seller-product-s
 })
 export class SellerProductDetailsComponent implements OnInit {
 
-product!: SellerProductItemModel
+product$!: Observable<SellerProductItemModel>
 
   constructor(private route: ActivatedRoute, private sellerProductStorageService: SellerProductStorageService) {
   }
@@ -18,12 +19,7 @@ product!: SellerProductItemModel
   ngOnInit(): void {
     this.route.params
       .subscribe((params: Params) => {
-        this.sellerProductStorageService.getProductById(params['id'])
-          .subscribe({
-            next: (res: SellerProductItemModel) => {
-              this.product = res
-            }
-          })
+        this.product$ = this.sellerProductStorageService.getProductById(params['id'])
       })
   }
 

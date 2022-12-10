@@ -1,9 +1,10 @@
 .card-list-wrapper {
+  display: flex;
   .card-list {
     width: 50%;
   }
-  display: flex;
   .card-list-side-bar{
+    width: 50%;
     padding: 0 20px;
   }
 }

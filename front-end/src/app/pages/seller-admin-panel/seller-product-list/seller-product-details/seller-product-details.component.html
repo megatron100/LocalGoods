@@ -1,4 +1,4 @@
-<mat-card class="product-card">
+<mat-card class="product-card" *ngIf='(product$ | async); let product else loading'>
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ product.name }}</mat-card-title>
@@ -17,3 +17,8 @@
     <button mat-raised-button routerLink='../'>Go back</button>
   </mat-card-actions>
 </mat-card>
+<ng-template #loading>
+  <div class='loader-wrapper'>
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-template>

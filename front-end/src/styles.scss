@@ -7,6 +7,12 @@ a {text-decoration: none}
   background-color: #919494;
 }
 
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+
 .container {
   width: 800px;
   .form {
