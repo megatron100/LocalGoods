@@ -17,7 +17,7 @@
     <div class="product-samples">
       <h2 class="sample-title">Some of our favourite products</h2>
       <div class="sample-list">
-        <app-product-card *ngFor="let product of topProds"></app-product-card>
+        <app-product-card *ngFor="let product of topProds" [product]='product'></app-product-card>
       </div>
     </div>
     <div class="contact">

@@ -1,17 +1,17 @@
 <div class="product-card">
     <div class="product-container">
         <a href="#">
-            <img src="{{product.photo}}" alt="{{product.name}}" class="product-pic">
+            <img src="{{product?.photo}}" alt="{{product?.name}}" class="product-pic">
         </a>
         <div class="product-content">
             <a href="#" class="product-name__link">
-                <h3 class="product-name">{{product.name}}</h3>
+                <h3 class="product-name">{{product?.name}}</h3>
             </a>
             <a href="#" class="product-seller__link">
-                <h4 class="product-seller">{{product.seller}}</h4>
+                <h4 class="product-seller">{{product?.seller}}</h4>
             </a>
-            <p class="product-description">{{product.description}}</p>
-            <p class="product-price">{{product.price | currency: 'USD'}}</p>
+            <p class="product-description">{{product?.description}}</p>
+            <p class="product-price">{{product?.price | currency: 'USD'}}</p>
         </div>
     </div>
     <div class="product-add__container">
