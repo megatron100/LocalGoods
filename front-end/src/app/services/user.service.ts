@@ -45,12 +45,12 @@ export class UserService {
       }
     }
     if (data) {
-      updatedUserData.address.area = data.address.area;
-      updatedUserData.address.postCode = data.address.pinCode;
-      updatedUserData.address.country = data.address.country;
-      updatedUserData.address.city = data.address.city;
-      updatedUserData.basicInfo.name = data.name;
-      updatedUserData.basicInfo.mobile = data.mobile;
+      updatedUserData.address.area = data?.address?.area;
+      updatedUserData.address.postCode = data?.address?.pinCode;
+      updatedUserData.address.country = data?.address?.country;
+      updatedUserData.address.city = data?.address?.city;
+      updatedUserData.basicInfo.name = data?.name;
+      updatedUserData.basicInfo.mobile = data?.mobile;
     }
     this.store.dispatch(new UserActions.UpdateUser(updatedUserData))
   }
