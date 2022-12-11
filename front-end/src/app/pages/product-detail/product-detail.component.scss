@@ -1,0 +1,125 @@
+.product-detail,
+.detail-content__text {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 25px auto;
+}
+
+.product-photo {
+    width: 600px;
+}
+
+.detail-content__text {
+    align-items: baseline;
+    width: 30%;
+}
+
+.detail-content__text p {
+    font-size: 18px;
+}
+
+.product-title {
+    font-size: 28px;
+}
+
+.product-price {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.product-add__container {
+    display: flex;
+}
+
+input {
+    font-size: 16px;
+    padding: 5px 20px;
+    width: 70px;
+    margin-right: 10px;
+    outline: none;
+}
+
+.product-add {
+    font-size: 16px;
+    padding: 5px 20px;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: #39a94b;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.product-add:hover {
+    color: #39a94b;
+    background-color: transparent;
+    border: 1px solid #39a94b;
+}
+
+@media (max-width: 1000px) {
+    .detail-content {
+        flex-direction: column;
+    }
+    .detail-content__text {
+        align-items: center;
+        width: 50%;
+    }
+    .detail-content__text p {
+        text-align: justify;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-photo {
+        width: 500px;
+    }
+
+    .product-title {
+        font-size: 24px;
+    }
+
+    .product-price {
+        font-size: 18px;
+    }
+
+    .detail-content__text p {
+        font-size: 16px;
+    }
+
+    .detail-content__text {
+        width: 80%;
+    }
+}
+
+@media (max-width: 575px) {
+    .product-photo {
+        width: 300px;
+    }
+
+    .detail-content__text p {
+        font-size: 14px;
+    }
+   
+}
+
+
+@media (max-width: 375px) {
+    .product-add__container {
+        flex-direction: column;
+    }
+
+    .product-add,
+    input {
+        margin: 5px auto;
+        padding: 10px 25px;
+        font-size: 18px;
+    }
+}
