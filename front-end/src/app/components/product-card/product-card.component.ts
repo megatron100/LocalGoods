@@ -18,10 +18,12 @@ export class ProductCardComponent implements OnInit {
     
   }
 
-  onClickAdd(prod: IProduct) {
+  onClickAdd(id: number) {
 
-    this.cartService.addToCart(prod);
-    console.log(prod);
+    this.cartService.addToCart(id)
+        .subscribe(res => {
+          console.log(res);
+        })
     
 
   }

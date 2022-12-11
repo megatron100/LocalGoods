@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -8,6 +8,8 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
+
+  @Input() product: any;
 
   cart!: IProduct[];
 

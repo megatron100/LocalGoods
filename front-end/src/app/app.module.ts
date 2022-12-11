@@ -17,6 +17,7 @@ import {reducers} from "./store";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { SettingsComponent } from './pages/settings/settings.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
     ProductCardComponent,
     SubMenuHeaderComponent,
     SettingsComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

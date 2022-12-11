@@ -40,6 +40,11 @@ export class ShopComponent implements OnInit {
     this.shopService.getProducts()
         .subscribe(response => { 
           this.products = response.data;
+          for (let prod of this.products) {
+            console.log(prod.id);
+            
+          }
+          
         })
   }
 

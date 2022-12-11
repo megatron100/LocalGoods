@@ -1,1 +1,8 @@
-<div class="product-section"></div>
+<div class="product-section">
+    <input type="checkbox" name="{{product.id}}" id="product">
+    <label for="product">
+        <app-product-card
+      *ngFor='let item of cart' [product]='product'
+    ></app-product-card>
+    </label>
+</div>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {IProduct} from "../interfaces/product";
 import { catchError, map, tap } from 'rxjs/operators';
-
 import { HttpClient } from '@angular/common/http';
 import { API, API_PATH,  } from '../constants/constants';
 
