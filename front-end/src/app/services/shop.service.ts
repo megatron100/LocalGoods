@@ -43,6 +43,14 @@ export class ShopService {
           );
   }
 
+  getProductDets(id: number): Observable<any> {
+    return this.http.get<any>(`${API}${API_PATH}/Home/GetProductById/${id}`)
+                .pipe(
+                  
+                  catchError(this.handleError<any>('getData')),
+                );
+  }
+
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {

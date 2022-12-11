@@ -1,10 +1,10 @@
 <div class="product-card">
     <div class="product-container">
-        <a href="#">
+        <a routerLink='/product/{{product.id}}'>
             <img src="{{product.imageLink}}" alt="{{product.productTitle}}" class="product-pic">
         </a>
         <div class="product-content">
-            <a href="#" class="product-name__link">
+            <a class="product-name__link" routerLink='/product/{{product.id}}'>
                 <h3 class="product-name">{{product.productTitle}}</h3>
             </a>
             <a href="#" class="product-seller__link">
