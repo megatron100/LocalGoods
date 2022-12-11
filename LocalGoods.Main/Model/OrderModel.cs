@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LocalGoods.Main.Model
 {
@@ -9,20 +10,14 @@ namespace LocalGoods.Main.Model
         public int Quantity { get; set; } = 1;
         [Column(TypeName = "decimal(18,4)")]
         public decimal TotalPrice {
-            get
-            {
-                return (OrderItem.Price * Quantity);
-            }
-            set
-            {
-                TotalPrice = value;
-            }
+            get;set;
         }
+        [JsonIgnore]
         public string PaymentType { get; set; }
         public string OrderStatus { get; set; }
         public virtual Address DropAddress { get; set; }
-        [ForeignKey("User")]
-        public  int CustomerId  { get; set; }
+       
+        public virtual User? Customer  { get; set; }
         public DateTime OrderDate  { get; set; }
 
     }

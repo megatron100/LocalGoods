@@ -55,7 +55,7 @@ namespace LocalGoods.Main.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<ActionResult> Post(  [FromBody] AddressRequest addressRequest)
+        public async Task<ActionResult> AddAddress([FromBody] AddressRequest addressRequest)
         {
             //for now anybody can change address of anybody
 
@@ -118,9 +118,9 @@ namespace LocalGoods.Main.Controllers
                     return StatusCode(404, response);
                 }
 
-                if (addressRequest.PinCode != null)
+                if (addressRequest.PostCode != null)
                 {
-                    address.PinCode = addressRequest.PinCode;
+                    address.PinCode = addressRequest.PostCode;
                 }
                 if (addressRequest.Country != null)
                 {

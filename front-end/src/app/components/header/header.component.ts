@@ -18,7 +18,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: User;
 
   constructor(public authService: AuthService,
-              private cartService: CartService) {
+              private cartService: CartService,
+              private store: Store<fromShop.AppState>) {
   }
 
   ngOnInit(): void {
@@ -27,6 +28,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (user) {
           console.log('user', user)
           this.user = user
+        }
+        this.isUserAuth = !!user;
+      });
+      this.cart = this.cartService.cartContent;
+    this.store.select('userData')
+      .subscribe((state: UserState) => {
+        if (state.user) {
+          this.user = state.user
         }
         this.isUserAuth = !!user;
       });

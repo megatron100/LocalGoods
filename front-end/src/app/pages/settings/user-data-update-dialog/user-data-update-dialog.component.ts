@@ -75,6 +75,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+    console.log(this.userForm.value)
     this.settingsService.updateUserInfo(this.userForm.value)
   }
 

@@ -33,33 +33,30 @@ namespace LocalGoods.Main.Controllers
         public async Task<ActionResult> GetSellerProducts()
         {
             var user = _customerService.CurrentUser();
-            var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable  && x.IsPublished).Select(a => a).ToListAsync();
+            var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
             if (products == null)
             {
                 return Ok(new ResponseModel { Message = "No products found" });
             }
-            foreach (var product in products)
-            {
-                product.Seller.Password = "";
-            }
+
             return Ok(new ResponseModel
             {
                 Status = true,
                 Message = "Products found",
                 Data = products
 
-            }) ;
+            });
 
         }
 
-        [HttpGet("GetProductById")]
+        [HttpGet("GetProductById/{id:int}")]
         public async Task<IActionResult> GetProductById(int id)
         {
 
             var response = new ResponseModel();
-            var user= _customerService.CurrentUser();
+            var user = _customerService.CurrentUser();
 
-            var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id==user.Id).Select(y => y).FirstOrDefault();
+            var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id == user.Id).Select(y => y).FirstOrDefault();
             if (product == null)
             {
                 response.Status = false;
@@ -68,7 +65,7 @@ namespace LocalGoods.Main.Controllers
             }
             response.Status = true;
             response.Message = "Product found";
-            product.Seller.Password = "";
+
             response.Data = product;
             return Ok(response);
         }
@@ -82,34 +79,41 @@ namespace LocalGoods.Main.Controllers
                 ResponseModel response = new ResponseModel();
                 var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
                 var user = _customerService.CurrentUser();
-                  
-                if (user == null ||   user.Address == null)
+
+                if (user == null || user.Address == null)
                 {
 
                     return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
                 }
                 if (category == null)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-                
-                    Product product = new Product()
+                    category = new ProductCategory
                     {
-                        Seller = user,
-                        ProductTitle = request.Name,
-                        ProductCategory = category,
-                        Price = request.Price,
-                        ShortDescription = request.ShortDesc,
-                        LongDescription = request.LongDescription
+                        ProductCategoryName = request.Category,
 
                     };
-                    var result = await _dbContext.Product.AddAsync(product);
+                    _dbContext.ProductCategory.Add(category);
                     _dbContext.SaveChanges();
-                    product.Seller.Password = "";
+                }
 
-                    response.Status = true;
-                    response.Data = product;
-                    response.Message = "Product Added Successfully";
+                Product product = new Product()
+                {
+                    Seller = user,
+                    ProductTitle = request.Name,
+                    ProductCategory = category,
+                    ImageLink=request.Photo,
+                    Price = request.Price,
+                    ShortDescription = request.ShortDesc,
+                    LongDescription = request.LongDescription
+
+                };
+                var result = await _dbContext.Product.AddAsync(product);
+                _dbContext.SaveChanges();
+                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+
+                response.Status = true;
+                response.Data = products;
+                response.Message = "Product Added Successfully";
 
                 return Ok(response);
             }
@@ -119,48 +123,67 @@ namespace LocalGoods.Main.Controllers
             }
         }
 
-        [HttpPut("EditProdcuct/{id:int}")]
-        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] AddProductModel request, int? product_id)
+        [HttpPut("EditProduct")]
+        public async Task<ActionResult<ResponseModel>> EditProduct([FromBody] EditProductRequest request)
         {
             try
             {
                 ResponseModel response = new ResponseModel();
-                var product = _dbContext.Product.Where(x => x.Id == product_id).FirstOrDefault();
+                var user = _customerService.CurrentUser();
+                var product = _dbContext.Product.Where(x => x.Id == request.ProductId && x.Seller.Id == user.Id).FirstOrDefault();
                 if (product == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
                 }
-                else
+
+                if (request.Name != null)
                 {
-                    Product newproduct = new Product();
-                    if (request.Name != null)
+                    product.ProductTitle = request.Name;
+                }
+                if (request.Category != null)
+                {
+                    var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                    if (category == null)
                     {
-                        newproduct.ProductTitle = request.Name;
+                        category = new ProductCategory
+                        {
+                            ProductCategoryName = request.Category,
+
+                        };
+                        _dbContext.ProductCategory.Add(category);
+                        _dbContext.SaveChanges();
                     }
-                    if (request.Category != null)
-                    {
-                        var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
-                        if (category != null)
 
-                        { newproduct.ProductCategory = category; }
-                    }
-                    
-                        newproduct.Price = request.Price;
+                      product.ProductCategory = category;  
+                }
 
-                    _dbContext.Product.Update(newproduct);
-                    await _dbContext.SaveChangesAsync();
+                product.Price = request.Price;
+                if (!string.IsNullOrEmpty(request.ShortDesc))
 
-                    response.Status = true;
-                    
-                    response.Message = "ProductDetails Updated Successfully";
+                { product.ShortDescription = request.ShortDesc; }
+                if(!string.IsNullOrEmpty(request.LongDescription))
+                {
+                    product.LongDescription = request.LongDescription;
 
                 }
+                if (!string.IsNullOrEmpty(request.Photo))
+
+                { product.ImageLink = request.Photo; }
+
+                _dbContext.Product.Update(product);
+                await _dbContext.SaveChangesAsync();
+                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+
+                response.Status = true;
+
+                response.Message = "ProductDetails Updated Successfully";
+                response.Data = products;
 
                 return Ok(response);
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -169,14 +192,22 @@ namespace LocalGoods.Main.Controllers
         {
             try
             {
-                var product = _dbContext.Product.Where(x => x.Id == id).FirstOrDefault();
+                var user = _customerService.CurrentUser();
+                var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id == user.Id).FirstOrDefault();
                 if (product == null)
                 {
-                    return NotFound(new ResponseModel {Status=false, Message = "Product Not Found" });
+                    return NotFound(new ResponseModel { Status = false, Message = "Product Not Found" });
                 }
                 _dbContext.Product.Remove(product);
                 await _dbContext.SaveChangesAsync();
-                return Ok(new { Message = "Product Deleted Successfully.." });
+                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+
+                return Ok(new ResponseModel
+                {
+                    Status = true,
+                    Message = "Product Deleted Success",
+                    Data = products
+                });
             }
             catch (Exception)
             {
@@ -191,8 +222,8 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var seller = _customerService.CurrentUser();
-               
-                if (  seller == null)
+
+                if (seller == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest);
                 }

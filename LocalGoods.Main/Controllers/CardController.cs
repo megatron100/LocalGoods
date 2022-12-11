@@ -6,11 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using LocalGoods.Main.DAL;
 using LocalGoods.Main.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalGoods.Main.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CardController : ControllerBase
     {
         
@@ -105,5 +107,6 @@ namespace LocalGoods.Main.Controllers
             _dbContext.SaveChangesAsync();
             return Ok(new { Message = "Card Deleted Successfully.." });
         }
+
     }
 }
