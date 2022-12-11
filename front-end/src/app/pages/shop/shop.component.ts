@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ShopService} from "../../services/shop.service";
-import {IProduct} from "../../interfaces/product";
 import {Store} from "@ngrx/store";
 import * as fromShop from '../../store/index'
 import {ShopState} from "../../store/shop.reducer";
@@ -12,7 +11,7 @@ import {ShopState} from "../../store/shop.reducer";
 })
 export class ShopComponent implements OnInit {
 
-  products: IProduct[] = []
+  products: any[] = [];
   sortValue: string = '';
   searchValue: string = '';
 
@@ -23,7 +22,6 @@ export class ShopComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.products = this.shopService.products
 
     this.store.select('sortData')
       .subscribe((state: ShopState) => {
@@ -33,7 +31,16 @@ export class ShopComponent implements OnInit {
     this.store.select('sortData')
       .subscribe((state: ShopState) => {
         this.searchValue = state.search
-      })
+      });
+
+      this.getProducts();
+  }
+
+  getProducts(): void {
+    this.shopService.getProducts()
+        .subscribe(response => { 
+          this.products = response.data;
+        })
   }
 
 }

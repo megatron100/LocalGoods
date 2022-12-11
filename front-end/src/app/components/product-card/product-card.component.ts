@@ -10,12 +10,12 @@ import { IProduct } from '../../interfaces/product'
 export class ProductCardComponent implements OnInit {
 
 
-  @Input() product!: IProduct;
+  @Input() product: any;
 
   constructor( private cartService: CartService ) { }
 
   ngOnInit(): void {
-
+    
   }
 
   onClickAdd(prod: IProduct) {
