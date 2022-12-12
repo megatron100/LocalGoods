@@ -6,6 +6,7 @@ import { UserDataUpdateDialogComponent } from './user-data-update-dialog/user-da
 import { BasicInfoComponent } from './user-data-update-dialog/basic-info/basic-info.component';
 import { AddressComponent } from './user-data-update-dialog/address/address.component';
 import { UserUpdatePassDialogComponent } from './user-update-pass-dialog/user-update-pass-dialog.component';
+import { AddCertificateDialogComponent } from './add-certificate-dialog/add-certificate-dialog.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { UserUpdatePassDialogComponent } from './user-update-pass-dialog/user-up
     BasicInfoComponent,
     AddressComponent,
     UserUpdatePassDialogComponent,
+    AddCertificateDialogComponent,
   ],
   imports: [
     SharedModule,

@@ -33,9 +33,11 @@ export class UserUpdatePassDialogComponent implements OnInit {
 
   onSubmit() {
     this.settingsService.changePassword(this.passForm.value)
-      .subscribe(({message}) => {
-        const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
-        dialogRef.afterClosed()
+      .subscribe({
+        next: ({message}) => {
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+          dialogRef.afterClosed()
+        }
       })
   }
 }

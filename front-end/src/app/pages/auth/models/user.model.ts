@@ -23,7 +23,6 @@ export class User {
       qualityCertificateTitle: string,
       qualityCertificateDescription: string,
       qualityCertificateLink: string,
-      qualityCertificateDeleteLink: string,
       taxNumber: string,
     } | null,
     public sellerRating?: number,
