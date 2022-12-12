@@ -22,7 +22,6 @@ export class SellerProductStorageService {
   }
 
   storeProduct(product: SellerProductItemModel) {
-    console.log(product)
     return this.http.post<any>(`${API}/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
       .pipe(
         map(({data}) => {
@@ -42,7 +41,6 @@ export class SellerProductStorageService {
 
   updateProduct(id: string, product: SellerProductItemModel) {
     const body = {...product, productId: id}
-    console.log(body)
     return this.http.put<any>(`${API}${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
       .pipe(
         map(({data}) => {

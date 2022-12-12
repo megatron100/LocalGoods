@@ -31,6 +31,14 @@ a {text-decoration: none}
   }
 }
 
+.mat-row {
+  background-color: #8a8888!important;
+  .mat-cell {
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+
 @media (max-height: 500px) {
   .mat-dialog-container {
     max-height: 400px!important;
