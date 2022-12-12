@@ -234,7 +234,7 @@ namespace LocalGoods.Main.Controllers
                         QualityCertificateTitle = request.QualityCertificateTitle,
                         QualityCertificateDescription = request.QualityCertificateDescription,
                         QualityCertificateLink = request.QualityCertificateLink,
-                        QualityCertificateDeleteLink = request.QualityCertificateLink,
+                        QualityCertificateDeleteLink = "",
                         TaxNumber = request.TaxNumber,
 
                     };

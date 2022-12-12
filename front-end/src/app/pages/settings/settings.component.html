@@ -10,33 +10,27 @@
           <table class="resp-tab">
             <tr>
               <td>pinCode</td>
-              <td>{{ user?.address?.pinCode || 'no info' }}</td>
+              <td>{{ user.address?.pinCode || 'no info' }}</td>
             </tr>
             <tr>
               <td>country</td>
-              <td>{{ user?.address?.country || 'no info' }}</td>
+              <td>{{ user.address?.country || 'no info' }}</td>
             </tr>
             <tr>
               <td>city</td>
-              <td>{{ user?.address?.city || 'no info' }}</td>
+              <td>{{ user.address?.city || 'no info' }}</td>
             </tr>
             <tr>
               <td>area</td>
-              <td>{{ user?.address?.area || 'no info' }}</td>
+              <td>{{ user.address?.area || 'no info' }}</td>
             </tr>
 
           </table>
         </td>
       </tr>
-      <tr>
-        <td>cardList</td>
-        <td>
-          <span *ngFor='let card of user.cardList'>{{ card || 'no info' }}</span>
-        </td>
-      </tr>
-      <tr>
+      <tr *ngIf="user.role === 'seller'">
         <td>certification</td>
-        <td>{{ user.certification || 'no info' }}</td>
+        <td>{{ user.certification ? 'yes' : 'no' }}</td>
       </tr>
       <tr>
         <td>email</td>
@@ -54,6 +48,9 @@
     <div class="panel-footer">
       <button mat-raised-button (click)="openUserEditDialog()" type="button" color="accent">
         Update
+      </button>
+      <button mat-raised-button (click)="openAddCertificateDialog()" type="button" color="accent">
+        Add Certificate
       </button>
     </div>
   </div>

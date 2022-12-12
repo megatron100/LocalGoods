@@ -16,8 +16,11 @@ import {MatTableModule} from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card'
-import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive'
-
+import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive';
+import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortHeader, MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher
     SearchPipe,
     SortPipe,
     LoadingSpinnerComponent,
-    MyErrorStateMatcherDirective
+    MyErrorStateMatcherDirective,
+    MessageDialogComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,10 @@ import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher
     MatInputModule,
     MatTableModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -60,7 +67,10 @@ import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher
     SearchPipe,
     SortPipe,
     MatCardModule,
-    MyErrorStateMatcherDirective
+    MyErrorStateMatcherDirective,
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers:[CdkColumnDef]
 })

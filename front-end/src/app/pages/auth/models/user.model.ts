@@ -10,18 +10,23 @@ export class User {
     private _refresh_token: string,
     private _tokenExpirationDate: Date,
     private _refreshTokenExpirationDate: Date,
-    public cardList?: UserPaymentCardModel[],
-    public certification?: [] | null,
-    public mobile?: string,
-    public sellerRating?: number,
     public address?: {
-      pinCode: string,
-      country: string,
-      city: string,
-      area: string,
-      coordinates: string,
-      createdDate: string
+      pinCode?: string,
+      country?: string,
+      city?: string,
+      area?: string,
+      coordinates?: string,
+      createdDate?: string
     },
+    public mobile?: string,
+    public certification?: {
+      qualityCertificateTitle: string,
+      qualityCertificateDescription: string,
+      qualityCertificateLink: string,
+      taxNumber: string,
+    } | null,
+    public sellerRating?: number,
+    public cardList?: UserPaymentCardModel[],
   ) {
   }
 

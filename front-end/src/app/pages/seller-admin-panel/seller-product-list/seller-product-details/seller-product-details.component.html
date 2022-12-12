@@ -1,0 +1,24 @@
+<mat-card class="product-card" *ngIf='(product$ | async); let product else loading'>
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-subtitle>{{ product.shortDesc }}</mat-card-subtitle>
+  </mat-card-header>
+  <img style='max-height: 600px' mat-card-image [src]='product.photo' [alt]='product.name'>
+  <mat-card-content>
+    <p>
+      {{ product.longDescription }}
+    </p>
+    <p>
+      Price: {{ product.price | currency: 'USD' }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button routerLink='../'>Go back</button>
+  </mat-card-actions>
+</mat-card>
+<ng-template #loading>
+  <div class='loader-wrapper'>
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-template>
