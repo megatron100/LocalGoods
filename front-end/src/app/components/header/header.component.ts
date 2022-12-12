@@ -34,15 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         this.isUserAuth = !!user;
       });
-      this.cart = this.cartService.cartContent;
+    this.cart = this.cartService.cartContent;
     this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
           this.user = state.user
         }
-        this.isUserAuth = !!user;
-      });
-      this.cart = this.cartService.cartContent;
+        this.isUserAuth = !!state.user;
+      })
   }
 
   onLogout() {

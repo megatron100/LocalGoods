@@ -34,6 +34,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value)
       .subscribe(value => {
         this.isLoading = true
-      })
+      });
   }
 }
