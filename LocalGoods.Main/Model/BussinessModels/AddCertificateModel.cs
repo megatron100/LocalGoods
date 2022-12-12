@@ -10,8 +10,7 @@ namespace LocalGoods.Main.Model.BussinessModels
         public string? QualityCertificateDescription { get; set; }
         [Required]
         public string? QualityCertificateLink { get; set; }
-        [Required]
-        public string? QualityCertificateDeleteLink { get; set; }
+
         [Required]
         public string TaxNumber { get; set; }
     }
