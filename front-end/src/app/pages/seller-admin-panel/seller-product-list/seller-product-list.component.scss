@@ -1,9 +1,114 @@
-.card-list-wrapper {
-  .card-list {
-    width: 50%;
+.mat-form-field {
+  background-color: #8a8888;
+  width: 100%;
+  padding: 5px;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  padding: 5px;
+  background-color: #8a8888;
+
+  .mat-table {
+    border-radius: 5px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
   }
-  display: flex;
-  .card-list-side-bar{
-    padding: 0 20px;
+
+  .mat-table tr {
+    background: #828283;
+  }
+
+  .mat-table mat-header-cell, .mat-table mat-cell {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-family: Verdana, sans-serif;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .mat-table mat-header-cell {
+    color: #FFF;
+    background: #757579;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .mat-table tr:nth-child(even) {
+    background: #a7a7a8;
+  }
+
+  .mat-paginator {
+    background-color: #8a8888;
+  }
+
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  .mat-icon {
+    margin-left: 30px;
+  }
+}
+
+
+.mat-table, mat-paginator {
+  background-color: #8a8888;
+}
+
+
+@media screen and (max-width: 960px) {
+  .mat-table {
+    padding: 5px;
+    border: 0;
+    vertical-align: middle;
+    background-color: #8a8888;
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+
+  .mat-table .mat-header-cell {
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height:10px;
+    margin-bottom: 2%;
+    margin-right: 4%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .mat-table .mat-cell:before {
+
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: .85em;
+  }
+
+  .mat-table .mat-cell {
+    margin-top: 2%;
+    margin-left: 4%;
   }
 }
