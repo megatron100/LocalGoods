@@ -1,6 +1,55 @@
-<div class='contacts'>
-  <div>
-    <h2>Here will be Contacts page!</h2>
+<div class='contacts-wrapper'>
+  <div class='content'>
+    <div class='header'><h2>Contact us</h2></div>
+    <div class='contact-content'>
+      <div class='contacts'>
+        <div>
+          <p>
+            <mat-icon>phone</mat-icon>
+            +38(067)-555-55-55
+          </p>
+        </div>
+        <div>
+          <p>
+            <mat-icon>phone</mat-icon>
+            +38(063)-555-55-55
+          </p>
+        </div>
+        <div>
+          <p>
+            <mat-icon>phone</mat-icon>
+            +38(050)-555-55-55
+          </p>
+        </div>
+        <div>
+          <p>
+            <mat-icon>email</mat-icon>
+            info@local-goods.com
+          </p>
+        </div>
+      </div>
+      <form>
+          <mat-form-field color='accent' appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type='text'  placeholder="Enter your name" matInput>
+          </mat-form-field>
+          <mat-form-field color='accent' appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input type='phone' placeholder="Ex. +380676666666" matInput>
+          </mat-form-field>
+          <mat-form-field color='accent' appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type='email' matInput  placeholder="Ex. pat@example.com">
+          </mat-form-field>
+          <mat-form-field color='accent' appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea matInput placeholder='Enter your message'></textarea>
+          </mat-form-field>
+        <div>
+          <button mat-raised-button type="submit" color="accent">Send</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 
