@@ -1,47 +1,26 @@
-.card-list-wrapper {
-  display: flex;
-
-  .card-list {
-    width: 50%;
-  }
-
-  .card-list-side-bar {
-    width: 50%;
-    padding: 0 20px;
-  }
-}
-
 .mat-form-field {
   background-color: #8a8888;
   width: 100%;
   padding: 5px;
 }
 
-
-//table {
-//  width: 100%;
-//  padding: 5px;
-//  background-color: #8a8888;
-//}
 .mat-elevation-z8 {
   width: 100%;
   padding: 5px;
   background-color: #8a8888;
 
-  .resp-tab {
+  .mat-table {
     border-radius: 5px;
     font-weight: normal;
     border: none;
     border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
   }
 
-  .resp-tab tr {
+  .mat-table tr {
     background: #828283;
   }
 
-  .resp-tab th, .resp-tab td {
+  .mat-table mat-header-cell, .mat-table mat-cell {
     padding: 10px 20px;
     font-size: 13px;
     font-family: Verdana, sans-serif;
@@ -49,7 +28,7 @@
     vertical-align: top;
   }
 
-  .resp-tab th {
+  .mat-table mat-header-cell {
     color: #FFF;
     background: #757579;
     font-weight: bold;
@@ -57,7 +36,7 @@
     text-align: center;
   }
 
-  .resp-tab tr:nth-child(even) {
+  .mat-table tr:nth-child(even) {
     background: #a7a7a8;
   }
 
@@ -75,25 +54,61 @@
 }
 
 
-@media(max-width: 1280px) {
-  //.mat-elevation-z8 {
-  //  width: 100%;
-  //  .resp-tab tr {
-  //    display: flex;
-  //    flex-direction: row;
-  //    flex-wrap: wrap;
-  //    margin-bottom: 30px;
-  //  }
-  //
-  //  .resp-tab th td {
-  //    margin: 0 -1px -1px 0;
-  //    padding-top: 35px;
-  //    position: relative;
-  //    width: 100%;
-  //  }
-  //}
+.mat-table, mat-paginator {
+  background-color: #8a8888;
 }
 
-@media(max-width: 480px) {
 
+@media screen and (max-width: 960px) {
+  .mat-table {
+    padding: 5px;
+    border: 0;
+    vertical-align: middle;
+    background-color: #8a8888;
+  }
+
+  .mat-table caption {
+    font-size: 1em;
+  }
+
+
+  .mat-table .mat-header-cell {
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+  }
+
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height:10px;
+    margin-bottom: 2%;
+    margin-right: 4%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .mat-table .mat-cell:before {
+
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: .85em;
+  }
+
+  .mat-table .mat-cell {
+    margin-top: 2%;
+    margin-left: 4%;
+  }
 }
