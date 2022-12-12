@@ -19,7 +19,8 @@ import {MatCardModule} from '@angular/material/card'
 import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher.directive';
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortHeader, MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -45,7 +46,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MatTableModule,
     MatDialogModule,
     MatCardModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -65,7 +68,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     SortPipe,
     MatCardModule,
     MyErrorStateMatcherDirective,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers:[CdkColumnDef]
 })

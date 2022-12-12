@@ -24,7 +24,7 @@ export class SellerProductItemComponent implements OnInit {
     private dialog: MatDialog,
     public store: Store<fromSellerProductList.AppState>,
     public sellerService: SellerService,
-    public sellerProductStorageService: SellerProductStorageService,) { }
+    public sellerProductStorageService: SellerProductStorageService) { }
 
   ngOnInit(): void {
   }
