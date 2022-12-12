@@ -3,4 +3,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .content {
+    font-size: 14px;
+    line-height: 1.42857;
+    width: 50%;
+  }
 }
