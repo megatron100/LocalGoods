@@ -104,6 +104,7 @@ namespace LocalGoods.Main.Controllers
                     order.OrderDate = DateTime.UtcNow;
                     order.Customer = user;
                     order.DropAddress = user.Address;
+                    order.PaymentType = "card";
                     order.Quantity = item.Quantity;
                     order.TotalPrice = item.TotalAmount;
                     await _dbContext.Orders.AddAsync(order);
@@ -143,7 +144,7 @@ namespace LocalGoods.Main.Controllers
                 }
 
                 //check if Order is valid
-                var cartItems =   _dbContext.ShoppingCartItem.Where(x => x.Id == user.Id).Select(a => a).ToList();
+                var cartItems =   _dbContext.ShoppingCartItem.Where(x => x.User.Id == user.Id).Select(a => a).ToList();
                 if(cartItems.Count==0)
                 {
                     return BadRequest(new ResponseModel

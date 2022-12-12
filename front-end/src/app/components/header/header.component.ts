@@ -18,8 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: User;
 
   constructor(public authService: AuthService,
-              private cartService: CartService,
-              private store: Store<fromShop.AppState>) {
+              private cartService: CartService) {
   }
 
   ngOnInit(): void {
