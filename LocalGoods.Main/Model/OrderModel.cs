@@ -13,7 +13,7 @@ namespace LocalGoods.Main.Model
             get;set;
         }
         [JsonIgnore]
-        public string? PaymentType { get; set; }
+        public string PaymentType { get; set; }
         public string OrderStatus { get; set; }
         public virtual Address DropAddress { get; set; }
        
