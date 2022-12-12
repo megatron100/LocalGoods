@@ -3,7 +3,10 @@ import {Subscription} from "rxjs";
 import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
 import {AuthService} from "../../pages/auth/auth.service";
-import { User } from 'src/app/pages/auth/models/user.model';
+import {User} from "../../pages/auth/models/user.model";
+import {Store} from "@ngrx/store";
+import * as fromShop from "../../store";
+import {UserState} from "../../store/user.reducer";
 
 @Component({
   selector: 'app-header',
