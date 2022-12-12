@@ -67,4 +67,5 @@ export class UserService {
   transformProductResponse(data: any) {
     return new SellerProductItemModel(data.productTitle, data.imageLink, data.productCategory.productCategoryName, data.price, data.shortDescription, data.longDescription, data.id)
   }
+
 }
