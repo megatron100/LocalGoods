@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SellerProductStorageService} from "../../../services/seller-product-storage.service";
 import {Subscription} from "rxjs";
 import {SellerProductItemModel} from "../models/seller-product-item.model";
@@ -27,6 +27,7 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<SellerProductItemModel>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(
     public sellerStorageService: SellerProductStorageService,

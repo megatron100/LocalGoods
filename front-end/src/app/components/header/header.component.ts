@@ -14,7 +14,6 @@ import {UserState} from "../../store/user.reducer";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  collapsed: boolean = true;
   isUserAuth: boolean = false;
   private userSub!: Subscription;
   cart!:IProduct[];

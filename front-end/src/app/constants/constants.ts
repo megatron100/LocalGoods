@@ -19,4 +19,4 @@ export const PATH_GET_PROFILE = 'profile';
 export const EXPIRE_IN = 1440;
 export const REFRESH_EXPIRE_IN = 14400;
 export const USER_ROLES = ['seller', 'customer'];
-export const CATEGORIES = ['Cheese', 'Dairy', 'Meat and eggs', 'Sausage and delicatessen', 'Vegetarian food']
+

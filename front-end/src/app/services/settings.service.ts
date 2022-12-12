@@ -32,7 +32,6 @@ export class SettingsService {
   };
 
   addCertificate(body: {}) {
-    console.log(body)
     return this.http.post<any>(`${API}/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
       .pipe(
       )
