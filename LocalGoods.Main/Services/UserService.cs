@@ -29,6 +29,17 @@ namespace LocalGoods.Main.Services
             return customer;
 
         }
+        public Product GetProductById(int id)
+        {
+
+            var product = _dbContext.Product.Where(x => x.Id == id).Select(a => a).FirstOrDefault();
+            if (product == null)
+            {
+                return null;
+            }
+            return product;
+
+        }
 
         public User GetUserByEmail(string email)
         {

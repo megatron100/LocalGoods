@@ -17,8 +17,9 @@ namespace LocalGoods.Main.Model
         public string? ImageLink { get; set; }
         public string? DeleteImageLink { get; set; }
 
-        public bool IsPublished { get; set; } = true;
+        public bool IsPublished { get; set; } = true;           
         public bool IsAvailable { get; set; } = true;
     }
 
 }
+        

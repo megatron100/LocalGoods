@@ -13,7 +13,6 @@
       </ul>
     </div>
     <div class="navbar-nav navbar-right">
-      <mat-icon  *ngIf='isUserAuth' style='color: red; cursor: pointer'>favorite_border</mat-icon>
       <mat-icon style="cursor: pointer; position: relative" *ngIf='isUserAuth' routerLinkActive="cart">shopping_cart</mat-icon>
       <mat-icon style="cursor: pointer" *ngIf='isUserAuth' [matMenuTriggerFor]="profile">person_outline</mat-icon>
       <mat-icon style="cursor: pointer" routerLink="/login" *ngIf='!isUserAuth'>login</mat-icon>
@@ -49,11 +48,10 @@
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item><mat-icon>home</mat-icon><a routerLink="/home">Home</a></button>
-  <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>contacts</mat-icon><a routerLink="/contacts">Contacts</a></button>
-  <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>info</mat-icon><a routerLink="/info">Info</a></button>
+  <button mat-menu-item><mat-icon>contacts</mat-icon><a routerLink="/contacts">Contacts</a></button>
+  <button mat-menu-item><mat-icon>info</mat-icon><a routerLink="/info">Info</a></button>
   <button *ngIf="isUserAuth && user.role === 'customer'" mat-menu-item><mat-icon>shopping_bag</mat-icon><a routerLink="/shop">Shop</a></button>
   <button *ngIf="isUserAuth && user.role === 'seller'" mat-menu-item><mat-icon>admin_panel_settings</mat-icon><a routerLink="/seller-admin-panel">My Farm</a></button>
-  <button *ngIf='isUserAuth' mat-menu-item><mat-icon>favorite_border</mat-icon><a routerLink="/wish-list">Wish List</a></button>
   <button *ngIf='isUserAuth' mat-menu-item><mat-icon>shopping_cart</mat-icon><a routerLink="/cart">Cart</a></button>
   <button *ngIf='isUserAuth' mat-menu-item><mat-icon>settings</mat-icon><a  routerLink="/private/settings">Settings</a></button>
   <mat-divider></mat-divider>

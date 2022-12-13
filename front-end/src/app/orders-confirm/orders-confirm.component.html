@@ -1,0 +1,9 @@
+<p>orders-confirm works!</p>
+<h1>
+    Pending Orders Are: 
+</h1>
+<ul>
+    <li *ngFor="let orders of pending_orders">
+        {{orders.orderItem.productTitle}}
+    </li>
+</ul>

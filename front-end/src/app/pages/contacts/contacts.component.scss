@@ -50,15 +50,68 @@
         padding: 30px 20px;
         background-color: #777777;
       }
+
       form:host {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
       }
+
       .mat-form-field {
         width: 100%;
         color: whitesmoke;
       }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .contacts-wrapper {
+    margin-top: 40px;
+
+    .content {
+      width: 80%;
+
+      .contact-content {
+        flex-direction: column;
+
+        .contacts {
+          width: 100%;
+        }
+
+        form {
+          width: 100%;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .contacts-wrapper {
+
+    .content {
+      width: 80%;
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .contacts-wrapper {
+
+    .content {
+      width: 60%;
+    }
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1920px) {
+  .contacts-wrapper {
+
+    .content {
+      width: 45%;
     }
   }
 }
