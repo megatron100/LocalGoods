@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import { AuthGuard } from './pages/auth/auth.guard';
+import { LoginComponent } from './pages/auth/login/login.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -19,7 +21,7 @@ const routes: Routes = [
       .then(m => m.ContactsModule)
   },
   {path: 'shop', loadChildren: () => import('./pages/shop/shop.module')
-      .then(m => m.ShopModule)
+      .then(m => m.ShopModule), canActivate: [AuthGuard]
   },
   { path: 'product/:id', loadChildren: () => import('./pages/product-detail/product-detail.module')
       .then(m => m.ProductDetailModule) },
