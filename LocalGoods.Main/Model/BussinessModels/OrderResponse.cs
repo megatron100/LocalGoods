@@ -3,6 +3,6 @@
     public class OrderResponse
     {
         public int id { get; set; }
-        public OrderStatus orderStatus { get; set; }
+        public string orderStatus { get; set; }
     }
 }

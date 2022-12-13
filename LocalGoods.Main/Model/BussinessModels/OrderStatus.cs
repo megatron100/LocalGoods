@@ -1,6 +1,6 @@
 ﻿namespace LocalGoods.Main.Model.BussinessModels
 {
-    public static class OrderStatus
+    public class OrderStatus
     {
         public const string Pending = "Pending";
         public const string Confirmed = "Confirmed";

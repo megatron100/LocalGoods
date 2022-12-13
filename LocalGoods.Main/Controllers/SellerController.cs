@@ -255,7 +255,7 @@ namespace LocalGoods.Main.Controllers
                 return BadRequest();
             }
         }
-        [HttpGet("GetPlacedOrders")]
+        [HttpGet("GetPendingOrders")]
         public async Task<ActionResult> GetOrdersToConfirmorReject()
         {
             var user = _customerService.CurrentUser();

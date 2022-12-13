@@ -103,6 +103,7 @@ namespace LocalGoods.Main.Controllers
                     order.OrderStatus = OrderStatus.Pending;
                     order.OrderDate = DateTime.UtcNow;
                     order.Customer = user;
+                    order.PaymentType = "card";
                     order.DropAddress = user.Address;
                     order.Quantity = item.Quantity;
                     order.TotalPrice = item.TotalAmount;
@@ -143,7 +144,7 @@ namespace LocalGoods.Main.Controllers
                 }
 
                 //check if Order is valid
-                var cartItems =   _dbContext.ShoppingCartItem.Where(x => x.Id == user.Id).Select(a => a).ToList();
+                var cartItems =   _dbContext.ShoppingCartItem.Where(x => x.User.Id == user.Id).Select(a => a).ToList();
                 if(cartItems.Count==0)
                 {
                     return BadRequest(new ResponseModel
