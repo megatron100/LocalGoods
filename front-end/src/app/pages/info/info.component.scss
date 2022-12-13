@@ -8,5 +8,11 @@
     font-size: 14px;
     line-height: 1.42857;
     width: 50%;
+    span {
+      font-weight: bold;
+    }
+    p span {
+      font-weight: bold;
+    }
   }
 }
