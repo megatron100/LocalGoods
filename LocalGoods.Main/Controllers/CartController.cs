@@ -63,7 +63,7 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpGet("AddToCart/{ProductId:int}")]
+        [HttpPost("AddToCart/{ProductId:int}")]
         public async Task<ActionResult> AddProductToCart(int ProductId)
 
         {
@@ -143,7 +143,7 @@ namespace LocalGoods.Main.Controllers
             });
         }
 
-        [HttpPost("ClearCart")]
+        [HttpDelete("ClearCart")]
         public async Task<ActionResult> DeleteCart()
         {
             var customer = _userService.CurrentUser();
