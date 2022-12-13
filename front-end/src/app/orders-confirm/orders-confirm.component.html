@@ -1,9 +1,88 @@
-<p>orders-confirm works!</p>
-<h1>
-    Pending Orders Are: 
-</h1>
-<ul>
-    <li *ngFor="let orders of pending_orders">
-        {{orders.orderItem.productTitle}}
-    </li>
-</ul>
+<section class="h-100 w-100">
+  <div class="container  h-100" style="width: 90%;">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card-header px-4 py-5">
+          <h1 class="text-muted mb-0">Pending Orders!</h1>
+        </div>
+        <div *ngFor="let orders of pending_orders">
+         
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-body p-4">
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row align-middle" style="display: flex; align-items:center; margin: 30px; justify-content:space-between;">
+                  <div class="col-md-2">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
+                      class="img-thumbnail"style="width:100px; height:100px;" alt="Phone">
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                   
+                    <p class="text-muted mb-0">OrderId:{{orders.id}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    
+                    <p class="text-muted mb-0 small">OrderItem: {{orders.orderItem.productTitle}}</p>
+                    <p class="text-muted mb-0 small">OrderDesc:{{orders.orderItem.shortDescription}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Qty: {{orders.quantity}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    
+                    <p class="text-muted mb-0 small">Price: ${{orders.orderItem.price}}</p>
+                  </div>
+                  <div class = "col-sm-1">
+                    <td style="display: block;">
+                      <div class="row">
+                        <label><b>Action</b></label>
+                      </div>
+                      <div class="row">
+                        <input type="radio" name="action" style="background-color: green;">
+                        <label> Confirm</label>
+                      </div>
+                      <div class="row">
+                        <input type="radio" name="action" style="background-color: red;">
+                        <label> Reject</label>
+                      </div>
+                  
+                </div>
+                   
+                </div>
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                
+              </div>
+            </div>
+            
+
+            <!-- <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0">Order Details</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0">Invoice Number : 788152</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-5">
+              <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+            </div> -->
+          </div> 
+        </div>
+          <!-- <div class="card-footer border-0 px-4 py-5"
+            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
