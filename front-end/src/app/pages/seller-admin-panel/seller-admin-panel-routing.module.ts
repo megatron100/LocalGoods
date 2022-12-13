@@ -16,9 +16,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       role: USER_ROLES[0]
-    },
-    children: [{path: ':id', component: SellerProductDetailsComponent},]
+    }
   },
+  {path: ':id', component: SellerProductDetailsComponent},
   {
     path: '',
     component: SellerProductStartComponent,
