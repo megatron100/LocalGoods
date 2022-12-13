@@ -22,4 +22,5 @@ export const USER_ROLES = ['seller', 'customer'];
 
 // Saurabh's edit
 export const ORDER_CONFIRM_PATH = 'GetPendingOrders';
+export const Customer_Orders = 'GetOrders';
 
