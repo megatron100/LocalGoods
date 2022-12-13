@@ -9,6 +9,7 @@ import {MyErrorStateMatcherDirective} from "../../../directives/my-error-state-m
 import {SettingsService} from "../../../services/settings.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
+import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-user-update-pass-dialog',
@@ -36,6 +37,13 @@ export class UserUpdatePassDialogComponent implements OnInit {
       .subscribe({
         next: ({message}) => {
           const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+          dialogRef.afterClosed()
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
           dialogRef.afterClosed()
         }
       })

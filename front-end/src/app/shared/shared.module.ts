@@ -20,7 +20,8 @@ import {MyErrorStateMatcherDirective} from '../directives/my-error-state-matcher
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatSortHeader, MatSortModule} from "@angular/material/sort";
+import {MatSortModule} from "@angular/material/sort";
+import { ErrorDialogComponent } from './error-handling/error-dialog/error-dialog.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatSortHeader, MatSortModule} from "@angular/material/sort";
     SortPipe,
     LoadingSpinnerComponent,
     MyErrorStateMatcherDirective,
-    MessageDialogComponent
+    MessageDialogComponent,
+    ErrorDialogComponent
   ],
   imports: [
     CommonModule,

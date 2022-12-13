@@ -9,6 +9,7 @@ import {UserState} from "../../../store/user.reducer";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
+import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-user-data-update-dialog',
@@ -84,10 +85,19 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
      this.settingsService.updateUserInfo(this.userForm.value)
-      .subscribe(({data, message}) => {
-     this.userService.updateUserInStore(data)
-        const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
-        dialogRef.afterClosed()
+      .subscribe({
+        next: ({data, message}) => {
+          this.userService.updateUserInStore(data)
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+          dialogRef.afterClosed()
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
+        }
       })
   }
 

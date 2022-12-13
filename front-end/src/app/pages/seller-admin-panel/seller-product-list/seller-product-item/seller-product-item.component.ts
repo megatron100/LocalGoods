@@ -9,6 +9,7 @@ import * as fromSellerProductList from "../../../../store";
 import * as ProductActions from '../../../../store/seller-product.actions';
 import {SellerService} from "../../../../services/seller.service";
 import {SellerProductStorageService} from "../../../../services/seller-product-storage.service";
+import {ErrorDialogComponent} from "../../../../shared/error-handling/error-dialog/error-dialog.component";
 
 
 @Component({
@@ -34,6 +35,13 @@ export class SellerProductItemComponent implements OnInit {
       .subscribe({
         next: (res: SellerProductItemModel[]) => {
           this.sellerService.setProducts(res)
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
         }
       })
   }

@@ -8,7 +8,7 @@ import {
   API,
   API_PATH_AUTH,
   EXPIRE_IN,
-  PATH_LOGIN, PATH_LOGOUT,
+  PATH_LOGIN,
   PATH_REGISTER,
   REFRESH_EXPIRE_IN
 } from "../../constants/constants";
@@ -19,6 +19,7 @@ import * as fromShop from '../../store/index'
 import {Store} from "@ngrx/store";
 import * as UserActions from '../../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
+import {ErrorService} from "../../shared/error-handling/error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,15 +30,22 @@ export class AuthService {
   private millisecondsInMinute = 60000;
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router,  private store: Store<fromShop.AppState>, public dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromShop.AppState>,
+    public dialog: MatDialog,
+    private errorService: ErrorService
+  ) {
   }
 
   register(body: RegisterModel) {
-    return this.http.post<any>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
+    return this.http.post<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
       .pipe(
+        catchError(this.errorService.handleError),
         tap(
           () => {
-            this.router.navigate(['./login'])
+            this.router.navigate(['./login']);
           }
         )
       )
@@ -47,6 +55,7 @@ export class AuthService {
   login(body: LoginModel) {
     return this.http.post<AuthResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
+        catchError(this.errorService.handleError),
         tap(
           ({data}) => {
             this.handleAuth(data.id, data.email, data.role, data.name, data.accessToken, data.refreshToken);
@@ -100,7 +109,7 @@ export class AuthService {
       new Date(userData._refreshTokenExpirationDate)
     )
 //We check whether our token is still active, if yes, so we activate the user
-    if(loadedUserFromLS.token) {
+    if (loadedUserFromLS.token) {
       const expirationTime = new Date(userData._refreshTokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationTime);
       this.store.dispatch(new UserActions.CreateUser(loadedUserFromLS))

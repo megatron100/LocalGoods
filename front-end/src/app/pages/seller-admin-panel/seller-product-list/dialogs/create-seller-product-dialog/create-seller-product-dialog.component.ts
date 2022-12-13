@@ -7,9 +7,10 @@ import {SellerProductState} from "../../../../../store/seller-product.reducer";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SellerProductStorageService} from "../../../../../services/seller-product-storage.service";
 import {CategoryModel} from "../../../models/category.model";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {SellerService} from "../../../../../services/seller.service";
 import {SellerProductItemModel} from "../../../models/seller-product-item.model";
+import {ErrorDialogComponent} from "../../../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-create-seller-product-dialog',
@@ -30,7 +31,8 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     public store: Store<fromSellerProductList.AppState>,
     public sellerService: SellerService,
     public sellerProductStorageService: SellerProductStorageService,
-    @Inject(MAT_DIALOG_DATA) public data: SellerProductItemModel
+    @Inject(MAT_DIALOG_DATA) public data: SellerProductItemModel,
+    public dialog: MatDialog
   ) {
   }
 
@@ -54,9 +56,15 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
       longDescription: new FormControl(this.data?.longDescription, [Validators.required]),
     })
     this.sellerProductStorageService.getCategories()
-      .subscribe(({data}) => {
-        this.categories = [...data as CategoryModel[]]
-        this.store.dispatch(new ProductActions.GetCategories(data))
+      .subscribe({
+        next: ({data}) => {
+          this.categories = [...data as CategoryModel[]]
+          this.store.dispatch(new ProductActions.GetCategories(data))
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {data: err});
+          dialogRef.afterClosed()
+        }
       })
 
     this.productsSubscription = this.store.select('sellerProductData')
@@ -74,14 +82,27 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (res: SellerProductItemModel[]) => {
             this.sellerService.setProducts(res)
+          },
+          error: err => {
+            const dialogRef = this.dialog.open(ErrorDialogComponent, {
+              data: err,
+              panelClass: 'color'
+            });
+            dialogRef.afterClosed()
           }
         })
     } else {
       this.sellerProductStorageService.updateProduct(this.data.id.toString(), this.createProductForm.value)
         .subscribe({
           next: (res: SellerProductItemModel[]) => {
-            console.log(res)
             this.sellerService.setProducts(res)
+          },
+          error: err => {
+            const dialogRef = this.dialog.open(ErrorDialogComponent, {
+              data: err,
+              panelClass: 'color'
+            });
+            dialogRef.afterClosed()
           }
         })
     }

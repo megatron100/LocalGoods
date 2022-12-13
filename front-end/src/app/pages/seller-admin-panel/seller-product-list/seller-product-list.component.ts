@@ -14,6 +14,7 @@ import {
   CreateSellerProductDialogComponent
 } from "./dialogs/create-seller-product-dialog/create-seller-product-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-seller-product-list',
@@ -23,7 +24,7 @@ import {MatDialog} from "@angular/material/dialog";
 export class SellerProductListComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   products!: SellerProductItemModel[]
-  displayedColumns: string[] = ['id', 'name', 'category',  'shortDesc', 'price', 'photo'];
+  displayedColumns: string[] = ['id', 'name', 'category', 'shortDesc', 'price', 'photo'];
   dataSource!: MatTableDataSource<SellerProductItemModel>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,10 +41,17 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-       this.sellerStorageService.getProducts()
+    this.sellerStorageService.getProducts()
       .subscribe({
         next: (res: SellerProductItemModel[]) => {
           this.sellerService.setProducts(res)
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
         }
       });
 
@@ -71,12 +79,15 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: SellerProductItemModel[]) => {
           this.sellerService.setProducts(res)
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {data: err});
+          dialogRef.afterClosed()
         }
       })
   }
 
   onProductUpdate(product: SellerProductItemModel) {
-    console.log('prod', product)
     this.store.dispatch(new ProductActions.ChangeMode(false));
     const dialogRef = this.dialog.open(CreateSellerProductDialogComponent, {data: product});
     dialogRef.afterClosed()
