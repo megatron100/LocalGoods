@@ -52,7 +52,7 @@ namespace LocalGoods.Main.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            }                               
         }
 
         [HttpGet("GetOrderById/{id:int}")]
@@ -94,6 +94,12 @@ namespace LocalGoods.Main.Controllers
                         Message = "No product found in Cart"
                     });
                 }
+                if(user.Address==null)
+                {
+                    response.Status = false;
+                    response.Message = "You don't have any address, Please add the address first";
+                        return Ok(response);
+                }
                 //put all cart items in order
 
                 foreach (var item in cartItems)
@@ -107,6 +113,7 @@ namespace LocalGoods.Main.Controllers
                     order.DropAddress = user.Address;
                     order.Quantity = item.Quantity;
                     order.TotalPrice = item.TotalAmount;
+                   
                     await _dbContext.Orders.AddAsync(order);
 
                 }
