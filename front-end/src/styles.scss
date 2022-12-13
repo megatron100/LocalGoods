@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100vh;  overflow-x: hidden;}
+html, body { height: 100vh;  overflow-x: hidden; box-sizing: border-box}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 a {text-decoration: none}
 
@@ -17,6 +17,7 @@ a {text-decoration: none}
   width: 800px;
   .form {
     width: 100%;
+    box-sizing: border-box;
   }
   //margin-top: 7em;
   padding: 15px;
