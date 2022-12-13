@@ -9,12 +9,19 @@ import { ShopService } from 'src/app/services/shop.service';
 })
 export class HomeComponent implements OnInit {
 
-  public topProds!: IProduct[];
+  public topProds!: any[];
 
   constructor( public shopService: ShopService ) { }
 
   ngOnInit(): void {
-    this.topProds = this.shopService.products;
+
+    this.shopService.getProducts();
+
+    this.shopService.productList$.subscribe(res =>{ this.topProds = res;
+    console.log(res);
+    })
+
+    
   }
 
 }

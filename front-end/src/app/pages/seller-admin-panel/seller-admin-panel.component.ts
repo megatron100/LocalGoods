@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./seller-admin-panel.component.scss']
 })
 export class SellerAdminPanelComponent implements OnInit {
+isCertificateExist!: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  onProductCreate() {
+
+  }
 }

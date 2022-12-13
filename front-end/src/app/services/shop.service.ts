@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import {IProduct} from "../interfaces/product";
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,7 @@ export class ShopService {
 
   constructor( private http: HttpClient ) { }
 
+  public productList$ = new BehaviorSubject([]);
   products: IProduct[] = [
     {
       name: 'Cheese',
@@ -36,11 +37,14 @@ export class ShopService {
     },
   ];
 
-  getProducts(): Observable<any> {
+  getProducts() {
     return this.http.get<any>(`${API}${API_PATH}/Home/GetProducts`)
           .pipe(
             catchError(this.handleError<any>('getData')),
-          );
+          )
+          // .subscribe(res => {            
+          //   this.productList$.next(res.data.otherProducts)
+          // });
   }
 
   getProductDets(id: number): Observable<any> {

@@ -9,14 +9,32 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-  @Input() product: any;
 
-  cart!: IProduct[];
+  cart!: any[];
 
   constructor( private cartService: CartService ) { }
 
   ngOnInit(): void {
-    this.cart = this.cartService.cartContent;
+    this.getCart();
+    
   }
 
+  getCart() {
+    this.cartService.getCart()
+        .subscribe(res => {
+          this.cart = res.data.cartItems;
+          console.log(this.cart);
+          
+          
+        })
+  }
+
+  calculatePrice(arr: any[]): number {
+    let sum: number = 0;
+    for (let item of arr) {
+      sum += (item.product.price * item.quantity);      
+    }
+
+    return sum;
+  }
 }

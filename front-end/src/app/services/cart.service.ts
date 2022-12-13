@@ -16,10 +16,17 @@ export class CartService {
   cartContent: any[] = [];
 
   addToCart(id: number): Observable<any> {
-    return this.http.get<any>(`${API}${API_PATH}/Cart/AddToCart/${id}`)
+    return this.http.post<any>(`${API}${API_PATH}/Cart/AddToCart/${id}`, id)
           .pipe(
             catchError(this.handleError<any>('getData')),
           );
+  }
+
+  getCart(): Observable<any> {
+    return this.http.get<any>(`${API}${API_PATH}/Cart/CartItems`)
+                .pipe(
+                  catchError(this.handleError<any>('getData'))
+                )
   }
 
 

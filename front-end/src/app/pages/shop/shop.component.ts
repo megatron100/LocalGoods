@@ -11,17 +11,19 @@ import {ShopState} from "../../store/shop.reducer";
 })
 export class ShopComponent implements OnInit {
 
-  products: any[] = [];
+  products!: any[];
   sortValue: string = '';
   searchValue: string = '';
 
   constructor(
-    private shopService: ShopService,
+    public shopService: ShopService,
     private store: Store<fromShop.AppState>
   ) {
   }
 
   ngOnInit(): void {
+
+    this.getProducts();
 
     this.store.select('sortData')
       .subscribe((state: ShopState) => {
@@ -33,18 +35,13 @@ export class ShopComponent implements OnInit {
         this.searchValue = state.search
       });
 
-      this.getProducts();
+      // this.products = this.shopService.productList$.value;
   }
 
   getProducts(): void {
     this.shopService.getProducts()
         .subscribe(response => { 
-          this.products = response.data;
-          for (let prod of this.products) {
-            console.log(prod.id);
-            
-          }
-          
+          this.products = response.data.otherProducts;
         })
   }
 
