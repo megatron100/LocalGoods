@@ -19,7 +19,6 @@ import * as fromShop from '../../store/index'
 import {Store} from "@ngrx/store";
 import * as UserActions from '../../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
-import {ResponseData} from "../../interfaces/responseData";
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +57,6 @@ export class AuthService {
   };
 
   logout() {
-    this.http.delete<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGOUT}`)
     //Remove the user from the LS if the token is not finished clearing Timeout after which autoLogout will take place
     this.store.dispatch(new UserActions.CreateUser(null))
     this.router.navigate(['./login']);
@@ -71,7 +69,6 @@ export class AuthService {
 
   autoLogout(expirationDuration: number) {
     //expirationDuration - timer of token time s over
-    this.http.delete<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGOUT}`)
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration)

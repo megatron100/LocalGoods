@@ -7,7 +7,6 @@ import {
   PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES,
   PATH_GET_PRODUCT_BY_ID,
   PATH_GET_PRODUCTS,
-  Local_API,
 } from "../constants/constants";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
@@ -51,7 +50,6 @@ export class SellerProductStorageService {
   };
 
   getProductById(id: string) {
-    console.log('service id', id)
     return this.http.get<any>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
       .pipe(
         map(({data}) => {
@@ -61,7 +59,7 @@ export class SellerProductStorageService {
   };
 
   getProducts() {
-    return this.http.get<any>(`${Local_API}${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
       .pipe(
         map(({data}) => {
           return this.userService.transformProductArrResponse(data)
