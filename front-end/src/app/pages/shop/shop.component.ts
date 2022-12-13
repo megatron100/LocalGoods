@@ -42,6 +42,11 @@ export class ShopComponent implements OnInit {
     this.shopService.getProducts()
         .subscribe(response => { 
           this.products = response.data.otherProducts;
+          for (let item of this.products) {
+            console.log(item.imageLink);
+            
+          }
+          
         })
   }
 

@@ -17,7 +17,7 @@ export class ProductCardComponent implements OnInit {
                 private shopService: ShopService ) { }
 
   ngOnInit(): void {
-    
+
   }
 
   onClickAdd(id: number) {

@@ -15,13 +15,27 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.shopService.getProducts();
+    this.getTopProds();
 
-    this.shopService.productList$.subscribe(res =>{ this.topProds = res;
-    console.log(res);
-    })
+    // this.shopService.productList$.subscribe(res =>{ this.topProds = res;
+    // console.log(res);
+    // })
 
     
+  }
+
+  getTopProds() {
+    let dataCont: any[];
+    this.shopService.getProducts()
+        .subscribe(res => {
+          dataCont = res.data.otherProducts;
+          dataCont.sort(function(a, b) {
+            return parseFloat(b.seller.sellerRating) - parseFloat(a.seller.sellerRating);
+        });
+        this.topProds = dataCont.splice(0, 3);
+        
+        
+        })
   }
 
 }

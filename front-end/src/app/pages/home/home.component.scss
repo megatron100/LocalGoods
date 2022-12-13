@@ -86,12 +86,31 @@
 .sample-list {
   margin: 20px auto;
   padding: 15px 20px;
+  width: 100%;
   flex-direction: row;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
-
 .contact {
   align-items: flex-start;
   margin: 20px auto;
   padding: 15px 20px;
+}
+
+
+
+@media (max-width: 1000px) {
+  
+  h2 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 770px) {
+  .home-banner {
+    flex-wrap: wrap;
+  }
+  .sample-list {
+    width: 1vw;
+  }
 }
