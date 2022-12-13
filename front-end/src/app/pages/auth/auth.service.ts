@@ -14,11 +14,11 @@ import {
 } from "../../constants/constants";
 import {Router} from "@angular/router";
 import {AuthResponseData} from "../../interfaces/auth-response-data";
+import {ResponseData} from "../../interfaces/responseData";
 import * as fromShop from '../../store/index'
 import {Store} from "@ngrx/store";
 import * as UserActions from '../../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
-import {ResponseData} from "../../interfaces/responseData";
 
 @Injectable({
   providedIn: 'root'
