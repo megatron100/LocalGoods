@@ -101,7 +101,7 @@ namespace LocalGoods.Main.Controllers
                     Seller = user,
                     ProductTitle = request.Name,
                     ProductCategory = category,
-                    ImageLink=request.Photo,
+                    ImageLink = request.Photo,
                     Price = request.Price,
                     ShortDescription = request.ShortDesc,
                     LongDescription = request.LongDescription
@@ -154,14 +154,14 @@ namespace LocalGoods.Main.Controllers
                         _dbContext.SaveChanges();
                     }
 
-                      product.ProductCategory = category;  
+                    product.ProductCategory = category;
                 }
 
                 product.Price = request.Price;
                 if (!string.IsNullOrEmpty(request.ShortDesc))
 
                 { product.ShortDescription = request.ShortDesc; }
-                if(!string.IsNullOrEmpty(request.LongDescription))
+                if (!string.IsNullOrEmpty(request.LongDescription))
                 {
                     product.LongDescription = request.LongDescription;
 
@@ -255,6 +255,81 @@ namespace LocalGoods.Main.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet("GetPendingOrders")]
+        public async Task<ActionResult> GetOrdersToConfirmorReject()
+        {
+            var user = _customerService.CurrentUser();
+            var allorders = _dbContext.Orders.ToList();
+            List<Order> orders = new List<Order>();
+            var filterorders = new List<Order>();
+            foreach (var o in allorders)
+            {
+                if (o.OrderStatus == OrderStatus.Pending)
+                {
+                    var product = _customerService.GetProductById(o.OrderItem.Id);
+                    var s_id = product.Seller.Id;
+                    if (s_id == user.Id)
+                    {
+                        filterorders.Add(o);
+                    }
+                }
+            }
+            if (filterorders.Count == 0)
+            {
+                return Ok(new
+                {
+                    Message = "No Orders to Confirm",
+                    Status = true,
+                    Data = filterorders
+                });
+            }
+            return Ok(new
+            {
+                Message = "Orders are successfully Fetched...",
+                Status = true,
+                Data = filterorders
+            });
+        }
+
+        [HttpPost("ConfirmOrder")]
+        public async Task<ActionResult> ConfirmOrder([FromBody] OrderConfirmModel model)
+        {
+            try
+            {
+
+                var seller = _customerService.CurrentUser();
+
+                if (seller == null)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+                else
+                {
+                    var order = await _dbContext.Orders.Where(x => x.Id == model.orderid).FirstOrDefaultAsync();
+                    if (model.status == OrderStatus.Confirmed)
+                    {
+                        order.OrderStatus = OrderStatus.Confirmed;
+                    }
+                    else
+                    {
+                        order.OrderStatus = OrderStatus.Refused;
+
+                    }
+                    return Ok(new
+                    {
+                        Message = "Order has been " + order.OrderStatus,
+                        status = true
+                    });
+                }
+
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
 
     }
 }

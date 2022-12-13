@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-
+import { OrdersConfirmComponent } from './orders-confirm/orders-confirm.component';
+import { CustomerordersComponent } from './pages/customerorders/customerorders.component';
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'login', loadChildren: () => import('./pages/auth/login/login.module')
@@ -32,6 +33,14 @@ const routes: Routes = [
   {
     path: 'private/settings', loadChildren: () => import('./pages/settings/settings.module')
       .then(m => m.SettingsModule)
+  },
+  {
+    component:OrdersConfirmComponent,
+    path:'sellerorders'
+  },
+  {
+    component:CustomerordersComponent,
+    path:'customerorders'
   }
 ];
 
