@@ -40,16 +40,17 @@
     <ng-container matColumnDef="photo" >
       <mat-header-cell mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row" data-label="image">
-        <img style='width: 40px' [src]='row.photo' alt='photo'>
+        <img style='width: 80px' [src]='row.photo' alt='photo'>
         <mat-icon (click)='onProductUpdate(row)' style='cursor: pointer'>edit</mat-icon>
         <mat-icon (click)='onProductDelete(row.id)' style='cursor: pointer'>delete</mat-icon>
+        <mat-icon style='cursor: pointer' [routerLink]=[row.id]>desktop_windows</mat-icon>
       </mat-cell>
     </ng-container>
 
     <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-     Row shown when there is no matching data.
+<!--     Row shown when there is no matching data.-->
     <tr class="mat-row" *matNoDataRow>
       <th class="mat-cell" colspan="6">No data matching the filter "{{input.value}}"</th>
     </tr>
