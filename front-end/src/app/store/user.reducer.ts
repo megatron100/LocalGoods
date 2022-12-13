@@ -42,8 +42,19 @@ export function userReducer(
         userData._refresh_token,
         new Date(userData._tokenExpirationDate),
         new Date(userData._refreshTokenExpirationDate),
-        {pinCode: payload?.address.postCode, area: payload?.address?.area, city: payload?.address?.city, country: payload?.address?.country},
+        {
+          pinCode: payload?.address.postCode,
+          area: payload?.address?.area,
+          city: payload?.address?.city,
+          country: payload?.address?.country
+        },
         payload.basicInfo.mobile,
+        {
+          qualityCertificateTitle: payload?.basicInfo.certification.qualityCertificateTitle,
+          qualityCertificateDescription: payload?.basicInfo.certification.qualityCertificateDescription,
+          qualityCertificateLink: payload?.basicInfo.certification.qualityCertificateLink,
+          taxNumber: payload?.basicInfo.certification.taxNumber
+        }
       )
       return {
         ...state,

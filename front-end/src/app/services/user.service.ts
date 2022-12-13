@@ -41,7 +41,13 @@ export class UserService {
       },
       "basicInfo": {
         "name": '',
-        "mobile": ''
+        "mobile": '',
+        "certification": {
+          "qualityCertificateTitle" : '',
+          "qualityCertificateDescription": '',
+          "qualityCertificateLink": '',
+          "taxNumber": ''
+        }
       }
     }
     if (data) {
@@ -51,6 +57,10 @@ export class UserService {
       updatedUserData.address.city = data?.address?.city;
       updatedUserData.basicInfo.name = data?.name;
       updatedUserData.basicInfo.mobile = data?.mobile;
+      updatedUserData.basicInfo.certification.qualityCertificateTitle = data?.certification.qualityCertificateTitle;
+      updatedUserData.basicInfo.certification.qualityCertificateDescription = data?.certification.qualityCertificateDescription;
+      updatedUserData.basicInfo.certification.qualityCertificateLink = data?.certification.taxNumber;
+      updatedUserData.basicInfo.certification.taxNumber = data?.certification.taxNumber;
     }
     this.store.dispatch(new UserActions.UpdateUser(updatedUserData))
   }
@@ -67,4 +77,5 @@ export class UserService {
   transformProductResponse(data: any) {
     return new SellerProductItemModel(data.productTitle, data.imageLink, data.productCategory.productCategoryName, data.price, data.shortDescription, data.longDescription, data.id)
   }
+
 }

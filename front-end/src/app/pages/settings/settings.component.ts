@@ -8,6 +8,7 @@ import {Store} from "@ngrx/store";
 import * as fromShop from "../../store";
 import {UserState} from "../../store/user.reducer";
 import {UserService} from "../../services/user.service";
+import {AddCertificateDialogComponent} from "./add-certificate-dialog/add-certificate-dialog.component";
 
 @Component({
   selector: 'app-settings',
@@ -41,6 +42,11 @@ export class SettingsComponent implements OnInit {
 
   openPassChangeDialog() {
     const dialogRef = this.dialog.open(UserUpdatePassDialogComponent);
+    dialogRef.afterClosed()
+  }
+
+  openAddCertificateDialog() {
+    const dialogRef = this.dialog.open(AddCertificateDialogComponent);
     dialogRef.afterClosed()
   }
 }

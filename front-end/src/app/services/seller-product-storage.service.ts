@@ -1,16 +1,14 @@
 import {Injectable} from '@angular/core';
 import {
   API, API_PATH,
-  API_PATH_SELLER, PATH_ADD_CERTIFICATE,
+  API_PATH_SELLER,
   PATH_ADD_PRODUCT,
   PATH_DELETE_PRODUCT_BY_ID,
   PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES,
   PATH_GET_PRODUCT_BY_ID,
   PATH_GET_PRODUCTS,
 } from "../constants/constants";
-import {IProduct} from "../interfaces/product";
 import {HttpClient} from "@angular/common/http";
-import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
 import {map} from "rxjs";
 import {UserService} from "./user.service";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
@@ -24,7 +22,6 @@ export class SellerProductStorageService {
   }
 
   storeProduct(product: SellerProductItemModel) {
-    console.log(product)
     return this.http.post<any>(`${API}/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
       .pipe(
         map(({data}) => {
@@ -44,7 +41,6 @@ export class SellerProductStorageService {
 
   updateProduct(id: string, product: SellerProductItemModel) {
     const body = {...product, productId: id}
-    console.log(body)
     return this.http.put<any>(`${API}${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
       .pipe(
         map(({data}) => {
@@ -68,13 +64,6 @@ export class SellerProductStorageService {
         map(({data}) => {
           return this.userService.transformProductArrResponse(data)
         })
-      )
-  };
-
-  addCertificate(body: CertificateModel) {
-    return this.http.put<IProduct[]>(`${API}/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
-      .pipe(
-
       )
   };
 

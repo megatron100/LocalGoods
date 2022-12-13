@@ -25,7 +25,13 @@ export class UpdateUser implements Action{
     },
     "basicInfo": {
       "name": string,
-      "mobile": string
+      "mobile": string,
+      "certification": {
+        "qualityCertificateTitle" : string,
+        "qualityCertificateDescription": string,
+        "qualityCertificateLink": string,
+        "taxNumber": string
+      }
     }
   }) {
   }

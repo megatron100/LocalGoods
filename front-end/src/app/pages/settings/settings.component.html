@@ -5,23 +5,23 @@
   <div class='user-info'>
     <table class="resp-tab">
       <tr>
-        <td>address</td>
+        <td>Address</td>
         <td>
           <table class="resp-tab">
             <tr>
-              <td>pinCode</td>
+              <td>Post Code</td>
               <td>{{ user.address?.pinCode || 'no info' }}</td>
             </tr>
             <tr>
-              <td>country</td>
+              <td>Country</td>
               <td>{{ user.address?.country || 'no info' }}</td>
             </tr>
             <tr>
-              <td>city</td>
+              <td>City</td>
               <td>{{ user.address?.city || 'no info' }}</td>
             </tr>
             <tr>
-              <td>area</td>
+              <td>Area</td>
               <td>{{ user.address?.area || 'no info' }}</td>
             </tr>
 
@@ -29,25 +29,28 @@
         </td>
       </tr>
       <tr *ngIf="user.role === 'seller'">
-        <td>certification</td>
+        <td>Certification</td>
         <td>{{ user.certification ? 'yes' : 'no' }}</td>
       </tr>
       <tr>
-        <td>email</td>
+        <td>Email</td>
         <td>{{ user.email || 'no info' }}</td>
       </tr>
       <tr>
-        <td>name</td>
+        <td>Name</td>
         <td>{{user.nickName || 'no info'}}</td>
       </tr>
       <tr>
-        <td>mobile</td>
+        <td>Mobile</td>
         <td>{{ user.mobile || 'no info'}}</td>
       </tr>
     </table>
     <div class="panel-footer">
       <button mat-raised-button (click)="openUserEditDialog()" type="button" color="accent">
         Update
+      </button>
+      <button mat-raised-button (click)="openAddCertificateDialog()" type="button" color="accent">
+        Add Certificate
       </button>
     </div>
   </div>

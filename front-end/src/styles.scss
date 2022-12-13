@@ -18,7 +18,7 @@ a {text-decoration: none}
   .form {
     width: 100%;
   }
-  margin-top: 7em;
+  //margin-top: 7em;
   padding: 15px;
   margin-right: auto;
   margin-left: auto;
@@ -28,6 +28,20 @@ a {text-decoration: none}
   .mat-form-field {
     margin-bottom: 15px;
     display: block;
+  }
+}
+
+.mat-row {
+  background-color: #8a8888!important;
+  .mat-cell {
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+
+@media (max-height: 500px) {
+  .mat-dialog-container {
+    max-height: 400px!important;
   }
 }
 
