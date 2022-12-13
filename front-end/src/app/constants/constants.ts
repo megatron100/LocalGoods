@@ -4,6 +4,7 @@ export const API = 'https://localgoods1.azurewebsites.net/';
 export const API_PATH = 'api';
 export const API_PATH_AUTH = 'api/Auth';
 export const PATH_LOGIN = 'Login';
+export const PATH_LOGOUT = 'Logout';
 export const PATH_REGISTER = 'Registration';
 export const PATH_EDIT = 'Edit';
 export const PATH_CHANGE_PASS = 'ChangePassword';

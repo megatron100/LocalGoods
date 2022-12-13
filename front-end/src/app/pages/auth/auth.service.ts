@@ -8,12 +8,13 @@ import {
   API,
   API_PATH_AUTH,
   EXPIRE_IN,
-  PATH_LOGIN,
+  PATH_LOGIN, PATH_LOGOUT,
   PATH_REGISTER,
   REFRESH_EXPIRE_IN
 } from "../../constants/constants";
 import {Router} from "@angular/router";
 import {AuthResponseData} from "../../interfaces/auth-response-data";
+import {ResponseData} from "../../interfaces/responseData";
 import * as fromShop from '../../store/index'
 import {Store} from "@ngrx/store";
 import * as UserActions from '../../store/user.actions';
@@ -56,6 +57,7 @@ export class AuthService {
   };
 
   logout() {
+    this.http.delete<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGOUT}`)
     //Remove the user from the LS if the token is not finished clearing Timeout after which autoLogout will take place
     this.store.dispatch(new UserActions.CreateUser(null))
     this.router.navigate(['./login']);
@@ -68,6 +70,7 @@ export class AuthService {
 
   autoLogout(expirationDuration: number) {
     //expirationDuration - timer of token time s over
+    this.http.delete<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGOUT}`)
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration)
