@@ -11,7 +11,7 @@
       </mat-form-field>
       <mat-form-field color='accent'>
         <mat-label>Category</mat-label>
-        <mat-select [(ngModel)]="selectedValue" formControlName="category">
+        <mat-select formControlName="category">
           <mat-option *ngFor="let category of categories" [value]="category.productCategoryName">
             {{category.productCategoryName}}
           </mat-option>
