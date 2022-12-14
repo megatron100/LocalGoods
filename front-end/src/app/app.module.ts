@@ -35,7 +35,7 @@ import { CustomerordersComponent } from './pages/customerorders/customerorders.c
     SubMenuHeaderComponent,
     SettingsComponent,
     CartComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
     OrdersConfirmComponent,
     CustomerordersComponent,
   ],
