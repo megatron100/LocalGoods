@@ -24,7 +24,7 @@ import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/
 export class SellerProductListComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   products!: SellerProductItemModel[]
-  displayedColumns: string[] = ['id', 'name', 'category', 'shortDesc', 'price', 'photo'];
+  displayedColumns: string[] = ['id', 'name', 'category', 'shortDesc', 'price', 'photo', 'actions'];
   dataSource!: MatTableDataSource<SellerProductItemModel>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -74,7 +74,6 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
   }
 
   onProductDelete(id: number) {
-    console.log('id', id)
     this.sellerProductStorageService.deleteProduct(id.toString())
       .subscribe({
         next: (res: SellerProductItemModel[]) => {
