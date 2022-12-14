@@ -1,9 +1,14 @@
-<div class="product-section"   >
+<div class="product-section">
     <div class="item-section" *ngFor="let item of cart">
-      <input type="checkbox" name="product" id="product">
-      <label for="product">
-        <app-product-card [product]='item.product'></app-product-card>
-      </label>
+      <div class="item-element" *ngIf="item.quantity > 0">
+          <app-product-card [product]='item.product'>
+            <div class="quantity-section">
+              <p class="quantity-text">{{item.quantity}}</p>
+              <button (click)="plusOne(item.id)">+</button>
+              <button (click)="minusOne(item.id)">-</button>
+            </div>
+          </app-product-card>
+      </div>
     </div>
     <div class="price-section">
       <p class="price">Total Price: <span>${{calculatePrice(cart)}}</span></p>

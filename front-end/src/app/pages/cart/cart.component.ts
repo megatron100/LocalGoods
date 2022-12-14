@@ -37,4 +37,24 @@ export class CartComponent implements OnInit {
 
     return sum;
   }
+
+  plusOne(id: number) {
+    for (let item of this.cart) {
+      if (item.id === id) {
+        item.quantity += 1;
+        console.log(item, item.quantity);
+        
+      }
+    }
+  }
+
+  minusOne(id: number) {
+    for (let item of this.cart) {
+      if (item.id === id) {
+        item.quantity -= 1;
+        console.log(item, item.quantity);
+        
+      }
+    }
+  }
 }

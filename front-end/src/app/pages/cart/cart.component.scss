@@ -11,6 +11,29 @@
     justify-content: space-around;
 }
 
+.quantity-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.quantity-section button {
+    margin: auto 5px;
+    border: 1px solid transparent;
+    background-color: #39a94b;
+    color: #fff;
+    width: 40px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.quantity-text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto 5px;
+    font-size: 20px;
+}
+
 .price-section {
     display: flex;
     align-items: center;
