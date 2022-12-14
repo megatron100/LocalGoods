@@ -13,6 +13,7 @@
       </ul>
     </div>
     <div class="navbar-nav navbar-right">
+      <mat-icon style="cursor: pointer; position: relative" *ngIf="isUserAuth && user.role === 'customer'" routerLinkActive="cart">shopping_cart</mat-icon>
       <mat-icon  *ngIf='isUserAuth' style='color: red; cursor: pointer'>favorite_border</mat-icon>
       <mat-icon style="cursor: pointer; position: relative" *ngIf='isUserAuth' routerLink="/cart">shopping_cart</mat-icon>
       <span class="cart-num" *ngIf="cart.length">{{cart.length}}</span>
