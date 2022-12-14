@@ -80,9 +80,9 @@ namespace LocalGoods.Main.Controllers
                 var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
                 var user = _customerService.CurrentUser();
 
-                if (user == null || user.Address == null)
+                if (user == null || user.Address == null || user.Certification==null)
                 {
-
+                    
                     return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
                 }
                 if (category == null)
@@ -291,37 +291,29 @@ namespace LocalGoods.Main.Controllers
             });
         }
 
-        [HttpPost("ConfirmOrder")]
-        public async Task<ActionResult> ConfirmOrder([FromBody] OrderConfirmModel model)
+        [HttpGet("Decline/{id:int}")]
+        public async Task<ActionResult> DeclineOrder(int id)
         {
             try
             {
 
                 var seller = _customerService.CurrentUser();
 
-                if (seller == null)
+                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+                if (order == null)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-                else
-                {
-                    var order = await _dbContext.Orders.Where(x => x.Id == model.orderid).FirstOrDefaultAsync();
-                    if (model.status == OrderStatus.Confirmed)
-                    {
-                        order.OrderStatus = OrderStatus.Confirmed;
-                    }
-                    else
-                    {
-                        order.OrderStatus = OrderStatus.Refused;
-
-                    }
-                    return Ok(new
-                    {
-                        Message = "Order has been " + order.OrderStatus,
-                        status = true
-                    });
+                    return BadRequest();
                 }
 
+                order.OrderStatus = OrderStatus.Refused;
+
+                _dbContext.Orders.Update(order);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Message = "Order has been Refused",
+                    status = true
+                }) ;
 
             }
             catch (Exception)
@@ -329,7 +321,37 @@ namespace LocalGoods.Main.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet("deliver/{id:int}")]
 
+        public async Task<ActionResult> Deliver(int id)
+        {
+            try
+            {
+
+                var seller = _customerService.CurrentUser();
+
+                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+                if (order == null)
+                {
+                    return BadRequest();
+                }
+
+                order.OrderStatus = OrderStatus.Confirmed;
+
+                _dbContext.Orders.Update(order);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Message = "Order has been Confirmed",
+                    status = true
+                });
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { ShopService } from 'src/app/services/shop.service';
 import { IProduct } from '../../interfaces/product'
 
 @Component({
@@ -10,19 +11,24 @@ import { IProduct } from '../../interfaces/product'
 export class ProductCardComponent implements OnInit {
 
 
-  @Input() product!: IProduct;
+  @Input() product: any;
 
-  constructor( private cartService: CartService ) { }
+  constructor( private cartService: CartService,
+                private shopService: ShopService ) { }
 
   ngOnInit(): void {
 
   }
 
-  onClickAdd(prod: IProduct) {
+  onClickAdd(id: number) {
 
-    this.cartService.addToCart(prod);
-    console.log(prod);
+    this.cartService.addToCart(id)
+        .subscribe(res => {
+          console.log(res);
+        })
     
 
   }
+
+  
 }

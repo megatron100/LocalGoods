@@ -17,6 +17,8 @@ import {reducers} from "./store";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { SettingsComponent } from './pages/settings/settings.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { OrdersConfirmComponent } from './orders-confirm/orders-confirm.component';
 import { CustomerordersComponent } from './pages/customerorders/customerorders.component';
 
@@ -32,6 +34,8 @@ import { CustomerordersComponent } from './pages/customerorders/customerorders.c
     ProductCardComponent,
     SubMenuHeaderComponent,
     SettingsComponent,
+    CartComponent,
+    ProductDetailComponent,
     OrdersConfirmComponent,
     CustomerordersComponent,
   ],

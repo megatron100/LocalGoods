@@ -1,3 +1,11 @@
-<div class="product-section">
-    <!-- <app-product-card *ngFor="let item of cart" ></app-product-card> -->
+<div class="product-section"   >
+    <div class="item-section" *ngFor="let item of cart">
+      <input type="checkbox" name="product" id="product">
+      <label for="product">
+        <app-product-card [product]='item.product'></app-product-card>
+      </label>
+    </div>
+    <div class="price-section">
+      <p class="price">Total Price: <span>${{calculatePrice(cart)}}</span></p>
+    </div>
 </div>

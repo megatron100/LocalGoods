@@ -7,9 +7,12 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {
   API,
-  API_PATH,
-  Local_API,
+  
+  
   API_PATH_SELLER,
+   
+  Local_api,
+   
   ORDER_CONFIRM_PATH
 } from "../constants/constants";
 @Injectable({
@@ -20,10 +23,20 @@ export class SellerService {
   constructor(public store: Store<fromSellerProductList.AppState>,private http: HttpClient) { }
 
   getorders(){
-    return this.http.get<any>(`${Local_API}${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`).pipe()
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`).pipe()
   };
+
+  
 
   setProducts(products: SellerProductItemModel[]) {
 this.store.dispatch(new ProductActions.SetProducts(products))
   }
+  //add service for decline order
+  declineOrder(id:any){
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/decline/${id}`)
+  }
+
+  deliverOrder(id:any){
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/deliver/${id}`) 
+  } 
 }

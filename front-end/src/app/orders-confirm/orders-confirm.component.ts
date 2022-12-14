@@ -12,8 +12,23 @@ export class OrdersConfirmComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.sellerService.getorders().subscribe((result)=>{this.pending_orders=result.data;console.log(this.pending_orders)
+    this.getOrders();
+
+  }
+  getOrders(){
+    this.sellerService.getorders().subscribe((result)=>{this.pending_orders=result.data;})
+
+  }
+  declineOrder(id:any){
+    this.sellerService.declineOrder(id).subscribe((result)=>{
+      this.getOrders();
+      console.log(result);
     });
+  }
+
+  deliverOrder(id:any)
+  {
+    this.sellerService.deliverOrder(id).subscribe((result)=>{this.getOrders()} )
 
   }
 
