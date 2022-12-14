@@ -1,0 +1,40 @@
+<h2 mat-dialog-title style='font-size: 22px'>Add certificate</h2>
+<div class='container'>
+  <form class='form' [formGroup]='addCertifForm' (ngSubmit)="onSubmit()">
+    <mat-card class='form-container'>
+      <mat-form-field color='accent'>
+        <mat-label>Certificate Title</mat-label>
+        <input type="text" matInput placeholder="Certificate Title" formControlName="qualityCertificateTitle"/>
+        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateTitle')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color='accent'>
+        <mat-label>Certificate Title</mat-label>
+        <input type="text" matInput placeholder="Certificate Description" formControlName="qualityCertificateDescription"/>
+        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateDescription')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color='accent'>
+        <mat-label>Certificate Title</mat-label>
+        <input type="text" matInput placeholder="Certificate Link" formControlName="qualityCertificateLink"/>
+        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateLink')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field color='accent'>
+        <mat-label>Certificate Title</mat-label>
+        <input type="text" matInput placeholder="Tax number" formControlName="taxNumber"/>
+        <mat-error *ngIf="addCertifForm.hasError('required', 'taxNumber')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </mat-card>
+  </form>
+</div>
+<mat-dialog-actions>
+  <button [disabled]='!addCertifForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
+    Save
+  </button>
+</mat-dialog-actions>

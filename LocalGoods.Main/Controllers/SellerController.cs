@@ -101,7 +101,7 @@ namespace LocalGoods.Main.Controllers
                     Seller = user,
                     ProductTitle = request.Name,
                     ProductCategory = category,
-                    ImageLink=request.Photo,
+                    ImageLink = request.Photo,
                     Price = request.Price,
                     ShortDescription = request.ShortDesc,
                     LongDescription = request.LongDescription
@@ -154,14 +154,14 @@ namespace LocalGoods.Main.Controllers
                         _dbContext.SaveChanges();
                     }
 
-                      product.ProductCategory = category;  
+                    product.ProductCategory = category;
                 }
 
                 product.Price = request.Price;
                 if (!string.IsNullOrEmpty(request.ShortDesc))
 
                 { product.ShortDescription = request.ShortDesc; }
-                if(!string.IsNullOrEmpty(request.LongDescription))
+                if (!string.IsNullOrEmpty(request.LongDescription))
                 {
                     product.LongDescription = request.LongDescription;
 
@@ -234,7 +234,7 @@ namespace LocalGoods.Main.Controllers
                         QualityCertificateTitle = request.QualityCertificateTitle,
                         QualityCertificateDescription = request.QualityCertificateDescription,
                         QualityCertificateLink = request.QualityCertificateLink,
-                        QualityCertificateDeleteLink = request.QualityCertificateLink,
+                        QualityCertificateDeleteLink = "",
                         TaxNumber = request.TaxNumber,
 
                     };
@@ -249,6 +249,103 @@ namespace LocalGoods.Main.Controllers
                 }
 
                 return Ok(response);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet("GetPendingOrders")]
+        public async Task<ActionResult> GetOrdersToConfirmorReject()
+        {
+            var user = _customerService.CurrentUser();
+            var allorders = _dbContext.Orders.ToList();
+            List<Order> orders = new List<Order>();
+            var filterorders = new List<Order>();
+            foreach (var o in allorders)
+            {
+                if (o.OrderStatus == OrderStatus.Pending)
+                {
+                    var product = _customerService.GetProductById(o.OrderItem.Id);
+                    var s_id = product.Seller.Id;
+                    if (s_id == user.Id)
+                    {
+                        filterorders.Add(o);
+                    }
+                }
+            }
+            if (filterorders.Count == 0)
+            {
+                return Ok(new
+                {
+                    Message = "No Orders to Confirm",
+                    Status = true,
+                    Data = filterorders
+                });
+            }
+            return Ok(new
+            {
+                Message = "Orders are successfully Fetched...",
+                Status = true,
+                Data = filterorders
+            });
+        }
+
+        [HttpGet("Decline")]
+        public async Task<ActionResult> DeclineOrder(int orderid)
+        {
+            try
+            {
+
+                var seller = _customerService.CurrentUser();
+
+                var order = await _dbContext.Orders.Where(x => x.Id == orderid).FirstOrDefaultAsync();
+                if (order == null)
+                {
+                    return BadRequest();
+                }
+
+                order.OrderStatus = OrderStatus.Refused;
+
+                _dbContext.Orders.Update(order);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Message = "Order has been Refused",
+                    status = true
+                }) ;
+
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet("deliver")]
+
+        public async Task<ActionResult> Deliver(int orderid)
+        {
+            try
+            {
+
+                var seller = _customerService.CurrentUser();
+
+                var order = await _dbContext.Orders.Where(x => x.Id == orderid).FirstOrDefaultAsync();
+                if (order == null)
+                {
+                    return BadRequest();
+                }
+
+                order.OrderStatus = OrderStatus.Confirmed;
+
+                _dbContext.Orders.Update(order);
+                _dbContext.SaveChanges();
+                return Ok(new
+                {
+                    Message = "Order has been Confirmed",
+                    status = true
+                });
+
             }
             catch (Exception)
             {

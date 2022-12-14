@@ -1,0 +1,30 @@
+a {
+  width: 100%;
+  .mat-card {
+    max-width: 100%;
+    margin-bottom: 8px;
+    background-color: #FFFFFF;
+
+    .mat-card-header {
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      color: #263038;
+      margin-bottom: 20px;
+    }
+
+    .mat-card-subtitle {
+      color: #aaafaf;
+    }
+
+    .mat-card-content {
+      color: #515252;
+    }
+
+    .card-buttons, button {
+      margin-right: 5px;
+    }
+  }
+
+}
