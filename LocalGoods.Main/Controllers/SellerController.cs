@@ -291,15 +291,15 @@ namespace LocalGoods.Main.Controllers
             });
         }
 
-        [HttpGet("Decline")]
-        public async Task<ActionResult> DeclineOrder(int orderid)
+        [HttpGet("Decline/{id:int}")]
+        public async Task<ActionResult> DeclineOrder(int id)
         {
             try
             {
 
                 var seller = _customerService.CurrentUser();
 
-                var order = await _dbContext.Orders.Where(x => x.Id == orderid).FirstOrDefaultAsync();
+                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
                 if (order == null)
                 {
                     return BadRequest();
@@ -321,16 +321,16 @@ namespace LocalGoods.Main.Controllers
                 return BadRequest();
             }
         }
-        [HttpGet("deliver")]
+        [HttpGet("deliver/{id:int}")]
 
-        public async Task<ActionResult> Deliver(int orderid)
+        public async Task<ActionResult> Deliver(int id)
         {
             try
             {
 
                 var seller = _customerService.CurrentUser();
 
-                var order = await _dbContext.Orders.Where(x => x.Id == orderid).FirstOrDefaultAsync();
+                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
                 if (order == null)
                 {
                     return BadRequest();

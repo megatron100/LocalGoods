@@ -7,9 +7,11 @@ import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {
   API,
-  API_PATH,
+  
   
   API_PATH_SELLER,
+   
+  Local_api,
    
   ORDER_CONFIRM_PATH
 } from "../constants/constants";
@@ -31,10 +33,10 @@ this.store.dispatch(new ProductActions.SetProducts(products))
   }
   //add service for decline order
   declineOrder(id:any){
-    return this.http.get<any>(`${API}}${API_PATH_SELLER}/decline/${id}`).pipe() 
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/decline/${id}`)
   }
 
   deliverOrder(id:any){
-    return this.http.get<any>(`${API}${API_PATH_SELLER}/deliver/${id}`).pipe() 
-  }
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/deliver/${id}`) 
+  } 
 }
