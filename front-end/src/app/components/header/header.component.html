@@ -71,6 +71,21 @@
     {{ user?.email }}
 
   </button>
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'seller'" routerLink="/sellerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+   Pending Orders
+
+  </button>
+
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'customer'" routerLink="/customerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+    My Orders
+
+  </button>
 
   <button mat-menu-item style='cursor: pointer' routerLink='private/settings'>
 
