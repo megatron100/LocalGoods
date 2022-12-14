@@ -31,7 +31,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onClickAdd(id: number) {
-    const quantity = document.getElementById('product-quantity') as HTMLInputElement;
+    let quantityWithId='product-quantity-'+id;
+    const quantity = document.getElementById(quantityWithId) as HTMLInputElement;
     let model: AddToCart={
       id:id,
       quantity: Number(quantity.value)

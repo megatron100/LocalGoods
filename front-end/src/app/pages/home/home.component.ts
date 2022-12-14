@@ -42,7 +42,8 @@ export class HomeComponent implements OnInit {
   }
 
   onClickAdd(prod: any) {
-    const quantity = document.getElementById('product-quantity') as HTMLInputElement;
+    let quantityWithId='product-quantity-'+prod.id;
+    const quantity = document.getElementById(quantityWithId) as HTMLInputElement;
     let model: AddToCart={
       id:prod.id,
       quantity: Number(quantity.value)
