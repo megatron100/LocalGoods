@@ -3,6 +3,7 @@ import {PRODUCT_SORT_VALUES} from "../../constants/constants";
 import {Store} from "@ngrx/store";
 import * as fromShop from '../../store/index';
 import * as ShopActions from '../../store/shop.actions';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-sub-menu-header',
@@ -12,10 +13,23 @@ import * as ShopActions from '../../store/shop.actions';
 export class SubMenuHeaderComponent implements OnInit {
 
   sortValues: string[] = PRODUCT_SORT_VALUES;
+  categories!: any[];
 
-  constructor(private store: Store<fromShop.AppState>) { }
+
+  constructor(private store: Store<fromShop.AppState>,
+              private shopService: ShopService) { }
 
   ngOnInit(): void {
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.shopService.getCategories()
+        .subscribe(res => {          
+          this.categories = res.data;
+          
+        })
+
   }
 
   sortValueChange($event: any) {
