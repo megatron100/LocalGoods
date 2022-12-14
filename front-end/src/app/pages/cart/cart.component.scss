@@ -91,3 +91,27 @@ button {
     color: #fff;
     background-color: #39a94b;
 }
+
+.remove-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-item button {
+    width: 150px;
+    padding: 7px 10px;
+    color: #fb2c2c;
+    background-color: transparent;
+    border: 1px solid #fb2c2c;
+    font-size: 20px;
+    margin: 10px auto;
+    transition: 0.3s all linear;
+    cursor: pointer;
+}
+
+.remove-item button:hover {
+    color: #fff;
+    background-color: #fb2c2c;
+}

@@ -7,6 +7,9 @@
               <button (click)="plusOne(item.id)">+</button>
               <button (click)="minusOne(item.id)">-</button>
             </div>
+            <div class="remove-item">
+              <button (click)="removeItem(item.id)">Remove</button>
+            </div>
           </app-product-card>
       </div>
     </div>
@@ -17,4 +20,5 @@
       <button class="cart-buy" (click)="buyProducts()">Buy</button>
       <button class="cart-clear" (click)="clearCart()">Clear Cart</button>
     </div>
+    
 </div>

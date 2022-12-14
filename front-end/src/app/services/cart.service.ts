@@ -29,8 +29,15 @@ export class CartService {
                 )
   }
 
+  removeItem(id: number) {
+    return this.http.delete<any>(`${API}${API_PATH}/Cart/remove/${id}`)
+    .pipe(
+      catchError(this.handleError<any>('getData'))
+    )
+  }
+
   clearCart() {
-    this.http.delete<any>(`${API}${API_PATH}/Cart/ClearCart`)
+    return this.http.delete<any>(`${API}${API_PATH}/Cart/ClearCart`)
         .pipe(
           catchError(this.handleError<any>('getData'))
         )

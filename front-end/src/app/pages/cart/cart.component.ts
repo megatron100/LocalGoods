@@ -34,9 +34,17 @@ export class CartComponent implements OnInit {
   }
 
   clearCart() {
-    this.cartService.clearCart();
-    console.log(this.cart);
+    // this.cartService.clearCart()
+    //     .subscribe(res => {
+    //       console.log(res);
+          
+    //     });
     
+    for (let item of this.cart) {
+      item.quantity = 0;
+    }
+    console.log(this.cart);
+        
   }
 
   calculatePrice(arr: any[]): number {
@@ -46,6 +54,16 @@ export class CartComponent implements OnInit {
     }
 
     return sum;
+  }
+
+  removeItem(id: number) {
+   
+    for (let item of this.cart) {
+      if (item.id === id) {
+        item.quantity = 0;
+      }
+    }
+    
   }
 
   plusOne(id: number) {
