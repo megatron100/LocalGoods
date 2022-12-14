@@ -19,6 +19,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { SettingsComponent } from './pages/settings/settings.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { FilterPipe } from './pipes/filter.pipe';
 import { OrdersConfirmComponent } from './orders-confirm/orders-confirm.component';
 import { CustomerordersComponent } from './pages/customerorders/customerorders.component';
 
@@ -36,8 +37,9 @@ import { CustomerordersComponent } from './pages/customerorders/customerorders.c
     SettingsComponent,
     CartComponent,
     ProductDetailComponent,
+    FilterPipe,
     OrdersConfirmComponent,
-    CustomerordersComponent,
+    CustomerordersComponent
   ],
   imports: [
     BrowserModule,

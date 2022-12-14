@@ -7,6 +7,7 @@
 .product-samples,
 .sample-title,
 .sample-list,
+.product-add,
 .contact {
   width: 100%;
   display: flex;
@@ -95,6 +96,39 @@
   align-items: flex-start;
   margin: 20px auto;
   padding: 15px 20px;
+}
+
+.product-add__container {
+  display: flex;
+}
+
+input {
+  font-size: 16px;
+  padding: 5px 10px;
+  width: 70px;
+  margin: auto 5px;
+  outline: none;
+}
+
+.product-add {
+  flex-direction: row;
+  font-size: 16px;
+  padding: 5px 10px;
+  color: #fff;
+  border: 1px solid transparent;
+  background-color: #39a94b;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.product-add:hover {
+  color: #39a94b;
+  background-color: transparent;
+  border: 1px solid #39a94b;
+}
+
+input:active {
+  border: 1px solid #39a94b;
 }
 
 
