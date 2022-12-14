@@ -78,7 +78,7 @@ namespace LocalGoods.Main.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        [HttpGet("OrderFromCart")]
+        [HttpGet("orderfromcart")]
         public async Task<ActionResult> OrderFromCart()
         {
             try
