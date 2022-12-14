@@ -115,12 +115,12 @@ namespace LocalGoods.Main.Controllers
         });
 
         }
-        [HttpDelete("minus")]
+        [HttpDelete("minus/{id:int}")]
         
-         public async Task<ActionResult> MinusProductToCart(int productId)
+         public async Task<ActionResult> MinusProductToCart(int id)
         {
             var user = _userService.CurrentUser();
-            var product = await _dbContext.Product.Where(x => x.Id == productId && x.IsAvailable && x.IsPublished).FirstOrDefaultAsync();
+            var product = await _dbContext.Product.Where(x => x.Id == id && x.IsAvailable && x.IsPublished).FirstOrDefaultAsync();
             if (product == null)
             {
                 return BadRequest(new ResponseModel
@@ -131,7 +131,7 @@ namespace LocalGoods.Main.Controllers
             }
             //check if product is already in cart
 
-            var cartItem = await _dbContext.ShoppingCartItem.Where(x => x.Product.Id == productId && x.User.Id == user.Id).FirstOrDefaultAsync();
+            var cartItem = await _dbContext.ShoppingCartItem.Where(x => x.Product.Id == id && x.User.Id == user.Id).FirstOrDefaultAsync();
 
             if (cartItem != null)
             {
