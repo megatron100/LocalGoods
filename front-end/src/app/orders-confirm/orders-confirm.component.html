@@ -1,9 +1,52 @@
-<p>orders-confirm works!</p>
+ 
 <h1>
-    Pending Orders Are: 
+    Pending Orders: 
 </h1>
-<ul>
-    <li *ngFor="let orders of pending_orders">
-        {{orders.orderItem.productTitle}}
-    </li>
-</ul>
+ 
+ 
+    
+
+<!--include bootstrap cdns-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- bootstrap js file -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<div>
+  
+
+    
+   
+   <div *ngFor="let order of pending_orders">
+       <div class="card bg-light mb-3 border-secondary" >
+             
+
+               
+               <h4 >Order ID: #{{order.id}}</h4>
+          
+            
+           <div class="card-body">
+               <div class="card-img-top">
+                 <img src="{{order.orderItem.imageLink}}" alt="image" width="100px" height="100px">    
+               </div>
+               <div>
+                   <h3 class="card-title">{{order.orderItem.productTitle}}</h3>
+               </div>
+               <h4>Drop Address: {{order.dropAddress.city}}</h4>
+               
+              
+                   <h4 class="card-text">Quantity: {{order.quantity}}</h4>
+                   
+                     <button type="button" (click)="declineOrder(order.id)" class="btn btn-danger m-1">Decline</button>
+                        <button type="button" (click)="deliverOrder(order.id)" class="btn btn-success">Deliver</button>
+
+
+
+
+               </div>
+           </div>
+       </div>
+   </div>
+

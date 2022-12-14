@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(public authService: AuthService,
               private cartService: CartService,
-              private store: Store<fromShop.AppState>) {
+              // private store: Store<fromShop.AppState>
+              ) {
   }
 
   ngOnInit(): void {
@@ -33,14 +34,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         this.isUserAuth = !!user;
       });
-    this.cart = this.cartService.cartContent;
-    this.store.select('userData')
-      .subscribe((state: UserState) => {
-        if (state.user) {
-          this.user = state.user
-        }
-        this.isUserAuth = !!state.user;
-      })
+      this.cart = this.cartService.cartContent;
+    // this.store.select('userData')
+    //   .subscribe((state: UserState) => {
+    //     if (state.user) {
+    //       this.user = state.user
+    //     }
+    //     this.isUserAuth = !!this.user;
+    //   });
+      this.cart = this.cartService.cartContent;
   }
 
   onLogout() {

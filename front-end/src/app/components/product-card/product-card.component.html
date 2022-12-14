@@ -1,22 +1,22 @@
 <div class="product-card">
     <div class="product-container">
-        <a href="#">
-            <img src="{{product.photo}}" alt="{{product.name}}" class="product-pic">
+        <a routerLink='/product/{{product.id}}'>
+            <img src="{{product.imageLink}}" alt="{{product.productTitle}}" class="product-pic">
         </a>
         <div class="product-content">
-            <a href="#" class="product-name__link">
-                <h3 class="product-name">{{product.name}}</h3>
+            <a class="product-name__link" routerLink='/product/{{product.id}}'>
+                <h3 class="product-name">{{product.productTitle}}</h3>
             </a>
             <a href="#" class="product-seller__link">
-                <h4 class="product-seller">{{product.seller}}</h4>
+                <h4 class="product-seller">{{product.seller.name}}</h4>
             </a>
-            <p class="product-description">{{product.description}}</p>
+            <p class="product-description">{{product.shortDescription}}</p>
             <p class="product-price">{{product.price | currency: 'USD'}}</p>
         </div>
     </div>
     <div class="product-add__container">
         <input type="number" name="product-quantity" id="product-quantity" value="1">
-        <button class="product-add" (click)="onClickAdd(product)">
+        <button class="product-add" (click)="onClickAdd(product.id)">
             Add to Cart
         </button>
     </div>

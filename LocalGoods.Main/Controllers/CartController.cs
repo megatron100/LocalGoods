@@ -115,7 +115,7 @@ namespace LocalGoods.Main.Controllers
 
         }
 
-        [HttpDelete("remove/{CartItemId:int}")]
+        [HttpDelete("Remove/{CartItemId:int}")]
         public async Task<ActionResult> DeleteProductFromCart(int CartItemId)
         {
             var user = _userService.CurrentUser();

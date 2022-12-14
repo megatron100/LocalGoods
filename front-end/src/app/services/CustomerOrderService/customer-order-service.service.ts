@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Local_API, API_PATH_SELLER, ORDER_CONFIRM_PATH, API_PATH, API, Customer_Orders } from 'src/app/constants/constants';
+import {   API_PATH_SELLER, ORDER_CONFIRM_PATH, API_PATH, API, Customer_Orders } from 'src/app/constants/constants';
 
 @Injectable({
   providedIn: 'root'

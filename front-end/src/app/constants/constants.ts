@@ -22,7 +22,7 @@ export const REFRESH_EXPIRE_IN = 14400;
 export const USER_ROLES = ['seller', 'customer'];
 
 // Saurabh's edit
-export const Local_API = 'https://localhost:7292/';
 export const ORDER_CONFIRM_PATH = 'GetPendingOrders';
 export const Customer_Orders = 'GetOrders';
+//export const Local_api="https://localhost:7292/"
 
