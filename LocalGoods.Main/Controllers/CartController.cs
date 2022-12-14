@@ -115,6 +115,7 @@ namespace LocalGoods.Main.Controllers
         });
 
         }
+        [HttpDelete("minus")]
         
          public async Task<ActionResult> MinusProductToCart(int productId)
         {
