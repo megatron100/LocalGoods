@@ -9,8 +9,8 @@ export class CustomerOrderServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getorders(){
+  getOrders(){
     return this.http.get<any>(`${API}${API_PATH}/order/${Customer_Orders}`).pipe()
-  
+
   }
 }

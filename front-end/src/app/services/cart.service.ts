@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-
 import { HttpClient } from '@angular/common/http';
 import { API, API_PATH,  } from '../constants/constants';
 import { Observable, of } from 'rxjs';
@@ -9,33 +8,30 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class CartService {
-
-  constructor( private http: HttpClient ) { }
-
   cartContent: any[] = [];
+
+  constructor(private http: HttpClient) {
+  }
 
   addToCart(id: number): Observable<any> {
     return this.http.post<any>(`${API}${API_PATH}/Cart/AddToCart/${id}`, id)
-          .pipe(
-            catchError(this.handleError<any>('getData')),
-          );
+      .pipe(
+        catchError(this.handleError<any>('getData')),
+      );
   }
 
   getCart(): Observable<any> {
     return this.http.get<any>(`${API}${API_PATH}/Cart/CartItems`)
-                .pipe(
-                  catchError(this.handleError<any>('getData'))
-                )
+      .pipe(
+        catchError(this.handleError<any>('getData'))
+      )
   }
 
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
       return of(result as T);
     }
-
   }
-
 
 }
