@@ -15,6 +15,7 @@ export class ShopComponent implements OnInit {
   products!: any[];
   sortValue: string = '';
   searchValue: string = '';
+  category: string = '';
 
   constructor(
     public shopService: ShopService,
@@ -50,6 +51,8 @@ export class ShopComponent implements OnInit {
           
         })
   }
+
+
 
   onClickAdd(prod: any) {
 

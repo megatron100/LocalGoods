@@ -2,7 +2,9 @@
   <app-sub-menu-header></app-sub-menu-header>
   <div class="product-section">
     <app-product-card
-      *ngFor='let product of products | search: searchValue | sort: sortValue' [product]='product'
+      *ngFor='let product of products | 
+     
+      search: searchValue | sort: sortValue'  [product]='product'
     >
     <div class="product-add__container" >
       <input type="number" name="product-quantity" id="product-quantity" value="1">

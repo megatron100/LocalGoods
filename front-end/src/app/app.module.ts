@@ -19,6 +19,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { SettingsComponent } from './pages/settings/settings.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     SubMenuHeaderComponent,
     SettingsComponent,
     CartComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
