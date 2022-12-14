@@ -50,17 +50,14 @@ export class UserService {
         }
       }
     }
-    if (data) {
-      updatedUserData.address.area = data?.address?.area;
-      updatedUserData.address.postCode = data?.address?.pinCode;
-      updatedUserData.address.country = data?.address?.country;
-      updatedUserData.address.city = data?.address?.city;
-      updatedUserData.basicInfo.name = data?.name;
-      updatedUserData.basicInfo.mobile = data?.mobile;
+    if (data.certification !== null) {
+      this.updateSellerData(data, updatedUserData)
       updatedUserData.basicInfo.certification.qualityCertificateTitle = data?.certification.qualityCertificateTitle;
       updatedUserData.basicInfo.certification.qualityCertificateDescription = data?.certification.qualityCertificateDescription;
       updatedUserData.basicInfo.certification.qualityCertificateLink = data?.certification.taxNumber;
       updatedUserData.basicInfo.certification.taxNumber = data?.certification.taxNumber;
+    }else {
+      this.updateSellerData(data, updatedUserData)
     }
     this.store.dispatch(new UserActions.UpdateUser(updatedUserData))
   }
@@ -78,4 +75,12 @@ export class UserService {
     return new SellerProductItemModel(data.productTitle, data.imageLink, data.productCategory.productCategoryName, data.price, data.shortDescription, data.longDescription, data.id)
   }
 
+  private updateSellerData(data: any, updatedUserData: any) {
+    updatedUserData.address.area = data?.address?.area;
+    updatedUserData.address.postCode = data?.address?.pinCode;
+    updatedUserData.address.country = data?.address?.country;
+    updatedUserData.address.city = data?.address?.city;
+    updatedUserData.basicInfo.name = data?.name;
+    updatedUserData.basicInfo.mobile = data?.mobile;
+  }
 }
