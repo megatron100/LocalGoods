@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EMAIL_PATTERN} from "../../../constants/constants";
 import {AuthService} from "../auth.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
     'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -32,8 +34,18 @@ export class LoginComponent implements OnInit {
     this.isLoading = true
 
     this.authService.login(this.loginForm.value)
-      .subscribe(value => {
-        this.isLoading = true
-      })
+      .subscribe({
+        next: () => {
+          this.isLoading = true
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color' // Add your custom panel class
+          });
+          dialogRef.afterClosed()
+          this.isLoading = false
+        }
+      });
   }
 }

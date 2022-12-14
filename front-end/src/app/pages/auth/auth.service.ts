@@ -4,9 +4,22 @@ import {HttpClient} from "@angular/common/http";
 import {RegisterModel} from "./models/register.model";
 import {BehaviorSubject, catchError, tap} from "rxjs";
 import {User} from "./models/user.model";
-import {API, API_PATH_AUTH, EXPIRE_IN, PATH_LOGIN, PATH_REGISTER, REFRESH_EXPIRE_IN} from "../../constants/constants";
+import {
+  API,
+  API_PATH_AUTH,
+  EXPIRE_IN,
+  PATH_LOGIN,
+  PATH_REGISTER,
+  REFRESH_EXPIRE_IN
+} from "../../constants/constants";
 import {Router} from "@angular/router";
 import {AuthResponseData} from "../../interfaces/auth-response-data";
+import {ResponseData} from "../../interfaces/responseData";
+import * as fromShop from '../../store/index'
+import {Store} from "@ngrx/store";
+import * as UserActions from '../../store/user.actions';
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorService} from "../../shared/error-handling/error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +30,22 @@ export class AuthService {
   private millisecondsInMinute = 60000;
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromShop.AppState>,
+    public dialog: MatDialog,
+    private errorService: ErrorService
+  ) {
   }
 
   register(body: RegisterModel) {
-    return this.http.post<any>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
+    return this.http.post<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
       .pipe(
+        catchError(this.errorService.handleError),
         tap(
           () => {
-            this.router.navigate(['./login'])
+            this.router.navigate(['./login']);
           }
         )
       )
@@ -35,6 +55,7 @@ export class AuthService {
   login(body: LoginModel) {
     return this.http.post<AuthResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
+        catchError(this.errorService.handleError),
         tap(
           ({data}) => {
             this.handleAuth(data.id, data.email, data.role, data.name, data.accessToken, data.refreshToken);
@@ -46,7 +67,7 @@ export class AuthService {
 
   logout() {
     //Remove the user from the LS if the token is not finished clearing Timeout after which autoLogout will take place
-    this.user.next(null);
+    this.store.dispatch(new UserActions.CreateUser(null))
     this.router.navigate(['./login']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -88,10 +109,10 @@ export class AuthService {
       new Date(userData._refreshTokenExpirationDate)
     )
 //We check whether our token is still active, if yes, so we activate the user
-    if(loadedUserFromLS.token) {
+    if (loadedUserFromLS.token) {
       const expirationTime = new Date(userData._refreshTokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationTime);
-      this.user.next(loadedUserFromLS)
+      this.store.dispatch(new UserActions.CreateUser(loadedUserFromLS))
     }
   }
 
@@ -108,7 +129,7 @@ export class AuthService {
 
     const user = new User(userId, userEmail, role, nickName, accessToken, refreshToken, expirationDate, refreshExpirationDate);
 
-    this.user.next(user);
+    this.store.dispatch(new UserActions.CreateUser(user))
 
     this.autoLogout(REFRESH_EXPIRE_IN * this.millisecondsInMinute)
     localStorage.setItem('userData', JSON.stringify(user))

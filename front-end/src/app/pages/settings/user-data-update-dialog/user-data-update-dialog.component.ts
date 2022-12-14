@@ -1,9 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {SettingsService} from "../../../services/settings.service";
-import {EMAIL_PATTERN} from "../../../constants/constants";
 import {Subscription} from "rxjs";
 import {AuthService} from "../../auth/auth.service";
+import {Store} from "@ngrx/store";
+import * as fromShop from "../../../store";
+import {UserState} from "../../../store/user.reducer";
+import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UserService} from "../../../services/user.service";
+import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-user-data-update-dialog',
@@ -15,7 +21,14 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
   userForm!: FormGroup;
   private subscription!: Subscription;
 
-  constructor(private fb: FormBuilder, private settingsService: SettingsService, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private settingsService: SettingsService,
+    private authService: AuthService,
+    private store: Store<fromShop.AppState>,
+    public dialog: MatDialog,
+    public userService: UserService
+    ) {
   }
 
   ngOnInit(): void {
@@ -24,7 +37,6 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let name = '';
-    let email = '';
     let mobile = '';
     let postCode = '';
     let country = '';
@@ -34,7 +46,6 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
         name: new FormControl(null, []),
-        email: new FormControl(null, [Validators.email, Validators.pattern(EMAIL_PATTERN)]),
         mobile: new FormControl(null, []),
       }),
       address: new FormGroup({
@@ -45,23 +56,21 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
       })
     });
 
-    this.subscription = this.authService.user
-      .subscribe(user => {
-        if(user) {
-          name = user.nickName;
-          email = user.email;
-          mobile = user.mobile || '';
-          postCode = user.address?.pinCode || '';
-          country = user.address?.country || ''
-          city = user.address?.city || ''
-          area = user.address?.area || ''
+    this.subscription = this.store.select('userData')
+      .subscribe((state: UserState) => {
+        if (state.user) {
+          name = state.user.nickName;
+          mobile = state.user.mobile || '';
+          postCode = state.user.address?.pinCode || '';
+          country = state.user.address?.country || ''
+          city = state.user.address?.city || ''
+          area = state.user.address?.area || ''
         }
       })
 
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
         name: new FormControl(name, [Validators.required, Validators.minLength(3)]),
-        email: new FormControl(email, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
         mobile: new FormControl(mobile, []),
       }),
       address: new FormGroup({
@@ -75,8 +84,21 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    console.log(this.userForm.value)
-    this.settingsService.updateUserInfo(this.userForm.value)
+     this.settingsService.updateUserInfo(this.userForm.value)
+      .subscribe({
+        next: ({data, message}) => {
+          this.userService.updateUserInStore(data)
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+          dialogRef.afterClosed()
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
+        }
+      })
   }
 
   ngOnDestroy() {
