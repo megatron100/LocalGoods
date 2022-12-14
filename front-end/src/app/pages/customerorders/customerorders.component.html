@@ -10,19 +10,40 @@ Also 2 button for either accept or decline order-->
 
 
  <div>
-    <!-- if there are no order, show message-->
+   
 
      
-    <h1>Customer Orders</h1>
+    <h1>Your Orders</h1>        
     <div *ngFor="let order of Orders.data">
-        <div class="card">
-            <img class="card-img-top" src="{{order.orderItem.imageLink}}" alt="Card image cap" width="20%">
+        <div class="card bg-light mb-3 border-secondary" >
+              <!-- card title,  order.orderStatus == 'Pending'" then make header color primary -->
+ 
+                
+                <h4 >Order ID: #{{order.id}}</h4>
+           
+            <!-- else if orderstatus is Confirmed the make header color success-->
+            <!-- <div class="card-header" [ngClass]="{'bg-success': order.orderStatus == 'Confirmed'}">
+
+                <h4 >Order ID: #{{order.id}}</h4>
+            </div>
+               -->
+            
+                  <!-- card body -->
             <div class="card-body">
-                <h5 class="card-title">{{order.orderItem.id}}</h5>
-                 
-                <button class="btn btn-success">Accept</button>
-                <button class="btn btn-danger">Decline</button>
+                <div class="card-img-top">
+                  <img src="{{order.orderItem.imageLink}}" alt="image" width="100px" height="100px">    
+                </div>
+                <div>
+                    <h3 class="card-title">{{order.orderItem.productTitle}}</h3>
+                </div>
+                
+                    <h4 class="card-text ">Order Status: {{order.orderStatus}}</h4>
+                    <h4 class="card-text">Quantity: {{order.quantity}}</h4>
+
+
+
+                </div>
             </div>
         </div>
     </div>
- </div>
+ 

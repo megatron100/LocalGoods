@@ -7,7 +7,7 @@ import { IPendingOrder } from '../interfaces/pending_orders_data';
   styleUrls: ['./orders-confirm.component.scss']
 })
 export class OrdersConfirmComponent implements OnInit {
-  pending_orders!:any;
+  pending_orders:any;
 
   constructor(public sellerService: SellerService ) { 
     

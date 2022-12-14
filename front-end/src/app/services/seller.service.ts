@@ -23,6 +23,8 @@ export class SellerService {
     return this.http.get<any>(`${Local_API}${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`).pipe()
   };
 
+  
+
   setProducts(products: SellerProductItemModel[]) {
 this.store.dispatch(new ProductActions.SetProducts(products))
   }
