@@ -36,6 +36,16 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.productsSubscription = this.store.select('sellerProductData')
+      .subscribe({
+        next: (state: SellerProductState) => {
+          this.isCreateMode = state.isCreateMode;
+          this.categories = [...state.categoryList];
+        }
+      })
+
+    console.log('Mode', this.isCreateMode)
+
     if (this.isCreateMode) {
       this.createProductForm = new FormGroup({
         name: new FormControl(null, [Validators.required]),
@@ -54,6 +64,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
       shortDesc: new FormControl(this.data?.shortDesc, [Validators.required]),
       longDescription: new FormControl(this.data?.longDescription, [Validators.required]),
     })
+
     this.sellerProductStorageService.getCategories()
       .subscribe({
         next: ({data}) => {
@@ -63,14 +74,6 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
         error: err => {
           const dialogRef = this.dialog.open(ErrorDialogComponent, {data: err});
           dialogRef.afterClosed()
-        }
-      })
-
-    this.productsSubscription = this.store.select('sellerProductData')
-      .subscribe({
-        next: (state: SellerProductState) => {
-          this.isCreateMode = state.isCreateMode;
-          this.categories = [...state.categoryList];
         }
       })
   }
@@ -112,10 +115,24 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
   }
 
   uploadFile(event: any) {
-    const file = (event.target as HTMLInputElement).files
-    console.log(file)
-    this.createProductForm.patchValue({
-      photo: file
-    })
+    const file = (event.target as HTMLInputElement).files?.[0]
+    const formData = new FormData();
+    formData.append("file", file as File);
+    this.sellerProductStorageService.uploadImage(formData)
+      .subscribe({
+        next: ({data}) => {
+          this.createProductForm.patchValue({
+            photo: data
+          })
+        },
+        error: err => {
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: err,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
+        }
+      })
   }
+
 }

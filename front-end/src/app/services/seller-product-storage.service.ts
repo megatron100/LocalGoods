@@ -6,13 +6,14 @@ import {
   PATH_DELETE_PRODUCT_BY_ID,
   PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES,
   PATH_GET_PRODUCT_BY_ID,
-  PATH_GET_PRODUCTS,
+  PATH_GET_PRODUCTS, PATH_UPLOAD,
 } from "../constants/constants";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs";
 import {UserService} from "./user.service";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
 import {ErrorService} from "../shared/error-handling/error.service";
+import {ResponseData} from "../interfaces/responseData";
 
 @Injectable({
   providedIn: 'root'
@@ -82,4 +83,13 @@ export class SellerProductStorageService {
         catchError(this.errorService.handleError),
       )
   };
+
+  uploadImage(file: FormData){
+    return this.http.post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
+      headers: {'Content-Type': 'multipart/form-data',}
+    })
+      .pipe(
+        catchError(this.errorService.handleError),
+      )
+  }
 }
