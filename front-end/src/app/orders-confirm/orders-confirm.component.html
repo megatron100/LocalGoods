@@ -2,8 +2,7 @@
 <h1>
     Pending Orders: 
 </h1>
-<!--Create page to display all pending order of seller, if there are none, show message 'there are no order'
-Also show two button to accept or decline orders-->
+ 
  
     
 
@@ -19,10 +18,7 @@ Also show two button to accept or decline orders-->
   
 
     
-    <!-- <div class="card bg-light mb-3 border-secondary" *ngIf="pending_orders.length == 0">
-         <div class="card-body">
-              <h3 class="card-title">There are no orders</h3>
-         </div> -->
+   
    <div *ngFor="let order of pending_orders">
        <div class="card bg-light mb-3 border-secondary" >
              
@@ -38,13 +34,13 @@ Also show two button to accept or decline orders-->
                <div>
                    <h3 class="card-title">{{order.orderItem.productTitle}}</h3>
                </div>
-               <h4>Dropaddress: {{order.dropAddress.city}}</h4>
+               <h4>Drop Address: {{order.dropAddress.city}}</h4>
                
               
                    <h4 class="card-text">Quantity: {{order.quantity}}</h4>
-                   <!-- Create two buttons, one for decline, one for Deliver-->
-                     <button type="button" class="btn btn-danger m-1">Decline</button>
-                        <button type="button" class="btn btn-success">Deliver</button>
+                   
+                     <button type="button" (click)="declineOrder(order.id)" class="btn btn-danger m-1">Decline</button>
+                        <button type="button" (click)="deliverOrder(order.id)" class="btn btn-success">Deliver</button>
 
 
 

@@ -8,7 +8,9 @@ import {map} from "rxjs";
 import {
   API,
   API_PATH,
+  
   API_PATH_SELLER,
+   
   ORDER_CONFIRM_PATH
 } from "../constants/constants";
 @Injectable({
@@ -26,5 +28,13 @@ export class SellerService {
 
   setProducts(products: SellerProductItemModel[]) {
 this.store.dispatch(new ProductActions.SetProducts(products))
+  }
+  //add service for decline order
+  declineOrder(id:any){
+    return this.http.get<any>(`${API}}${API_PATH_SELLER}/decline/${id}`).pipe() 
+  }
+
+  deliverOrder(id:any){
+    return this.http.get<any>(`${API}${API_PATH_SELLER}/deliver/${id}`).pipe() 
   }
 }

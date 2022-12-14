@@ -36,6 +36,22 @@
     <mat-icon>mail_outline</mat-icon>
     {{ user?.email }}
   </button>
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'seller'" routerLink="/sellerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+   Pending Orders
+
+  </button>
+
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'customer'" routerLink="/customerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+    MyOrders
+
+  </button>
+
   <button mat-menu-item style='cursor: pointer' routerLink='private/settings'>
     <mat-icon>settings</mat-icon>
     Settings
@@ -53,6 +69,21 @@
   <button *ngIf='!isUserAuth' mat-menu-item><mat-icon>info</mat-icon><a routerLink="/info">Info</a></button>
   <button *ngIf="isUserAuth && user.role === 'customer'" mat-menu-item><mat-icon>shopping_bag</mat-icon><a routerLink="/shop">Shop</a></button>
   <button *ngIf="isUserAuth && user.role === 'seller'" mat-menu-item><mat-icon>admin_panel_settings</mat-icon><a routerLink="/seller-admin-panel">My Farm</a></button>
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'seller'" routerLink="/sellerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+    Pending Orders
+
+  </button>
+
+  <button mat-menu-item *ngIf="isUserAuth && user.role === 'customer'" routerLink="/customerorders">
+
+    <mat-icon>assignment</mat-icon>
+
+    My Orders
+
+  </button>
   <button *ngIf='isUserAuth' mat-menu-item><mat-icon>favorite_border</mat-icon><a routerLink="/wish-list">Wish List</a></button>
   <button *ngIf='isUserAuth' mat-menu-item><mat-icon>shopping_cart</mat-icon><a routerLink="/cart">Cart</a></button>
   <button *ngIf='isUserAuth' mat-menu-item><mat-icon>settings</mat-icon><a  routerLink="/private/settings">Settings</a></button>
