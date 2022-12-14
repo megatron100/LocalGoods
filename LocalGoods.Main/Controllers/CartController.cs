@@ -115,6 +115,52 @@ namespace LocalGoods.Main.Controllers
         });
 
         }
+        
+         public async Task<ActionResult> MinusProductToCart(int productId)
+        {
+            var user = _userService.CurrentUser();
+            var product = await _dbContext.Product.Where(x => x.Id == productId && x.IsAvailable && x.IsPublished).FirstOrDefaultAsync();
+            if (product == null)
+            {
+                return BadRequest(new ResponseModel
+                {
+                    Status = false,
+                    Message = "Product Not found"
+                });
+            }
+            //check if product is already in cart
+
+            var cartItem = await _dbContext.ShoppingCartItem.Where(x => x.Product.Id == productId && x.User.Id == user.Id).FirstOrDefaultAsync();
+
+            if (cartItem != null)
+            {
+                cartItem.Quantity -= 1;
+                cartItem.TotalAmount = product.Price * cartItem.Quantity;
+
+                _dbContext.ShoppingCartItem.Update(cartItem);
+
+            }
+            else
+            {
+                return Ok(
+                    new ResponseModel
+                    {
+                        Status = false,
+                        Message = "Product Not found in cart"
+                    }
+                    );
+            }
+
+            _dbContext.SaveChanges();
+
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Unit item removed from Cart",
+                
+            });
+            
+        }
 
         [HttpDelete("Remove/{CartItemId:int}")]
         public async Task<ActionResult> DeleteProductFromCart(int CartItemId)
