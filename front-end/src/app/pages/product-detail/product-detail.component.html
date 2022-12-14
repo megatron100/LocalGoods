@@ -7,6 +7,9 @@
             <h3 class="product-price">${{product.price}}</h3>
             <div class="product-add__container">
                 <input type="number" name="product-quantity" id="product-quantity" value="1">
+                <!--call onClickAdd function on a button click and pass product.id and input value-->
+                <button class="product-add" (click)="onClickAdd(product.id)">
+                    Add to Cart</button>
                 <button class="product-add" (click)="onClickAdd(product.id)">
                     Add to Cart
                 </button>
@@ -14,3 +17,5 @@
         </div>
     </div>
 </div>
+
+ 

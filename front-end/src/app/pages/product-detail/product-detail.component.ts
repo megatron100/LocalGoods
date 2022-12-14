@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AddToCart } from 'src/app/interfaces/addToCartModel';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 
@@ -30,8 +31,13 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onClickAdd(id: number) {
+    const quantity = document.getElementById('product-quantity') as HTMLInputElement;
+    let model: AddToCart={
+      id:id,
+      quantity: Number(quantity.value)
+    };
 
-    this.cartService.addToCart(id)
+    this.cartService.addToCart(model)
         .subscribe(res => {
           console.log(res);
         })

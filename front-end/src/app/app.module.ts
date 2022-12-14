@@ -37,9 +37,9 @@ import { CustomerordersComponent } from './pages/customerorders/customerorders.c
     SettingsComponent,
     CartComponent,
     ProductDetailComponent,
-    FilterPipe
+    FilterPipe,
     OrdersConfirmComponent,
-    CustomerordersComponent,
+    CustomerordersComponent
   ],
   imports: [
     BrowserModule,

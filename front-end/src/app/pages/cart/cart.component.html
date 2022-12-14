@@ -4,8 +4,8 @@
           <app-product-card [product]='item.product'>
             <div class="quantity-section">
               <p class="quantity-text">{{item.quantity}}</p>
-              <button (click)="plusOne(item.id)">+</button>
-              <button (click)="minusOne(item.id)">-</button>
+              <button (click)="plusOne(item.product.id)">+</button>
+              <button (click)="minusOne(item.product.id)">-</button>
             </div>
             <div class="remove-item">
               <button (click)="removeItem(item.id)">Remove</button>
@@ -14,7 +14,13 @@
       </div>
     </div>
     <div class="price-section">
-      <p class="price">Total Price: <span>${{calculatePrice(cart)}}</span></p>
+      <p class="price">Total Price: <span>${{calculatePrice()}}</span></p>
+     
+    </div>
+
+    <div class="price-section">
+      <p class="price">Total Quantity: <span>{{calculateQuantity()}}</span></p>
+     
     </div>
     <div class="cart-actions">
       <button class="cart-buy" (click)="buyProducts()">Buy</button>

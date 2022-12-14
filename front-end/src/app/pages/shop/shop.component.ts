@@ -4,6 +4,7 @@ import {Store} from "@ngrx/store";
 import * as fromShop from '../../store/index'
 import {ShopState} from "../../store/shop.reducer";
 import { CartService } from 'src/app/services/cart.service';
+import { AddToCart } from 'src/app/interfaces/addToCartModel';
 
 @Component({
   selector: 'app-shop',
@@ -55,8 +56,13 @@ export class ShopComponent implements OnInit {
 
 
   onClickAdd(prod: any) {
+    const quantity = document.getElementById('product-quantity') as HTMLInputElement;
+    let model: AddToCart={
+      id:prod.id,
+      quantity:Number(quantity.value)
+    };
 
-    this.cartService.addToCart(prod.id)
+    this.cartService.addToCart(model)
         .subscribe(res => {
           console.log(res);
         })
