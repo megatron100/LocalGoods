@@ -45,7 +45,7 @@ export class CartService {
         )
   }
   orderFromCart(){
-    return this.http.post<any>(`${API}${API_PATH}/order/OrderFromCart`, this.cartContent)
+    return this.http.post<any>(`${API}${API_PATH}/order/orderfromcart`,{})
         .pipe(
           catchError(this.handleError<any>('getData'))
         )
