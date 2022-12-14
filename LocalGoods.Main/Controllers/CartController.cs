@@ -83,7 +83,7 @@ namespace LocalGoods.Main.Controllers
 
             if (cartItem != null)
             {
-                cartItem.Quantity += 1;
+                cartItem.Quantity += request.quantity;
                 cartItem.TotalAmount = cartItem.Product.Price * cartItem.Quantity;
 
                 _dbContext.ShoppingCartItem.Update(cartItem);
