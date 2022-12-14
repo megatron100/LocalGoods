@@ -13,7 +13,7 @@ import { AddToCart } from 'src/app/interfaces/addToCartModel';
 })
 export class ShopComponent implements OnInit {
 
-  products!: any[];
+  products: any[] = [];
   sortValue: string = '';
   searchValue: string = '';
   category: string = '';

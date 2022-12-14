@@ -18,9 +18,9 @@ export class CartService {
   addToCart( model:AddToCart): Observable<any> {
 
     return this.http.post<AddToCart>(`${API}${API_PATH}/Cart/AddToCart`, model)
-          .pipe(
-            catchError(this.handleError<any>('getData')),
-          );
+      .pipe(
+        catchError(this.handleError<any>('getData')),
+      );
   }
 
   getCart(): Observable<any> {
@@ -32,28 +32,28 @@ export class CartService {
 
   removeItem(id: number) {
     return this.http.delete<any>(`${API}${API_PATH}/Cart/remove/${id}`)
-    .pipe(
-      catchError(this.handleError<any>('getData'))
-    )
+      .pipe(
+        catchError(this.handleError<any>('getData'))
+      )
   }
 
   clearCart() {
     return this.http.delete<any>(`${API}${API_PATH}/Cart/ClearCart`)
-        .pipe(
-          catchError(this.handleError<any>('getData'))
-        )
+      .pipe(
+        catchError(this.handleError<any>('getData'))
+      )
   }
   orderFromCart(){
     return this.http.get<any>(`${API}${API_PATH}/order/orderfromcart`)
-        .pipe(
-          catchError(this.handleError<any>('getData'))
-        )
+      .pipe(
+        catchError(this.handleError<any>('getData'))
+      )
   }
   minusQuantity(id: number) {
     return this.http.delete<any>(`${API}${API_PATH}/Cart/minus/${id}`)
-        .pipe(
-          catchError(this.handleError<any>('getData'))
-        )
+      .pipe(
+        catchError(this.handleError<any>('getData'))
+      )
 
   }
 
