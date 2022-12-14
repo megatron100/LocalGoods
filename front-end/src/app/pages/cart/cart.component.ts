@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IProduct } from 'src/app/interfaces/product';
+import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -16,7 +15,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCart();
-    
+
   }
 
   getCart() {
@@ -24,15 +23,15 @@ export class CartComponent implements OnInit {
         .subscribe(res => {
           this.cart = res.data.cartItems;
           console.log(this.cart);
-          
-          
+
+
         })
   }
 
   calculatePrice(arr: any[]): number {
     let sum: number = 0;
     for (let item of arr) {
-      sum += (item.product.price * item.quantity);      
+      sum += (item.product.price * item.quantity);
     }
 
     return sum;

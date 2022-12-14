@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
-import { ShopService } from 'src/app/services/shop.service';
-import { IProduct } from '../../interfaces/product'
 
 @Component({
   selector: 'app-product-card',
@@ -13,8 +11,7 @@ export class ProductCardComponent implements OnInit {
 
   @Input() product: any;
 
-  constructor( private cartService: CartService,
-                private shopService: ShopService ) { }
+  constructor( private cartService: CartService) { }
 
   ngOnInit(): void {
 
@@ -26,9 +23,9 @@ export class ProductCardComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
         })
-    
+
 
   }
 
-  
+
 }

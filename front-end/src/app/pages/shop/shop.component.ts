@@ -11,7 +11,7 @@ import {ShopState} from "../../store/shop.reducer";
 })
 export class ShopComponent implements OnInit {
 
-  products!: any[];
+  products: any[] = [];
   sortValue: string = '';
   searchValue: string = '';
 
@@ -35,21 +35,20 @@ export class ShopComponent implements OnInit {
         this.searchValue = state.search
       });
 
-      // this.products = this.shopService.productList$.value;
+    // this.products = this.shopService.productList$.value;
   }
 
   getProducts(): void {
     this.shopService.getProducts()
-        .subscribe(response => { 
-          this.products = response.data.otherProducts;
-          for (let item of this.products) {
-            console.log(item.imageLink);
-            
-          }
-          
-        })
+      .subscribe(response => {
+        this.products = response.data.otherProducts;
+        for (let item of this.products) {
+          console.log(item.imageLink);
+
+        }
+
+      })
   }
 
-  
 
 }
