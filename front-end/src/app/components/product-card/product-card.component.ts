@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
-import { IProduct } from '../../interfaces/product'
 
 @Component({
   selector: 'app-product-card',
@@ -20,15 +19,7 @@ export class ProductCardComponent implements OnInit {
 
   }
 
-  onClickAdd(id: number) {
-
-    this.cartService.addToCart(id)
-        .subscribe(res => {
-          console.log(res);
-        })
-    
-
-  }
+  
 
   
 }

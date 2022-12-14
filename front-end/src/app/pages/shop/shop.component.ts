@@ -3,6 +3,7 @@ import {ShopService} from "../../services/shop.service";
 import {Store} from "@ngrx/store";
 import * as fromShop from '../../store/index'
 import {ShopState} from "../../store/shop.reducer";
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-shop',
@@ -17,6 +18,7 @@ export class ShopComponent implements OnInit {
 
   constructor(
     public shopService: ShopService,
+    public cartService: CartService,
     private store: Store<fromShop.AppState>
   ) {
   }
@@ -35,7 +37,6 @@ export class ShopComponent implements OnInit {
         this.searchValue = state.search
       });
 
-      // this.products = this.shopService.productList$.value;
   }
 
   getProducts(): void {
@@ -48,6 +49,16 @@ export class ShopComponent implements OnInit {
           }
           
         })
+  }
+
+  onClickAdd(prod: any) {
+
+    this.cartService.addToCart(prod.id)
+        .subscribe(res => {
+          console.log(res);
+        })
+    
+
   }
 
   

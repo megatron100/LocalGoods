@@ -14,10 +14,5 @@
             <p class="product-price">{{product.price | currency: 'USD'}}</p>
         </div>
     </div>
-    <div class="product-add__container">
-        <input type="number" name="product-quantity" id="product-quantity" value="1">
-        <button class="product-add" (click)="onClickAdd(product.id)">
-            Add to Cart
-        </button>
-    </div>
+    <ng-content></ng-content>
 </div>
