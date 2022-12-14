@@ -8,7 +8,6 @@ import { SellerProductItemComponent } from './seller-product-list/seller-product
 import { SellerProductDetailsComponent } from './seller-product-list/seller-product-details/seller-product-details.component';
 import { SellerProductStartComponent } from './seller-product-list/seller-product-start/seller-product-start.component';
 import { CreateSellerProductDialogComponent } from './seller-product-list/dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
-import { DeleteSellerProductDialogComponent } from './seller-product-list/dialogs/delete-seller-product-dialog/delete-seller-product-dialog.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 
@@ -22,7 +21,6 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     SellerProductDetailsComponent,
     SellerProductStartComponent,
     CreateSellerProductDialogComponent,
-    DeleteSellerProductDialogComponent
   ],
   imports: [
     SharedModule,
