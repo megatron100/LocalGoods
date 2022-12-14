@@ -80,9 +80,9 @@ namespace LocalGoods.Main.Controllers
                 var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
                 var user = _customerService.CurrentUser();
 
-                if (user == null || user.Address == null)
+                if (user == null || user.Address == null || user.Certification==null)
                 {
-
+                    
                     return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
                 }
                 if (category == null)

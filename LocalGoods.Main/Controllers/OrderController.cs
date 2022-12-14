@@ -117,6 +117,8 @@ namespace LocalGoods.Main.Controllers
                     await _dbContext.Orders.AddAsync(order);
 
                 }
+                //clear the cart
+                _dbContext.ShoppingCartItem.RemoveRange(cartItems);
                 await _dbContext.SaveChangesAsync();
                 return Ok(new ResponseModel
                 {
