@@ -12,9 +12,10 @@ using System.Security.Claims;
 using System.Text;
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Infrastructure;
-
+using System.Security.Cryptography;
 namespace LocalGoods.Main.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -39,7 +40,7 @@ namespace LocalGoods.Main.Controllers
             _jwtAuthManager = jwtAuthManager;
 
         }
-
+        
         [HttpGet("Test")]
         public ActionResult Employee()
         {
@@ -99,7 +100,7 @@ namespace LocalGoods.Main.Controllers
                     CreatedDate = DateTime.UtcNow,
                     Name = request.Name,
                     Email = request.Email,
-                    Password = request.Password,
+                    Password = EncryptPassword.CalculateSHA256(request.Password),
                     Role = request.Role
                 };
 
@@ -123,7 +124,7 @@ namespace LocalGoods.Main.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        
         [HttpPost("Login")]
 
         public async Task<ActionResult<string>> Login([FromBody] LoginModel request)
@@ -140,7 +141,7 @@ namespace LocalGoods.Main.Controllers
                     response.Message = "User Does Not Exists";
                     return StatusCode(StatusCodes.Status401Unauthorized, response);
                 }
-                bool validatepassword = customer.Password == request.Password;
+                bool validatepassword = customer.Password == EncryptPassword.CalculateSHA256(request.Password);
                 if (!validatepassword)
                 {
                     response.Status = false;
