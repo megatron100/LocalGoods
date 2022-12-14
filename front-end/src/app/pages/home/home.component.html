@@ -16,7 +16,14 @@
     <div class="product-samples">
       <h2 class="sample-title">Some of our favourite products</h2>
       <div class="sample-list">
-        <app-product-card *ngFor="let product of topProds" [product]='product'></app-product-card>
+        <app-product-card *ngFor="let product of topProds" [product]='product'>
+          <div class="product-add__container" >
+            <input type="number" name="product-quantity" id="product-quantity" value="1">
+            <button class="product-add" (click)="onClickAdd(product)">
+                Add to Cart
+            </button>
+          </div>
+        </app-product-card>
       </div>
     </div>
     <div class="contact">
