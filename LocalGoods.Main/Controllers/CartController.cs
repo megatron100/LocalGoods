@@ -135,6 +135,19 @@ namespace LocalGoods.Main.Controllers
 
             if (cartItem != null)
             {
+            if(cartItem.Quantity==1)
+            {
+            _dbContext.ShoppingCartItem.Remove(cartItem);
+            _dbContext.SaveChanges();
+
+            return Ok(new ResponseModel
+            {
+                Status = true,
+                Message = "Cart Item removed from Cart",
+                
+            });
+            
+            }
                 cartItem.Quantity -= 1;
                 cartItem.TotalAmount = product.Price * cartItem.Quantity;
 
