@@ -29,6 +29,16 @@ export class CartComponent implements OnInit {
         })
   }
 
+  buyProducts() {
+    
+  }
+
+  clearCart() {
+    this.cartService.clearCart();
+    console.log(this.cart);
+    
+  }
+
   calculatePrice(arr: any[]): number {
     let sum: number = 0;
     for (let item of arr) {

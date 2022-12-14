@@ -13,4 +13,8 @@
     <div class="price-section">
       <p class="price">Total Price: <span>${{calculatePrice(cart)}}</span></p>
     </div>
+    <div class="cart-actions">
+      <button class="cart-buy" (click)="buyProducts()">Buy</button>
+      <button class="cart-clear" (click)="clearCart()">Clear Cart</button>
+    </div>
 </div>

@@ -29,6 +29,13 @@ export class CartService {
                 )
   }
 
+  clearCart() {
+    this.http.delete<any>(`${API}${API_PATH}/Cart/ClearCart`)
+        .pipe(
+          catchError(this.handleError<any>('getData'))
+        )
+  }
+
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {

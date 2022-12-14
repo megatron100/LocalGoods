@@ -1,8 +1,15 @@
-.product-section {
+.product-section,
+.cart-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 20px auto;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.3s all linear;
 }
 
 .item-section {
@@ -19,7 +26,7 @@
 
 .quantity-section button {
     margin: auto 5px;
-    border: 1px solid transparent;
+    border: 1px solid #39a94b;
     background-color: #39a94b;
     color: #fff;
     width: 40px;
@@ -38,6 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin:  15px auto;
 }
 
 .price-section p {
@@ -48,4 +56,38 @@
 .price-section span {
     font-size: 26px;
     font-weight: normal;
+}
+
+.cart-actions {
+    flex-direction: row;
+}
+
+.cart-actions button {
+    margin: auto 10px 10px;
+    padding: 15px 20px;
+    width: 150px;
+    font-size: 16px;
+}
+
+.cart-buy {
+    color: #fff;
+    background-color: #39a94b;
+    border: 1px solid #39a94b;
+}
+
+.cart-clear {
+    color: #39a94b;
+    background-color: transparent;
+    border: 1px solid #39a94b;
+}
+
+.quantity-section button:hover,
+.cart-buy:hover {
+    color: #39a94b;
+    background-color: transparent;
+}
+
+.cart-clear:hover {
+    color: #fff;
+    background-color: #39a94b;
 }
