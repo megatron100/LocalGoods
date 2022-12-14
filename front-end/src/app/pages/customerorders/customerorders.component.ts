@@ -7,15 +7,18 @@ import { CustomerOrderServiceService } from 'src/app/services/CustomerOrderServi
   styleUrls: ['./customerorders.component.scss']
 })
 export class CustomerordersComponent implements OnInit {
-  Orders:any;
+  orders:any;
+  message: string = ''
 
 
-  constructor(private orders:CustomerOrderServiceService) { }
+  constructor(private orderServices:CustomerOrderServiceService) { }
 
   ngOnInit(): void {
-    this.orders.getorders().subscribe((result)=>{
-      this.Orders=result;
-      console.log(result)
+    this.orderServices.getOrders().subscribe(({data, message})=>{
+      this.orders=data;
+      this.message=message;
+      console.log(data)
+      console.log(message)
     })
   }
 

@@ -13,7 +13,7 @@ import { AddToCart } from 'src/app/interfaces/addToCartModel';
 })
 export class ShopComponent implements OnInit {
 
-  products!: any[];
+  products: any[] = [];
   sortValue: string = '';
   searchValue: string = '';
   category: string = '';
@@ -43,14 +43,14 @@ export class ShopComponent implements OnInit {
 
   getProducts(): void {
     this.shopService.getProducts()
-        .subscribe(response => { 
-          this.products = response.data.otherProducts;
-          for (let item of this.products) {
-            console.log(item.imageLink);
-            
-          }
-          
-        })
+      .subscribe(response => {
+        this.products = response.data.otherProducts;
+        for (let item of this.products) {
+          console.log(item.imageLink);
+
+        }
+
+      })
   }
 
 
@@ -66,10 +66,10 @@ export class ShopComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
         })
-    
+
 
   }
 
-  
+
 
 }

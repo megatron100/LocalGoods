@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCart();
-    
+
   }
 
   getCart() {
@@ -28,8 +28,8 @@ export class CartComponent implements OnInit {
           this.cart = res.data.cartItems;
           this.cartWithQuantity = res.data;
           console.log(this.cartWithQuantity);
-          
-          
+
+
         })
   }
 
@@ -40,10 +40,10 @@ export class CartComponent implements OnInit {
         {this.cart=[];
         this.cartWithQuantity=[];}
         console.log(res);
-        
+
       })
 
-    
+
   }
 
   clearCart() {
@@ -52,16 +52,16 @@ export class CartComponent implements OnInit {
           this.cart = []
           this.cartWithQuantity =[];
           console.log(res);
-          
+
         });
-    
-     
-        
+
+
+
   }
 
   calculatePrice() {
     return this.cartWithQuantity.totalAmount;
-    
+
   }
   calculateQuantity() {
     return this.cartWithQuantity.totalQuantity;
@@ -72,15 +72,15 @@ export class CartComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
           this.cartWithQuantity=res.data;
-          
+
           for (let i = 0; i < this.cart.length; i++) {
             if (this.cart[i].id === id) {
               this.cart.splice(i, 1);
             }
           }
         })
-    
-    
+
+
   }
 
   plusOne(id: number) {
@@ -88,29 +88,29 @@ export class CartComponent implements OnInit {
       id:id,
       quantity:1
     };
-     
 
-    
+
+
 
     this.cartService.addToCart(model).subscribe(res => {
       console.log(res);
       this.cartWithQuantity=res.data;
-      
+
        this.getCart();
     })
   }
-    
- 
+
+
 
   minusOne(id: number) {
     this.cartService.minusQuantity(id).subscribe(res => {
       console.log(res);
       this.cartWithQuantity=res.data;
-      
+
       this.getCart();
     })
-     
+
   }
 }
 
- 
+

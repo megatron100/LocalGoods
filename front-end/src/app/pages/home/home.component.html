@@ -6,7 +6,7 @@
         <p class="home-banner__desc">
           Track down the very best, freshest and locally produced food and drink in your area. Simply type in your postcode and discover a constantly updating new world of fine food and drink.
         </p>
-        <a routerLink="/shop" class="shop-link">Shop now</a>
+        <a *ngIf="!user || user.role === 'customer'" routerLink="/shop" class="shop-link">Shop now</a>
       </div>
     </div>
     <div class="home-objective">
@@ -43,5 +43,4 @@
         </a>
       </div>
     </div>
-  <!-- </div> -->
 </div>

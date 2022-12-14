@@ -1,6 +1,6 @@
 <mat-toolbar class='mat-toolbar'>
   <div class='logo'>
-    <a href="#">Local goods</a>
+    <a href="#">Local Goods</a>
   </div>
   <div class="navbar-collapse">
     <div class="navbar-nav">
@@ -12,20 +12,10 @@
         <li *ngIf="isUserAuth && user.role === 'seller'" routerLinkActive="active"><a routerLink="/seller-admin-panel">My Farm</a></li>
         <li *ngIf="isUserAuth && user.role === 'seller'" routerLinkActive="active"><a routerLink="/sellerorders">Pending Orders</a></li>
         <li *ngIf="isUserAuth && user.role === 'customer'" routerLinkActive="active"><a routerLink="/customerorders">My Orders</a></li>
-        
-        
-
       </ul>
     </div>
-
-    
-
-
-
-
-
     <div class="navbar-nav navbar-right">
-      <mat-icon style="cursor: pointer; position: relative" *ngIf="isUserAuth && user.role === 'customer'" routerLinkActive="/cart">shopping_cart</mat-icon>
+      <mat-icon style="cursor: pointer; position: relative" *ngIf="isUserAuth && user.role === 'customer'" routerLinkActive="cart">shopping_cart</mat-icon>
       <mat-icon style="cursor: pointer" *ngIf='isUserAuth' [matMenuTriggerFor]="profile">person_outline</mat-icon>
       <mat-icon style="cursor: pointer" routerLink="/login" *ngIf='!isUserAuth'>login</mat-icon>
       <mat-icon style="cursor: pointer" routerLink="/register" *ngIf='!isUserAuth'>lock_open</mat-icon>

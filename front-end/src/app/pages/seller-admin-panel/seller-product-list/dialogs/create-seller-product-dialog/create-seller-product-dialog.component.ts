@@ -23,7 +23,6 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
   isCreateMode!: boolean;
   createProductForm!: FormGroup;
   categories!: CategoryModel[];
-  selectedValue!: string;
 
 
   constructor(
@@ -44,12 +43,10 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
         }
       })
 
-    console.log('Mode', this.isCreateMode)
-
     if (this.isCreateMode) {
       this.createProductForm = new FormGroup({
         name: new FormControl(null, [Validators.required]),
-        photo: new FormControl(null, [Validators.required]),
+        photo: new FormControl(null, []),
         category: new FormControl(null, [Validators.required]),
         price: new FormControl(null, [Validators.required]),
         shortDesc: new FormControl(null, [Validators.required]),
@@ -58,7 +55,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     }
     this.createProductForm = new FormGroup({
       name: new FormControl(this.data?.name, [Validators.required]),
-      photo: new FormControl(this.data?.photo, [Validators.required]),
+      photo: new FormControl(this.data?.photo, []),
       category: new FormControl(this.data?.category, [Validators.required]),
       price: new FormControl(this.data?.price, [Validators.required]),
       shortDesc: new FormControl(this.data?.shortDesc, [Validators.required]),
