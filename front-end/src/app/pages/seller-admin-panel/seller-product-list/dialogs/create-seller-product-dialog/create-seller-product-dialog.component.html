@@ -10,13 +10,6 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field color='accent'>
-        <mat-label>Photo</mat-label>
-        <input matInput placeholder='Ex. https://...' formControlName='photo' type='text'>
-        <mat-error *ngIf="createProductForm.hasError('required', 'photo')">
-          This field is required!
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field color='accent'>
         <mat-label>Category</mat-label>
         <mat-select [(ngModel)]="selectedValue" formControlName="category">
           <mat-option *ngFor="let category of categories" [value]="category.productCategoryName">
@@ -49,6 +42,8 @@
         </mat-error>
       </mat-form-field>
     </mat-card>
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose product image</button>
+    <input hidden (change)="uploadFile($event)" #fileInput type="file" id="file">
   </form>
 </div>
 <mat-dialog-actions>

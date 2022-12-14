@@ -26,7 +26,6 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
   selectedValue!: string;
 
 
-
   constructor(
     public store: Store<fromSellerProductList.AppState>,
     public sellerService: SellerService,
@@ -37,7 +36,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if(this.isCreateMode) {
+    if (this.isCreateMode) {
       this.createProductForm = new FormGroup({
         name: new FormControl(null, [Validators.required]),
         photo: new FormControl(null, [Validators.required]),
@@ -110,5 +109,13 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.productsSubscription.unsubscribe()
+  }
+
+  uploadFile(event: any) {
+    const file = (event.target as HTMLInputElement).files
+    console.log(file)
+    this.createProductForm.patchValue({
+      photo: file
+    })
   }
 }
