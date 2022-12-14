@@ -14,6 +14,7 @@ import {Store} from "@ngrx/store";
   styleUrls: ['./seller-admin-panel.component.scss']
 })
 export class SellerAdminPanelComponent implements OnInit {
+isCertificateExist!: boolean;
 
   isCertificateExist: boolean = true
 
