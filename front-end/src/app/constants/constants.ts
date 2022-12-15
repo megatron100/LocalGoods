@@ -5,6 +5,7 @@ export const API_PATH = 'api';
 export const API_PATH_AUTH = 'api/Auth';
 export const PATH_LOGIN = 'Login';
 export const PATH_LOGOUT = 'Logout';
+export const PATH_UPLOAD = 'Upload';
 export const PATH_REGISTER = 'Registration';
 export const PATH_EDIT = 'Edit';
 export const PATH_CHANGE_PASS = 'ChangePassword';
@@ -24,5 +25,5 @@ export const USER_ROLES = ['seller', 'customer'];
 // Saurabh's edit
 export const ORDER_CONFIRM_PATH = 'GetPendingOrders';
 export const Customer_Orders = 'GetOrders';
-//export const Local_api="https://localhost:7292/"
+export const Local_api="https://localhost:7292/"
 

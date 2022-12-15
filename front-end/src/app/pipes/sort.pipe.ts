@@ -11,10 +11,10 @@ export class SortPipe implements PipeTransform {
     switch (args) {
       case 'ASC Name':
         sorted.sort((a: IProduct, b: IProduct) => {
-          if (a.name > b.name) {
+          if (a.productTitle > b.productTitle) {
             return 1
           }
-          if (a.name < b.name) {
+          if (a.productTitle < b.productTitle) {
             return -1
           }
           return 0
@@ -23,10 +23,10 @@ export class SortPipe implements PipeTransform {
 
       case 'DESC Name':
         sorted.sort((a: IProduct, b: IProduct) => {
-          if (b.name > a.name) {
+          if (b.productTitle > a.productTitle) {
             return 1
           }
-          if (b.name < a.name) {
+          if (b.productTitle < a.productTitle) {
             return -1
           }
           return 0

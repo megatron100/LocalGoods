@@ -6,6 +6,9 @@
     <mat-form-field color='accent'>
       <mat-label>Post Code</mat-label>
       <input type='text' matInput placeholder="Ex. 12345" formControlName="postCode" />
+      <mat-error *ngIf="form.hasError('required', 'postCode')">
+        This field is required!
+      </mat-error>
     </mat-form-field>
     <!-- /Post code -->
 
@@ -13,6 +16,9 @@
     <mat-form-field color='accent'>
       <mat-label>Country</mat-label>
       <input type="text" matInput placeholder="Ex. Ukraine" formControlName="country" />
+      <mat-error *ngIf="form.hasError('required', 'country')">
+        This field is required!
+      </mat-error>
     </mat-form-field>
     <!-- /Country -->
 
@@ -21,6 +27,9 @@
     <mat-form-field color='accent'>
       <mat-label>City</mat-label>
       <input type="text" matInput placeholder="Ex. Lviv" formControlName="city" />
+      <mat-error *ngIf="form.hasError('required', 'city')">
+        This field is required!
+      </mat-error>
     </mat-form-field>
     <!-- /City -->
 
@@ -29,6 +38,9 @@
     <mat-form-field color='accent'>
       <mat-label>Area</mat-label>
       <input type="text" matInput placeholder="Ex. Lviv area" formControlName="area" />
+      <mat-error *ngIf="form.hasError('required', 'area')">
+        This field is required!
+      </mat-error>
     </mat-form-field>
     <!-- /Area -->
   </mat-card>

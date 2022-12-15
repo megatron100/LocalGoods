@@ -40,7 +40,14 @@
     <ng-container matColumnDef="photo" >
       <mat-header-cell mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row" data-label="image">
-        <img style='width: 80px' [src]='row.photo' alt='photo'>
+        <img style='width: 45px' [src]='row.photo' alt='photo'>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Other Column -->
+    <ng-container matColumnDef="actions" >
+      <mat-header-cell mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let row" data-label="actions">
         <mat-icon (click)='onProductUpdate(row)' style='cursor: pointer'>edit</mat-icon>
         <mat-icon (click)='onProductDelete(row.id)' style='cursor: pointer'>delete</mat-icon>
         <mat-icon style='cursor: pointer' [routerLink]=[row.id]>desktop_windows</mat-icon>

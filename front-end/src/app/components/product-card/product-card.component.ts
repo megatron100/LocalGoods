@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 import { IProduct } from '../../interfaces/product'
+import {AddToCart} from "../../interfaces/addToCartModel";
 
 @Component({
   selector: 'app-product-card',
@@ -20,15 +21,15 @@ export class ProductCardComponent implements OnInit {
 
   }
 
-  onClickAdd(id: number) {
+  onClickAdd(model:AddToCart) {
 
-    this.cartService.addToCart(id)
+    this.cartService.addToCart(model)
         .subscribe(res => {
           console.log(res);
         })
-    
+
 
   }
 
-  
+
 }

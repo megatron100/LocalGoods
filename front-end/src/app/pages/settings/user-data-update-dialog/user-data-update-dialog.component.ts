@@ -45,14 +45,14 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
-        name: new FormControl(null, []),
-        mobile: new FormControl(null, []),
+        name: new FormControl(null, [Validators.required]),
+        mobile: new FormControl(null, [Validators.required]),
       }),
       address: new FormGroup({
-        postCode: new FormControl(null, []),
-        country: new FormControl(null, []),
-        city: new FormControl(null, []),
-        area: new FormControl(null, []),
+        postCode: new FormControl(null, [Validators.required]),
+        country: new FormControl(null, [Validators.required]),
+        city: new FormControl(null, [Validators.required]),
+        area: new FormControl(null, [Validators.required]),
       })
     });
 
@@ -71,13 +71,13 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
         name: new FormControl(name, [Validators.required, Validators.minLength(3)]),
-        mobile: new FormControl(mobile, []),
+        mobile: new FormControl(mobile, [Validators.required]),
       }),
       address: new FormGroup({
-        postCode: new FormControl(postCode, []),
-        country: new FormControl(country, []),
-        city: new FormControl(city, []),
-        area: new FormControl(area, []),
+        postCode: new FormControl(postCode, [Validators.required]),
+        country: new FormControl(country, [Validators.required]),
+        city: new FormControl(city, [Validators.required]),
+        area: new FormControl(area, [Validators.required]),
       })
     })
   }
