@@ -36,9 +36,17 @@ export class CartComponent implements OnInit {
   buyProducts() {
     this.cartService.orderFromCart()
       .subscribe(res => {
-        if(res.data.status==true)
+        if(res.status==true)
         {this.cart=[];
-        this.cartWithQuantity=[];}
+        this.cartWithQuantity=[];
+        alert(res.message);}
+        //show popup with message
+
+
+        else if(res.status==false)
+        {
+          alert(res.message);
+        }
         console.log(res);
 
       })
@@ -51,7 +59,7 @@ export class CartComponent implements OnInit {
         .subscribe(res => {
           this.cart = []
           this.cartWithQuantity =[];
-          console.log(res);
+          alert(res.message);
 
         });
 
@@ -70,7 +78,7 @@ export class CartComponent implements OnInit {
   removeItem(id: number) {
     this.cartService.removeItem(id)
         .subscribe(res => {
-          console.log(res);
+           
           this.cartWithQuantity=res.data;
 
           for (let i = 0; i < this.cart.length; i++) {
@@ -78,6 +86,7 @@ export class CartComponent implements OnInit {
               this.cart.splice(i, 1);
             }
           }
+          alert(res.message);
         })
 
 
@@ -97,6 +106,7 @@ export class CartComponent implements OnInit {
       this.cartWithQuantity=res.data;
 
        this.getCart();
+       alert(res.message);
     })
   }
 
@@ -108,6 +118,7 @@ export class CartComponent implements OnInit {
       this.cartWithQuantity=res.data;
 
       this.getCart();
+      alert(res.message);
     })
 
   }
