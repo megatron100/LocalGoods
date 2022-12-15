@@ -44,16 +44,11 @@ namespace LocalGoods.Main.Controllers
                 response.Data = products.Take(3);
                 return Ok(response);
             }
-            
-            List<Product> nearByProduct = new List<Product>();
-            if (user.Address != null)
-            {
-                nearByProduct = products.Where(x => x.Seller.Address.City == user.Address.City).ToList();
-            }
-                var otherProducts = products.Except(nearByProduct).ToList();
+
+            var otherProducts = products;
                 response.Status = true;
                 response.Message = "Products found";
-                response.Data = new { nearByProduct, otherProducts };
+                response.Data = new { otherProducts };
                 return Ok(response);
              
         }

@@ -25,7 +25,7 @@ export class ProductCardComponent implements OnInit {
 
     this.cartService.addToCart(model)
         .subscribe(res => {
-          console.log(res);
+          alert(res.message);
         })
 
 

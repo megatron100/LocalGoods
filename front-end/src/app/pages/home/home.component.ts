@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.cartService.addToCart(model)
         .subscribe(res => {
-          console.log(res);
+          alert(res.message);
         })
 
 
