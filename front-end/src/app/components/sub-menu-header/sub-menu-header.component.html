@@ -13,7 +13,7 @@
 
   <div class="select">
     <label for="filter">Filter by Category:</label>
-    <select name="filter" id="filter" >
+    <select name="filter" id="filter" (change)="filterCategory($event)">
       <option *ngFor="let category of categories" [value]="category.productCategoryName">{{ category.productCategoryName }}</option>
     </select>
   </div>

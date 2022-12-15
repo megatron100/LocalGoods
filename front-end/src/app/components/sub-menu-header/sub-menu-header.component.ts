@@ -25,9 +25,9 @@ export class SubMenuHeaderComponent implements OnInit {
 
   getCategories() {
     this.shopService.getCategories()
-        .subscribe(res => {          
-          this.categories = res.data;
-          
+        .subscribe(res => {
+          this.categories = ['', ...res.data];
+
         })
 
   }
@@ -38,5 +38,9 @@ export class SubMenuHeaderComponent implements OnInit {
 
   searchChange($event: any) {
     this.store.dispatch(new ShopActions.SearchProducts($event.target.value))
+  }
+
+  filterCategory($event: any) {
+    this.store.dispatch(new ShopActions.FilterCategories($event.target.value))
   }
 }

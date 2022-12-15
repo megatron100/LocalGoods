@@ -38,7 +38,12 @@ export class ShopComponent implements OnInit {
       .subscribe((state: ShopState) => {
         this.searchValue = state.search
       });
-
+this.store.select('sortData')
+  .subscribe((state: ShopState) =>
+  {
+    console.log('categ', state.filterCat)
+    this.category = state.filterCat
+  })
   }
 
   getProducts(): void {
@@ -56,7 +61,7 @@ export class ShopComponent implements OnInit {
 
 
   onClickAdd(prod: any) {
-    
+
     let model: AddToCart={
       id:prod.id,
       quantity:1

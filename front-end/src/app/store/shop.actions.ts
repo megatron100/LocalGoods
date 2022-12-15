@@ -2,6 +2,7 @@ import {Action} from "@ngrx/store";
 
 export const SORT_PRODUCTS = 'SORT_PRODUCTS';
 export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
+export const FILTER_CATEGORIES = 'FILTER_CATEGORIES';
 
 
 export class SortProducts implements Action{
@@ -18,4 +19,11 @@ export class SearchProducts implements Action{
   }
 }
 
-export type ShopActions = SortProducts | SearchProducts
+export class FilterCategories implements Action{
+  readonly type = FILTER_CATEGORIES;
+
+  constructor(public payload: string) {
+  }
+}
+
+export type ShopActions = SortProducts | SearchProducts | FilterCategories

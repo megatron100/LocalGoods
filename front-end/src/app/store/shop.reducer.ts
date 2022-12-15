@@ -2,12 +2,14 @@ import * as ShopActions from './shop.actions'
 
 export interface ShopState {
   sort: string,
-  search: string
+  search: string,
+  filterCat: string,
 }
 
 const initialState: ShopState = {
   sort: '',
-  search: ''
+  search: '',
+  filterCat: ''
 }
 
 export function shopReducer(
@@ -25,6 +27,12 @@ export function shopReducer(
         ...state,
         search: payload
       };
-    default: return state
+    case ShopActions.FILTER_CATEGORIES:
+      return {
+        ...state,
+        filterCat: payload
+      };
+    default:
+      return state
   }
 }

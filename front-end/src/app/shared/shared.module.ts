@@ -22,6 +22,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import { ErrorDialogComponent } from './error-handling/error-dialog/error-dialog.component';
+import {FilterCategoryPipe} from "../pipes/filter-category.pipe";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ErrorDialogComponent } from './error-handling/error-dialog/error-dialog
     LoadingSpinnerComponent,
     MyErrorStateMatcherDirective,
     MessageDialogComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    FilterCategoryPipe
   ],
   imports: [
     CommonModule,
@@ -72,7 +74,8 @@ import { ErrorDialogComponent } from './error-handling/error-dialog/error-dialog
     MyErrorStateMatcherDirective,
     MatButtonToggleModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FilterCategoryPipe
   ],
   providers:[CdkColumnDef]
 })
