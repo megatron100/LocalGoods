@@ -24,11 +24,12 @@ const routes: Routes = [
   {path: 'shop', loadChildren: () => import('./pages/shop/shop.module')
       .then(m => m.ShopModule), canActivate: [AuthGuard]
   },
+  {path: 'cart', loadChildren: () => import('./pages/cart/cart.module')
+      .then(m => m.CartModule), canActivate: [AuthGuard]
+  },
   { path: 'product/:id', loadChildren: () => import('./pages/product-detail/product-detail.module')
       .then(m => m.ProductDetailModule),  canActivate: [AuthGuard] },
-  {path: 'cart', loadChildren: () => import('./pages/cart/cart.module')
-      .then(m => m.CartModule)
-  },
+
   {
     path: 'seller-admin-panel', loadChildren: () => import('./pages/seller-admin-panel/seller-admin-panel.module')
       .then(m => m.SellerAdminPanelModule)
