@@ -1,4 +1,5 @@
 ﻿using LocalGoods.Main.DAL;
+using LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Model;
 using LocalGoods.Main.Model.BussinessModels;
 using LocalGoods.Main.Services;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text;
 namespace LocalGoods.Main.Controllers
 {
     [Route("api")]
@@ -21,6 +22,7 @@ namespace LocalGoods.Main.Controllers
             (
             LocalGoodsDbContext _localgoodsdbcontext,
             UserService customerService
+
             )
         {
             _dbContext = _localgoodsdbcontext;
@@ -28,7 +30,7 @@ namespace LocalGoods.Main.Controllers
             _customerService = customerService;
 
         }
-
+        
         [HttpGet("Profile")]
 
         public async Task<ActionResult> Get()
@@ -137,15 +139,15 @@ namespace LocalGoods.Main.Controllers
                     };
                 }
 
-                if (changePassword.existingPassword != user.Password)
+                if (EncryptPassword.CalculateSHA256(changePassword.newPassword) == user.Password)
                 {
                     return new ResponseModel()
                     {
                         Status = false,
-                        Message = " Existing Password Incorrect"
+                        Message = " Existing Password cannot be same as new"
                     };
                 }
-                user.Password = changePassword.newPassword;
+                user.Password = EncryptPassword.CalculateSHA256(changePassword.newPassword);
                 _dbContext.User.Update(user);
                 await _dbContext.SaveChangesAsync();
 
