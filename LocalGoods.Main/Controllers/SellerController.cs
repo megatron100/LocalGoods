@@ -96,9 +96,9 @@ namespace LocalGoods.Main.Controllers
                     _dbContext.SaveChanges();
                 }
 
-                if(request.Photo==null)
+                if(string.IsNullOrEmpty(request.Photo))
                 {
-                    request.Photo = "https://th.bing.com/th/id/OIP.jyv7_a5okBXPcs2_J1L-BAHaFI?pid=ImgDet&rs=1";
+                    request.Photo = "https://localgoodsstorage.blob.core.windows.net/productimage/a6644208-ef20-4034-8f99-a03a9b614080.jpg";
                 }
                 Product product = new Product()
                 {

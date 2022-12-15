@@ -3,6 +3,8 @@ import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 import { IProduct } from '../../interfaces/product'
 import {AddToCart} from "../../interfaces/addToCartModel";
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-product-card',
@@ -15,7 +17,7 @@ export class ProductCardComponent implements OnInit {
   @Input() product: any;
 
   constructor( private cartService: CartService,
-                private shopService: ShopService ) { }
+                private shopService: ShopService, public dialog: MatDialog ) { }
 
   ngOnInit(): void {
 
@@ -25,7 +27,8 @@ export class ProductCardComponent implements OnInit {
 
     this.cartService.addToCart(model)
         .subscribe(res => {
-          alert(res.message);
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+       dialogRef.afterClosed()
         })
 
 
