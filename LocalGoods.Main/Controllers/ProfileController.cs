@@ -130,6 +130,15 @@ namespace LocalGoods.Main.Controllers
             {
                 var user = _customerService.CurrentUser();
 
+                if (EncryptPassword.CalculateSHA256(changePassword.existingPassword) != user.Password)
+                {
+                    return new ResponseModel()
+                    {
+                        Status = false,
+                        Message = " Existing Password is incorrect"
+                    };
+                }
+
                 if (changePassword.newPassword != changePassword.passConfirm)
                 {
                     return new ResponseModel()
@@ -147,6 +156,7 @@ namespace LocalGoods.Main.Controllers
                         Message = " Existing Password cannot be same as new"
                     };
                 }
+                
                 user.Password = EncryptPassword.CalculateSHA256(changePassword.newPassword);
                 _dbContext.User.Update(user);
                 await _dbContext.SaveChangesAsync();
@@ -162,8 +172,6 @@ namespace LocalGoods.Main.Controllers
                 return BadRequest();
             }
         }
-
-        //Profile Picture Actikon Method need to be Implemented
 
     }
 }

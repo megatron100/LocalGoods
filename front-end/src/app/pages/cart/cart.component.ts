@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AddToCart } from 'src/app/interfaces/addToCartModel';
 import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
 import { SellerService } from 'src/app/services/seller.service';
+import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
+import { ErrorDialogComponent } from 'src/app/shared/error-handling/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +18,7 @@ export class CartComponent implements OnInit {
   cart!: any[];
   cartWithQuantity: any;
 
-  constructor( private cartService: CartService ) { }
+  constructor( private cartService: CartService, public dialog: MatDialog ) { }
 
   ngOnInit(): void {
     this.getCart();
@@ -39,13 +42,19 @@ export class CartComponent implements OnInit {
         if(res.status==true)
         {this.cart=[];
         this.cartWithQuantity=[];
-        alert(res.message);}
-        //show popup with message
-
-
+        const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+        dialogRef.afterClosed()
+         
+      }
+         
         else if(res.status==false)
         {
-          alert(res.message);
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: res.message,
+            panelClass: 'color'
+          });
+          dialogRef.afterClosed()
+          
         }
         console.log(res);
 
@@ -59,11 +68,11 @@ export class CartComponent implements OnInit {
         .subscribe(res => {
           this.cart = []
           this.cartWithQuantity =[];
-          alert(res.message);
+
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+          dialogRef.afterClosed()
 
         });
-
-
 
   }
 
@@ -86,7 +95,8 @@ export class CartComponent implements OnInit {
               this.cart.splice(i, 1);
             }
           }
-          alert(res.message);
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+          dialogRef.afterClosed()
         })
 
 
@@ -102,11 +112,12 @@ export class CartComponent implements OnInit {
 
 
     this.cartService.addToCart(model).subscribe(res => {
-      console.log(res);
+       
       this.cartWithQuantity=res.data;
 
        this.getCart();
-       alert(res.message);
+       const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+       dialogRef.afterClosed()
     })
   }
 
@@ -114,11 +125,12 @@ export class CartComponent implements OnInit {
 
   minusOne(id: number) {
     this.cartService.minusQuantity(id).subscribe(res => {
-      console.log(res);
+      console.log(res); 
       this.cartWithQuantity=res.data;
 
       this.getCart();
-      alert(res.message);
+      const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+       dialogRef.afterClosed()
     })
 
   }

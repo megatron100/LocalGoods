@@ -6,6 +6,8 @@ import { ShopService } from 'src/app/services/shop.service';
 import {AuthService} from "../auth/auth.service";
 import {Subscription} from "rxjs";
 import {User} from "../auth/models/user.model";
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
   user!: User;
 
-  constructor( public shopService: ShopService, public authService: AuthService, public cartService: CartService) { }
+  constructor( public dialog: MatDialog,public shopService: ShopService, public authService: AuthService, public cartService: CartService) { }
 
   ngOnInit(): void {
     this.userSub = this.authService.user
@@ -55,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.cartService.addToCart(model)
         .subscribe(res => {
-          alert(res.message);
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+       dialogRef.afterClosed()
         })
 
 

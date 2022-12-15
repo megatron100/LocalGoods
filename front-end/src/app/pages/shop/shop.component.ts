@@ -5,6 +5,8 @@ import * as fromShop from '../../store/index'
 import {ShopState} from "../../store/shop.reducer";
 import { CartService } from 'src/app/services/cart.service';
 import { AddToCart } from 'src/app/interfaces/addToCartModel';
+import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shop',
@@ -21,7 +23,8 @@ export class ShopComponent implements OnInit {
   constructor(
     public shopService: ShopService,
     public cartService: CartService,
-    private store: Store<fromShop.AppState>
+    private store: Store<fromShop.AppState>,
+    public dialog: MatDialog
   ) {
   }
 
@@ -64,7 +67,8 @@ export class ShopComponent implements OnInit {
 
     this.cartService.addToCart(model)
         .subscribe(res => {
-          alert(res.message);
+          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
+          dialogRef.afterClosed()
         })
 
 
