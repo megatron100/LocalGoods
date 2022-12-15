@@ -96,6 +96,10 @@ namespace LocalGoods.Main.Controllers
                     _dbContext.SaveChanges();
                 }
 
+                if(request.Photo==null)
+                {
+                    request.Photo = "https://th.bing.com/th/id/OIP.jyv7_a5okBXPcs2_J1L-BAHaFI?pid=ImgDet&rs=1";
+                }
                 Product product = new Product()
                 {
                     Seller = user,
