@@ -1,5 +1,4 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.Model;
+﻿ 
 using LocalGoods.Main.Model.BussinessModels;
 using Microsoft.AspNetCore.Authentication;
 using LocalGoods.Main.Services;
@@ -9,10 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
+ 
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Infrastructure;
-using System.Security.Cryptography;
+
+using LocalGoods.Main.DAL.UnitOfWork;
+using User = LocalGoods.Main.DAL.Models.User;
+using LocalGoods.Main.DAL;
+
 namespace LocalGoods.Main.Controllers
 {
 
@@ -21,32 +24,52 @@ namespace LocalGoods.Main.Controllers
     public class AuthController : ControllerBase
     {
         private IConfiguration _configuration;
-        private LocalGoodsDbContext localgoodsdbcontext;
+        private IUnitOfWork _unitofWork;
         private UserService _customerService;
         private readonly IJwtAuthManager _jwtAuthManager;
+        private LocalGoodsDbContext _localGoodsDbContext;
 
-        public AuthController
-            (
-            LocalGoodsDbContext _localgoodsdbcontext,
+        public AuthController(
+
             IConfiguration configuration,
             UserService customerService,
-            IJwtAuthManager jwtAuthManager
+            IJwtAuthManager jwtAuthManager,
+            IUnitOfWork unitofWork,
+            LocalGoodsDbContext localGoodsDbContext
 
             )
         {
-            localgoodsdbcontext = _localgoodsdbcontext;
+             
             _configuration = configuration;
             _customerService = customerService;
             _jwtAuthManager = jwtAuthManager;
+            _unitofWork = unitofWork;
+             _localGoodsDbContext = localGoodsDbContext;
 
         }
         
         [HttpGet("Test")]
         public ActionResult Employee()
         {
-            string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
-            return Ok(Employees);
+            //string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
+
+            //get sellers
+            var sellers = _unitofWork.UserRepository.GetAll().Where(x => x.Role == Role.Seller).ToList();
+
+            return Ok(sellers);
+            
         }
+
+        [HttpGet("Test2")]
+        public ActionResult Employee2()
+        {
+            //string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
+
+            var allUsers = _localGoodsDbContext.User.Where(x => x.Role == Role.Seller).ToList();
+            return Ok(allUsers);
+
+        }
+
         [HttpPost("Registration")]
         [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] RegistrationModel request)
@@ -74,7 +97,8 @@ namespace LocalGoods.Main.Controllers
 
                 }
 
-                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
+                //var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
+                var customer = _unitofWork.UserRepository.GetAll().Where(x => x.Email == request.Email).Select(a => a).FirstOrDefault();
                 if (customer != null)
                 {
                     response.Status = false;
@@ -104,9 +128,9 @@ namespace LocalGoods.Main.Controllers
                     Role = request.Role
                 };
 
-                var result = await localgoodsdbcontext.User.AddAsync(_user);
+                var result = await _unitofWork.UserRepository.AddAsync(_user);
 
-                localgoodsdbcontext.SaveChanges();
+               await _unitofWork.SaveAsync();
                 response.Data = new
                 {
                     Name = request.Name,
@@ -134,7 +158,7 @@ namespace LocalGoods.Main.Controllers
                 request.Email = request.Email.ToLower().Trim();
                 request.Password = request.Password.Trim();
                 ResponseModel response = new ResponseModel();
-                var customer = await localgoodsdbcontext.User.Where(x => x.Email == request.Email).Select(a => a).FirstOrDefaultAsync();
+                var customer = _unitofWork.UserRepository.GetAll().Where(x => x.Email == request.Email).Select(a => a).FirstOrDefault();
                 if (customer == null)
                 {
                     response.Status = false;

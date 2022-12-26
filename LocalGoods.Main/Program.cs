@@ -1,4 +1,5 @@
 using LocalGoods.Main.DAL;
+using LocalGoods.Main.DAL.UnitOfWork;
 using LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Services;
@@ -10,13 +11,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
- 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(option =>
 {
@@ -49,6 +46,9 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
                                     builder.Configuration.GetConnectionString("LocalGoodsConnection"))
                                                                        );
+//add UnitOfWork
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

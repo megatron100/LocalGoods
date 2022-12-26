@@ -10,7 +10,7 @@
     using System.Text;
     using System.Text.Json.Serialization;
     using global::LocalGoods.Main.DAL;
-    using global::LocalGoods.Main.Model;
+    using global::LocalGoods.Main.DAL.Models;
     using Microsoft.IdentityModel.Tokens;
 
     namespace LocalGoods.Main.Infrastructure

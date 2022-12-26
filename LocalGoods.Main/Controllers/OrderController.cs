@@ -1,5 +1,5 @@
 ﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.Model;
+using LocalGoods.Main.DAL.Models;
 using LocalGoods.Main.Model.BussinessModels;
 using LocalGoods.Main.Services;
 using Microsoft.AspNetCore.Authorization;

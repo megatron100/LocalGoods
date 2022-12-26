@@ -1,7 +1,7 @@
 ﻿using LocalGoods.Main.Controllers;
 using LocalGoods.Main.DAL;
 using LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.Model;
+using LocalGoods.Main.DAL.Models;
 using System.Security.Claims;
 using System.Web;
 

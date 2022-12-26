@@ -1,4 +1,6 @@
-﻿namespace LocalGoods.Main.Model.BussinessModels
+﻿using LocalGoods.Main.DAL.Models;
+namespace LocalGoods.Main.Model.BussinessModels
+
 {
     public class CartResponse
     {

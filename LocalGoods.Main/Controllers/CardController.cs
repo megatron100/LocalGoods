@@ -1,5 +1,5 @@
 ﻿using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Model;
+using LocalGoods.Main.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
