@@ -1,7 +1,9 @@
 ﻿using LocalGoods.Main.DAL;
 using LocalGoods.Main.DAL.Models;
+using LocalGoods.Main.DAL.UnitOfWork;
 using LocalGoods.Main.Model.BussinessModels;
 using LocalGoods.Main.Services;
+using LocalGoods.Main.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,17 +17,19 @@ namespace LocalGoods.Main.Controllers
     public class SellerController : ControllerBase
     {
 
-        private LocalGoodsDbContext _dbContext;
-        private UserService _customerService;
+        private IUserService _customerService;
+        private IUnitOfWork _unitOfWork;
 
         public SellerController
             (
-            LocalGoodsDbContext _localgoodsdbcontext,
-            UserService customerService
+
+            IUserService customerService,
+            IUnitOfWork unitOfWork
+
             )
         {
-            _dbContext = _localgoodsdbcontext;
 
+            _unitOfWork = unitOfWork;
             _customerService = customerService;
 
         }
@@ -33,7 +37,7 @@ namespace LocalGoods.Main.Controllers
         public async Task<ActionResult> GetSellerProducts()
         {
             var user = _customerService.CurrentUser();
-            var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+            var products = _unitOfWork.ProductRepository.GetAll().Where(x => x.Seller.Id == user.Id).ToList();
             if (products == null)
             {
                 return Ok(new ResponseModel { Message = "No products found" });
@@ -56,7 +60,8 @@ namespace LocalGoods.Main.Controllers
             var response = new ResponseModel();
             var user = _customerService.CurrentUser();
 
-            var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id == user.Id).Select(y => y).FirstOrDefault();
+            var product = _unitOfWork.ProductRepository.GetById(id);
+            product = product.Seller.Id == user.Id ? product : null;
             if (product == null)
             {
                 response.Status = false;
@@ -77,12 +82,12 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 ResponseModel response = new ResponseModel();
-                var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                var category = _unitOfWork.ProductCategoryRepository.GetAll().Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
                 var user = _customerService.CurrentUser();
 
-                if (user == null || user.Address == null || user.Certification==null)
+                if (user == null || user.Address == null || user.Certification == null)
                 {
-                    
+
                     return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Seller is required to have Certification/Address to sell products" });
                 }
                 if (category == null)
@@ -92,11 +97,11 @@ namespace LocalGoods.Main.Controllers
                         ProductCategoryName = request.Category,
 
                     };
-                    _dbContext.ProductCategory.Add(category);
-                    _dbContext.SaveChanges();
+                    _unitOfWork.ProductCategoryRepository.Add(category);
+                    await _unitOfWork.SaveAsync();
                 }
 
-                if(string.IsNullOrEmpty(request.Photo))
+                if (string.IsNullOrEmpty(request.Photo))
                 {
                     request.Photo = "https://localgoodsstorage.blob.core.windows.net/productimage/a6644208-ef20-4034-8f99-a03a9b614080.jpg";
                 }
@@ -111,9 +116,9 @@ namespace LocalGoods.Main.Controllers
                     LongDescription = request.LongDescription
 
                 };
-                var result = await _dbContext.Product.AddAsync(product);
-                _dbContext.SaveChanges();
-                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+                var result = await _unitOfWork.ProductRepository.AddAsync(product);
+                _unitOfWork.Save();
+                var products = _unitOfWork.ProductRepository.GetAll().Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToList();
 
                 response.Status = true;
                 response.Data = products;
@@ -134,7 +139,7 @@ namespace LocalGoods.Main.Controllers
             {
                 ResponseModel response = new ResponseModel();
                 var user = _customerService.CurrentUser();
-                var product = _dbContext.Product.Where(x => x.Id == request.ProductId && x.Seller.Id == user.Id).FirstOrDefault();
+                var product = _unitOfWork.ProductRepository.GetAll().Where(x => x.Id == request.ProductId && x.Seller.Id == user.Id).FirstOrDefault();
                 if (product == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, new { Message = "Product Not Found" });
@@ -146,7 +151,7 @@ namespace LocalGoods.Main.Controllers
                 }
                 if (request.Category != null)
                 {
-                    var category = await _dbContext.ProductCategory.Where(x => x.ProductCategoryName == request.Category).FirstOrDefaultAsync();
+                    var category = _unitOfWork.ProductCategoryRepository.GetAllAsync().Result.Where(x => x.ProductCategoryName == request.Category).FirstOrDefault();
                     if (category == null)
                     {
                         category = new ProductCategory
@@ -154,8 +159,8 @@ namespace LocalGoods.Main.Controllers
                             ProductCategoryName = request.Category,
 
                         };
-                        _dbContext.ProductCategory.Add(category);
-                        _dbContext.SaveChanges();
+                        _unitOfWork.ProductCategoryRepository.Add(category);
+                        _unitOfWork.Save();
                     }
 
                     product.ProductCategory = category;
@@ -174,9 +179,9 @@ namespace LocalGoods.Main.Controllers
 
                 { product.ImageLink = request.Photo; }
 
-                _dbContext.Product.Update(product);
-                await _dbContext.SaveChangesAsync();
-                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+                _unitOfWork.ProductRepository.Update(product);
+                await _unitOfWork.SaveAsync();
+                var products = _unitOfWork.ProductRepository.GetAll().Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToList();
 
                 response.Status = true;
 
@@ -197,14 +202,14 @@ namespace LocalGoods.Main.Controllers
             try
             {
                 var user = _customerService.CurrentUser();
-                var product = _dbContext.Product.Where(x => x.Id == id && x.Seller.Id == user.Id).FirstOrDefault();
+                var product = _unitOfWork.ProductRepository.GetAll().Where(x => x.Id == id && x.Seller.Id == user.Id).FirstOrDefault();
                 if (product == null)
                 {
                     return NotFound(new ResponseModel { Status = false, Message = "Product Not Found" });
                 }
-                _dbContext.Product.Remove(product);
-                await _dbContext.SaveChangesAsync();
-                var products = await _dbContext.Product.Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToListAsync();
+                _unitOfWork.ProductRepository.Delete(product);
+                await _unitOfWork.SaveAsync();
+                var products = _unitOfWork.ProductRepository.GetAll().Where(x => x.Seller.Id == user.Id && x.IsAvailable && x.IsPublished).Select(a => a).ToList();
 
                 return Ok(new ResponseModel
                 {
@@ -243,8 +248,8 @@ namespace LocalGoods.Main.Controllers
 
                     };
                     seller.Certification = certificate;
-                    var result = await _dbContext.Certificate.AddAsync(certificate);
-                    _dbContext.SaveChanges();
+                    var result = await _unitOfWork.CertificateRepository.AddAsync(certificate);
+                    await _unitOfWork.SaveAsync();
 
                     response.Status = true;
                     response.Data = certificate;
@@ -263,7 +268,7 @@ namespace LocalGoods.Main.Controllers
         public async Task<ActionResult> GetOrdersToConfirmorReject()
         {
             var user = _customerService.CurrentUser();
-            var allorders = _dbContext.Orders.ToList();
+            var allorders = _unitOfWork.OrderRepository.GetAll();
             List<Order> orders = new List<Order>();
             var filterorders = new List<Order>();
             foreach (var o in allorders)
@@ -303,7 +308,7 @@ namespace LocalGoods.Main.Controllers
 
                 var seller = _customerService.CurrentUser();
 
-                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+                var order = _unitOfWork.OrderRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
                 if (order == null)
                 {
                     return BadRequest();
@@ -311,13 +316,13 @@ namespace LocalGoods.Main.Controllers
 
                 order.OrderStatus = OrderStatus.Refused;
 
-                _dbContext.Orders.Update(order);
-                _dbContext.SaveChanges();
+                _unitOfWork.OrderRepository.Update(order);
+                await _unitOfWork.SaveAsync();
                 return Ok(new
                 {
                     Message = "Order has been Refused",
                     status = true
-                }) ;
+                });
 
             }
             catch (Exception)
@@ -333,8 +338,9 @@ namespace LocalGoods.Main.Controllers
             {
 
                 var seller = _customerService.CurrentUser();
+                //get orders in async way from order repository
 
-                var order = await _dbContext.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+                var order = _unitOfWork.OrderRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
                 if (order == null)
                 {
                     return BadRequest();
@@ -342,8 +348,8 @@ namespace LocalGoods.Main.Controllers
 
                 order.OrderStatus = OrderStatus.Confirmed;
 
-                _dbContext.Orders.Update(order);
-                _dbContext.SaveChanges();
+                _unitOfWork.OrderRepository.Update(order);
+                await _unitOfWork.SaveAsync();
                 return Ok(new
                 {
                     Message = "Order has been Confirmed",

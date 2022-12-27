@@ -4,10 +4,11 @@ using LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.DAL.Models;
 using System.Security.Claims;
 using System.Web;
+using LocalGoods.Main.Services.IServices;
 
 namespace LocalGoods.Main.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly LocalGoodsDbContext _dbContext;
         private readonly IHttpContextAccessor _httpContextAccessor;

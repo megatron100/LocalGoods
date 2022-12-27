@@ -1,4 +1,4 @@
-﻿ 
+﻿
 using LocalGoods.Main.Model.BussinessModels;
 using Microsoft.AspNetCore.Authentication;
 using LocalGoods.Main.Services;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
- 
+
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Infrastructure;
 
@@ -23,50 +23,37 @@ namespace LocalGoods.Main.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IConfiguration _configuration;
+
         private IUnitOfWork _unitofWork;
-        private UserService _customerService;
+
         private readonly IJwtAuthManager _jwtAuthManager;
-        private LocalGoodsDbContext _localGoodsDbContext;
 
         public AuthController(
 
-            IConfiguration configuration,
-            UserService customerService,
             IJwtAuthManager jwtAuthManager,
-            IUnitOfWork unitofWork,
-            LocalGoodsDbContext localGoodsDbContext
+            IUnitOfWork unitofWork
 
             )
         {
-             
-            _configuration = configuration;
-            _customerService = customerService;
+
             _jwtAuthManager = jwtAuthManager;
             _unitofWork = unitofWork;
-             _localGoodsDbContext = localGoodsDbContext;
 
         }
-        
+
         [HttpGet("Test")]
         public ActionResult Employee()
         {
             //string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
 
             //get sellers
-            var sellers = _unitofWork.UserRepository.GetAll().Where(x => x.Role == Role.Seller).ToList();
+            var sellers6 = _unitofWork.UserRepository.GetById(1);
+            var sellers = _unitofWork.UserRepository.GetAll();
+            var sellers2 = _unitofWork.UserRepository.GetAll().ToList();
+
+            var sellers5 = _unitofWork.UserRepository.GetAll().ToList().Where(x => x.Role == Role.Seller);
 
             return Ok(sellers);
-            
-        }
-
-        [HttpGet("Test2")]
-        public ActionResult Employee2()
-        {
-            //string[] Employees = new string[] { "Employee1", "Employee2", "Employee3" };
-
-            var allUsers = _localGoodsDbContext.User.Where(x => x.Role == Role.Seller).ToList();
-            return Ok(allUsers);
 
         }
 
@@ -130,7 +117,7 @@ namespace LocalGoods.Main.Controllers
 
                 var result = await _unitofWork.UserRepository.AddAsync(_user);
 
-               await _unitofWork.SaveAsync();
+                await _unitofWork.SaveAsync();
                 response.Data = new
                 {
                     Name = request.Name,
@@ -148,10 +135,10 @@ namespace LocalGoods.Main.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        
+
         [HttpPost("Login")]
 
-        public async Task<ActionResult<string>> Login([FromBody] LoginModel request)
+        public async Task<ActionResult> Login([FromBody] LoginModel request)
         {
             try
             {

@@ -18,7 +18,9 @@ namespace LocalGoods.Main.DAL.Repository
 
         public IEnumerable<T> GetAll()
         {
+            //asnotracking giving error
             return _dbSet.ToList();
+
         }
 
         public T GetById(int id)
