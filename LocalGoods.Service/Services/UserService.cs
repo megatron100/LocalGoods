@@ -132,6 +132,52 @@ namespace LocalGoods.Services
             return true;
         }
 
+        public Task<bool> AddUser(User user)
+        {
+            throw new NotImplementedException();
+            
+        }
+
+        public Task<bool> UpdateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<User>> GetAllSellers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RateSeller(int sellerId, int rating)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<User>> AdminGetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<User>> AdminGetAllBlockedUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AdminBlockUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AdminUnblockUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AdminDeleteUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 
