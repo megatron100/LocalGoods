@@ -4,6 +4,144 @@
     "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj",
+        "projectName": "LocalGoods.Common",
+        "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj",
+        "packagesPath": "C:\\Users\\Shubham_Maurya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Shubham_Maurya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj",
+        "projectName": "LocalGoods.DAL",
+        "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj",
+        "packagesPath": "C:\\Users\\Shubham_Maurya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Shubham_Maurya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -27,7 +165,17 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj"
+              },
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj"
+              },
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -87,6 +235,70 @@
               "version": "[6.25.0, )"
             }
           },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj",
+        "projectName": "LocalGoods.Service",
+        "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj",
+        "packagesPath": "C:\\Users\\Shubham_Maurya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Shubham_Maurya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj"
+              },
+              "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj": {
+                "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "imports": [
             "net461",
             "net462",

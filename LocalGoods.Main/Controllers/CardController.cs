@@ -1,12 +1,13 @@
-﻿using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.DAL.Models;
+﻿using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+using LocalGoods.Common.EfModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using LocalGoods.Main.DAL;
-using LocalGoods.Main.Services;
+using LocalGoods.DAL;
+ 
 using Microsoft.AspNetCore.Authorization;
+using LocalGoods.Services.IServices;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -17,12 +18,12 @@ namespace LocalGoods.Main.Controllers
     {
         
         private LocalGoodsDbContext _dbContext;
-        private UserService _customerService;
+        private IUserService _customerService;
 
         public CardController
             (
             LocalGoodsDbContext _localgoodsdbcontext,
-            UserService customerService
+            IUserService customerService
             )
         {
             _dbContext = _localgoodsdbcontext;

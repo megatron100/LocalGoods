@@ -1,7 +1,7 @@
 ﻿
-using LocalGoods.Main.Model.BussinessModels;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
 using Microsoft.AspNetCore.Authentication;
-using LocalGoods.Main.Services;
+ 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +9,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.Infrastructure;
+using LocalGoods.Common.Infrastructure;
 
-using LocalGoods.Main.DAL.UnitOfWork;
-using User = LocalGoods.Main.DAL.Models.User;
-using LocalGoods.Main.DAL;
+using LocalGoods.DAL.UnitOfWork;
+using User = LocalGoods.Common.EfModels.User;
+using LocalGoods.DAL;
+using LocalGoods.Service.Services.IServices;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -26,17 +26,17 @@ namespace LocalGoods.Main.Controllers
 
         private IUnitOfWork _unitofWork;
 
-        private readonly IJwtAuthManager _jwtAuthManager;
+        private readonly IJwtService _jwtService;
 
         public AuthController(
 
-            IJwtAuthManager jwtAuthManager,
+            IJwtService jwtAuthManager,
             IUnitOfWork unitofWork
 
             )
         {
 
-            _jwtAuthManager = jwtAuthManager;
+            _jwtService = jwtAuthManager;
             _unitofWork = unitofWork;
 
         }
@@ -168,7 +168,7 @@ namespace LocalGoods.Main.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
                 };
 
-                var jwtResult = _jwtAuthManager.GenerateTokens(request.Email, authClaims, DateTime.Now);
+                var jwtResult = _jwtService.GenerateTokens(request.Email, authClaims, DateTime.Now);
 
                 return Ok(new ResponseModel
                 {
@@ -202,7 +202,7 @@ namespace LocalGoods.Main.Controllers
             // https://github.com/auth0/node-jsonwebtoken/issues/375
 
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            _jwtAuthManager.RemoveRefreshTokenByUserEmail(userEmail);
+            _jwtService.RemoveRefreshTokenByUserEmail(userEmail);
 
             return Ok(new ResponseModel
             {
@@ -231,7 +231,7 @@ namespace LocalGoods.Main.Controllers
 
                 var accessToken = await HttpContext.GetTokenAsync("Bearer", "access_token");
 
-                var jwtResult = _jwtAuthManager.Refresh(request.RefreshToken, accessToken, DateTime.Now);
+                var jwtResult = _jwtService.Refresh(request.RefreshToken, accessToken, DateTime.Now);
 
                 return Ok(new ResponseModel
                 {

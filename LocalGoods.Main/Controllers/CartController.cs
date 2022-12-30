@@ -1,11 +1,13 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Services;
+﻿using LocalGoods.Common.Helpers.Constants;
+using LocalGoods.DAL;
+using LocalGoods.Common.EfModels;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+ 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using LocalGoods.Services.IServices;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -16,8 +18,8 @@ namespace LocalGoods.Main.Controllers
     {
         //dbcontext
         private LocalGoodsDbContext _dbContext;
-        private UserService _userService;
-        public CartController(LocalGoodsDbContext dbContext, UserService userService)
+        private IUserService _userService;
+        public CartController(LocalGoodsDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
             _userService = userService;

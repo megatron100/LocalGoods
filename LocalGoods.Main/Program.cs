@@ -1,13 +1,16 @@
-using LocalGoods.Main.DAL;
-using LocalGoods.Main.DAL.UnitOfWork;
-using LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.Services;
+using LocalGoods.DAL;
+using LocalGoods.DAL.UnitOfWork;
+using LocalGoods.Common.Infrastructure;
+ 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using LocalGoods.Service.Services.IServices;
+using LocalGoods.Service.Services;
+using LocalGoods.Services.IServices;
+using LocalGoods.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,8 +52,8 @@ builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
 //add UnitOfWork
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<IJwtAuthManager, JwtAuthManager>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddAuthentication(options =>

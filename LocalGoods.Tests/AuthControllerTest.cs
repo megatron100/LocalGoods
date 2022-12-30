@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
-using LocalGoods.Main.DAL.UnitOfWork;
-using LocalGoods.Main.DAL.Repository;
-using LocalGoods.Main.DAL.Models;
-using Microsoft.Extensions.Configuration;
-using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.Services;
+using LocalGoods.DAL.UnitOfWork;
+using LocalGoods.DAL.Repository;
+using LocalGoods.Common.EfModels;
+
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using LocalGoods.Main.DAL.Helpers.Constants;
-using LocalGoods.Main.Model.BussinessModels;
+
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
 using Microsoft.AspNetCore.Mvc;
-using LocalGoods.Main.Infrastructure;
+using LocalGoods.Common.Infrastructure;
+using LocalGoods.Service.Services.IServices;
+using LocalGoods.Service.Models;
 
 namespace LocalGoods.Tests
 {
@@ -32,14 +31,14 @@ namespace LocalGoods.Tests
             userRepositoryMock = new Mock<IRepository<User>>();
         }
         [TestMethod]
-        public void Test_Login()
+        public void Test_Login_ReturnSuccess()
         { 
             var user = new User()
             {
 
                 Email = "test@test.com",
                 Password = "test12345",
-                Role = Main.DAL.Helpers.Constants.Role.Seller,
+                Role = Role.Seller,
                 Id = 1,
                 Name = "test"
 
@@ -51,7 +50,7 @@ namespace LocalGoods.Tests
             userRepositoryMock.Setup(x => x.GetAll()  ).Returns( new List<User>() { user}  );
              
             //mock Jwt
-            var jwtMock = new Mock<IJwtAuthManager>();
+            var jwtMock = new Mock<IJwtService>();
             var JwtResult = new JwtAuthResult
             {
                 AccessToken = "Fake-Access-Token",
@@ -80,11 +79,17 @@ namespace LocalGoods.Tests
             Assert.IsNotNull(okresult.Value.GetType().GetProperty("Data").GetValue(okresult.Value, null));
 
         }
+
+        [TestMethod]
+        public void Test_Login_Return_Password_Incorrect()
+        {
+
+        }
         [TestMethod]
 
         public void Test_Registration()
         {
-            var user = new User { Email = "test@test.com", Password = "test12345", Role = Main.DAL.Helpers.Constants.Role.Seller, Id = 1, Name = "test" };
+            var user = new User { Email = "test@test.com", Password = "test12345", Role =  Role.Seller, Id = 1, Name = "test" };
             userRepositoryMock.Setup(x => x.GetAll()).Returns(new List<User> { user });
             userRepositoryMock.Setup(x => x.AddAsync(It.IsAny<User>())).ReturnsAsync(user);
             unitOfWorkMock.Setup(x => x.UserRepository).Returns(userRepositoryMock.Object);
@@ -95,7 +100,7 @@ namespace LocalGoods.Tests
                 Name = "test",
                 Password = "test12345",
                 RePassword = "test12345",
-                Role = Main.DAL.Helpers.Constants.Role.Seller
+                Role =  Role.Seller
             };
             var result = controller.Register(registerRequest);
 

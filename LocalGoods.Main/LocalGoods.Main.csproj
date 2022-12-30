@@ -23,4 +23,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LocalGoods.Common\LocalGoods.Common.csproj" />
+    <ProjectReference Include="..\LocalGoods.DAL\LocalGoods.DAL.csproj" />
+    <ProjectReference Include="..\LocalGoods.Service\LocalGoods.Service.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,10 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Services;
+﻿using LocalGoods.DAL;
+using LocalGoods.Common.EfModels;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+ 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using LocalGoods.Services.IServices;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -14,11 +15,11 @@ namespace LocalGoods.Main.Controllers
     public class AddressController : ControllerBase
     {
         private readonly LocalGoodsDbContext _dbContext;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
         public AddressController
             (
             LocalGoodsDbContext dbContext,
-            UserService userService
+            IUserService userService
             )
 
         {

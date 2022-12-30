@@ -1,9 +1,9 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.DAL.UnitOfWork;
-using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Services;
-using LocalGoods.Main.Services.IServices;
+﻿using LocalGoods.DAL;
+using LocalGoods.Common.EfModels;
+using LocalGoods.DAL.UnitOfWork;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+ 
+using LocalGoods.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -1,12 +1,14 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Services;
+﻿using LocalGoods.Common.Helpers.Constants;
+using LocalGoods.DAL;
+using LocalGoods.Common.EfModels;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+ 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using LocalGoods.Services.IServices;
 
 namespace LocalGoods.Main.Controllers
 {
@@ -16,9 +18,9 @@ namespace LocalGoods.Main.Controllers
     public class HomeController : ControllerBase
     {
         private readonly LocalGoodsDbContext _dbContext;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public HomeController(LocalGoodsDbContext dbContext, UserService userService)
+        public HomeController(LocalGoodsDbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
             _userService = userService;

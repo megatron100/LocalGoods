@@ -1,4 +1,4 @@
-﻿using LocalGoods.Main.DAL.Models;
+﻿using LocalGoods.Common.EfModels;
 namespace LocalGoods.Main.Model.BussinessModels
 
 {

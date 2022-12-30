@@ -1,13 +1,16 @@
-﻿using LocalGoods.Main.DAL;
-using LocalGoods.Main.Infrastructure;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.Model.BussinessModels;
-using LocalGoods.Main.Services;
+﻿using LocalGoods.DAL;
+using LocalGoods.Common.Infrastructure;
+using LocalGoods.Common.EfModels;
+using LocalGoods.Main.Model.BussinessModels; using LocalGoods.Common.Helpers.Constants;
+ 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using LocalGoods.Services;
+using LocalGoods.Services.IServices;
+
 namespace LocalGoods.Main.Controllers
 {
     [Route("api")]
@@ -16,12 +19,12 @@ namespace LocalGoods.Main.Controllers
     public class ProfileController : ControllerBase
     {
         private LocalGoodsDbContext _dbContext;
-        private UserService _customerService;
+        private IUserService _customerService;
 
         public ProfileController
             (
             LocalGoodsDbContext _localgoodsdbcontext,
-            UserService customerService
+            IUserService customerService
 
             )
         {

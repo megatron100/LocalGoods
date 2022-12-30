@@ -1,16 +1,12 @@
-﻿using LocalGoods.Main.Controllers;
-using LocalGoods.Main.DAL.Models;
-using LocalGoods.Main.DAL.Repository;
-using LocalGoods.Main.DAL.UnitOfWork;
-using LocalGoods.Main.Services;
-using LocalGoods.Main.Services.IServices;
+﻿using LocalGoods.Common.EfModels;
+using LocalGoods.Common.Helpers.Constants;
+using LocalGoods.DAL.Repository;
+using LocalGoods.DAL.UnitOfWork;
+using LocalGoods.Main.Controllers;
+ 
+using LocalGoods.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocalGoods.Tests
 {
@@ -43,7 +39,7 @@ namespace LocalGoods.Tests
             var user = new User
             {
                 Id = 1,
-                Role = Main.DAL.Helpers.Constants.Role.Seller
+                Role =  Role.Seller
             };
             var products = new List<Product>
     {
@@ -81,7 +77,7 @@ namespace LocalGoods.Tests
             var user = new User
             {
                 Id = 1,
-                Role = Main.DAL.Helpers.Constants.Role.Seller
+                Role =  Role.Seller
             };
             var products = new List<Product>
             {

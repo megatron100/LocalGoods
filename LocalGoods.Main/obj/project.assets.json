@@ -2498,6 +2498,55 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "LocalGoods.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/LocalGoods.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalGoods.Common.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "LocalGoods.DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "LocalGoods.Common": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.1",
+          "Microsoft.EntityFrameworkCore.Proxies": "6.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1"
+        },
+        "compile": {
+          "bin/placeholder/LocalGoods.DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalGoods.DAL.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "LocalGoods.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "LocalGoods.Common": "1.0.0",
+          "LocalGoods.DAL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LocalGoods.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalGoods.Service.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -8232,11 +8281,29 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "LocalGoods.Common/1.0.0": {
+      "type": "project",
+      "path": "../LocalGoods.Common/LocalGoods.Common.csproj",
+      "msbuildProject": "../LocalGoods.Common/LocalGoods.Common.csproj"
+    },
+    "LocalGoods.DAL/1.0.0": {
+      "type": "project",
+      "path": "../LocalGoods.DAL/LocalGoods.DAL.csproj",
+      "msbuildProject": "../LocalGoods.DAL/LocalGoods.DAL.csproj"
+    },
+    "LocalGoods.Service/1.0.0": {
+      "type": "project",
+      "path": "../LocalGoods.Service/LocalGoods.Service.csproj",
+      "msbuildProject": "../LocalGoods.Service/LocalGoods.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Azure.Storage.Blobs >= 12.14.1",
+      "LocalGoods.Common >= 1.0.0",
+      "LocalGoods.DAL >= 1.0.0",
+      "LocalGoods.Service >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.0",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
       "Microsoft.EntityFrameworkCore >= 6.0.1",
@@ -8275,7 +8342,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj": {
+              "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Common\\LocalGoods.Common.csproj"
+            },
+            "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj": {
+              "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.DAL\\LocalGoods.DAL.csproj"
+            },
+            "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj": {
+              "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Service\\LocalGoods.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
