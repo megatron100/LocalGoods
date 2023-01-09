@@ -1,16 +1,19 @@
 using LocalGoods.DAL;
 using LocalGoods.DAL.UnitOfWork;
-using LocalGoods.Common.Infrastructure;
- 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
 using LocalGoods.Service.Services.IServices;
 using LocalGoods.Service.Services;
 using LocalGoods.Services.IServices;
 using LocalGoods.Services;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
+using System.Text;
+
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,15 +48,29 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
 });
+string keyVaultUrl = builder.Configuration["URI:KeyVault"];
+var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultSecret secret = secretClient.GetSecret("LocalGoodsDbSecret"); 
+string connectionString = secret.Value;
+
+//var azureServiceTokenProvider = new AzureServiceTokenProvider();
+//string token = azureServiceTokenProvider.GetAccessTokenAsync(keyVaultUrl).Result;
+
+//var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential(new TokenCredential(token)));
+
+//KeyVaultSecret secret = secretClient.GetSecret("<secret-name>");
+//string connectionString = secret.Value;
+builder.Configuration["AzureLocalGoodsConnection"] = connectionString;
 
 builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
-                                    builder.Configuration.GetConnectionString("LocalGoodsConnection"))
+                                    builder.Configuration.GetConnectionString("AzureLocalGoodsConnection"))
                                                                        );
 //add UnitOfWork
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddAuthentication(options =>
