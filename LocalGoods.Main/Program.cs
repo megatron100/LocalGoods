@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using LocalGoods.Main.DAL;
 using LocalGoods.Main.Infrastructure;
 using LocalGoods.Main.Infrastructure.LocalGoods.Main.Infrastructure;
@@ -45,10 +47,18 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
 });
-
+string keyVaultUrl = "https://localgoodskeyvault.vault.azure.net/";
+var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultSecret secret = secretClient.GetSecret("LocalGoodsDbSecret");
+string connectionString = secret.Value;
+ 
 builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
-                                    builder.Configuration.GetConnectionString("LocalGoodsConnection"))
+                                    builder.Configuration.GetConnectionString(connectionString))
                                                                        );
+
+//builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
+//                                    builder.Configuration.GetConnectionString("LocalGoodsConnection"))
+//                                                                       );
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
