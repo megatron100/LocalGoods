@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Azure.Storage.Blobs;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
+
 namespace LocalGoods.Main.Controllers
 {
     [Route("api")]
@@ -110,7 +113,14 @@ namespace LocalGoods.Main.Controllers
 
             var extension = Path.GetExtension(file.FileName);
             var fileName = $"{Guid.NewGuid()}{extension}";
-            var connectionString = _configuration.GetConnectionString("AzureStorage");
+
+            //access connection string from azure key vault
+            string keyVaultUrl = "https://localgoodskeyvault.vault.azure.net/";
+            var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            KeyVaultSecret secret = secretClient.GetSecret("LocalGoodsBlobSecret");
+            string connectionString = secret.Value;
+
+     
             var blobServiceClient = new BlobServiceClient(connectionString);
             var containerClient = blobServiceClient.GetBlobContainerClient("productimage");
             //create a container if it doesn't exist

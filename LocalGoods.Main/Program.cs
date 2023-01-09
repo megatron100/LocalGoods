@@ -49,12 +49,17 @@ builder.Services.AddSwaggerGen(option =>
 });
 string keyVaultUrl = "https://localgoodskeyvault.vault.azure.net/";
 var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
-KeyVaultSecret secret = secretClient.GetSecret("LocalGoodsDbSecret");
-string connectionString = secret.Value;
+KeyVaultSecret dbSecret = secretClient.GetSecret("LocalGoodsDbSecret");
+KeyVaultSecret blobSecret = secretClient.GetSecret("LocalGoodsBlobSecret");
  
+builder.Configuration["AzureDbConnection"] = dbSecret.Value;
+builder.Configuration["AzureBlobSecret"] = blobSecret.Value;
+
 builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
-                                    builder.Configuration.GetConnectionString(connectionString))
+                                    builder.Configuration["AzureDbConnection"])
                                                                        );
+
+ 
 
 //builder.Services.AddDbContext<LocalGoodsDbContext>(x => x.UseSqlServer(
 //                                    builder.Configuration.GetConnectionString("LocalGoodsConnection"))
@@ -106,5 +111,5 @@ app.UseCors(x => x
     .AllowAnyHeader());
 
 app.MapControllers();
-
+ 
 app.Run();
