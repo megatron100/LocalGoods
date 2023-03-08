@@ -1,13 +1,11 @@
-import { AddToCart } from 'src/app/interfaces/addToCartModel';
-import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ShopService } from 'src/app/services/shop.service';
-import {AuthService} from "../auth/auth.service";
 import {Subscription} from "rxjs";
 import {User} from "../auth/models/user.model";
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
+import {AddToCart, AuthService} from "../../core";
 
 @Component({
   selector: 'app-home',

@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {AuthGuard} from "../auth/auth.guard";
-import {USER_ROLES} from "../../constants/constants";
 import {SellerAdminPanelComponent} from "./seller-admin-panel.component";
 import {
   SellerProductDetailsComponent
 } from "./seller-product-list/seller-product-details/seller-product-details.component";
 import {SellerProductStartComponent} from "./seller-product-list/seller-product-start/seller-product-start.component";
+import {AuthGuard} from "../../core";
+import {USER_ROLES} from "../../shared/constants/constants";
 
 const routes: Routes = [
   {

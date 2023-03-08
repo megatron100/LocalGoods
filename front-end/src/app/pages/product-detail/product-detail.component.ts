@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { AddToCart } from 'src/app/interfaces/addToCartModel';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
+import {AddToCart} from "../../core";
 
 @Component({
   selector: 'app-product-detail',
@@ -27,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
   getProductDets(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.shopService.getProductDets(id)
-        .subscribe(response => {           
+        .subscribe(response => {
           this.product = response.data
         })
   }
@@ -45,7 +45,7 @@ export class ProductDetailComponent implements OnInit {
           const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
        dialogRef.afterClosed()
         })
-    
+
 
   }
 }

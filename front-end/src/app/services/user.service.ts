@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {UserUpdateResponseData} from "../interfaces/userUpdateResponseData";
-import {API, API_PATH, PATH_GET_PROFILE} from "../constants/constants";
 import {Store} from "@ngrx/store";
 import * as fromShop from "../store";
 import * as UserActions from '../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
+import {UserUpdateResponseData} from "../core";
+import {API, API_PATH, PATH_GET_PROFILE} from "../shared/constants/constants";
 
 
 @Injectable({

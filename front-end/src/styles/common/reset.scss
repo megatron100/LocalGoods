@@ -1,0 +1,94 @@
+@import "src/styles/constants/index";
+@import "src/styles/mixins/index";
+
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100vh;  overflow-x: hidden; box-sizing: border-box}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+a {text-decoration: none}
+
+.form-container {
+  background-color: #919494;
+}
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+
+.container {
+  @include media-breakpoint-between('xxs', 'xs') {
+    width: 100%;
+    padding: 15px 0;
+  };
+  @include media-breakpoint-between('s', 's') {
+    width: 100%;
+    padding: 15px 0;
+  };
+  @include media-breakpoint-between('md', 'md') {
+    width: 500px;
+  };
+  @include media-breakpoint-between(lg, lg) {
+    width: 600px;
+  };
+
+  @include media-breakpoint-between(xlg, xlg) {
+    width: 800px;
+  };
+
+  .form {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+  border-radius: 6px;
+
+  .mat-form-field {
+    margin-bottom: 15px;
+    display: block;
+  }
+}
+
+.mat-row {
+  background-color: #8a8888!important;
+  .mat-cell {
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+
+  .mat-dialog-container {
+    @include media-breakpoint-between(md, xlg) {
+      max-height: 400px!important;
+    };
+  }
+
+.input {
+  display: flex;
+  justify-content: center;
+  padding-right: 5px;
+
+  .pass-visibility {
+    background: transparent;
+    width: 20px;
+    color: $gray50;
+    font-size: $font-large;
+  }
+
+  .icon-pass-visible {
+    @include icon('action-eye-off-24');
+  }
+
+  .icon-pass-invisible {
+    @include icon('action-eye-24');
+  }
+}
+
+.help-block {
+  color: red
+}
+

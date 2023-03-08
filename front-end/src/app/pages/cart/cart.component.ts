@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart } from 'src/app/interfaces/addToCartModel';
-import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
-import { SellerService } from 'src/app/services/seller.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/error-handling/error-dialog/error-dialog.component';
+import {AddToCart} from "../../core";
 
 @Component({
   selector: 'app-cart',
@@ -44,9 +42,9 @@ export class CartComponent implements OnInit {
         this.cartWithQuantity=[];
         const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
         dialogRef.afterClosed()
-         
+
       }
-         
+
         else if(res.status==false)
         {
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
@@ -54,7 +52,7 @@ export class CartComponent implements OnInit {
             panelClass: 'color'
           });
           dialogRef.afterClosed()
-          
+
         }
         console.log(res);
 
@@ -87,7 +85,7 @@ export class CartComponent implements OnInit {
   removeItem(id: number) {
     this.cartService.removeItem(id)
         .subscribe(res => {
-           
+
           this.cartWithQuantity=res.data;
 
           for (let i = 0; i < this.cart.length; i++) {
@@ -112,7 +110,7 @@ export class CartComponent implements OnInit {
 
 
     this.cartService.addToCart(model).subscribe(res => {
-       
+
       this.cartWithQuantity=res.data;
 
        this.getCart();
@@ -125,7 +123,7 @@ export class CartComponent implements OnInit {
 
   minusOne(id: number) {
     this.cartService.minusQuantity(id).subscribe(res => {
-      console.log(res); 
+      console.log(res);
       this.cartWithQuantity=res.data;
 
       this.getCart();

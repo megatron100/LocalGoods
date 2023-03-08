@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
-import {
-  API, API_PATH,
-  API_PATH_SELLER,
-  PATH_ADD_PRODUCT,
-  PATH_DELETE_PRODUCT_BY_ID,
-  PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES,
-  PATH_GET_PRODUCT_BY_ID,
-  PATH_GET_PRODUCTS, PATH_UPLOAD,
-} from "../constants/constants";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs";
 import {UserService} from "./user.service";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
 import {ErrorService} from "../shared/error-handling/error.service";
-import {ResponseData} from "../interfaces/responseData";
+import {
+  API, API_PATH,
+  API_PATH_SELLER,
+  PATH_ADD_PRODUCT,
+  PATH_DELETE_PRODUCT_BY_ID,
+  PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES, PATH_GET_PRODUCT_BY_ID, PATH_GET_PRODUCTS, PATH_UPLOAD
+} from "../shared/constants/constants";
+import {ResponseData} from "../core";
 
 @Injectable({
   providedIn: 'root'

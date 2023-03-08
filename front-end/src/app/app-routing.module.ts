@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import { AuthGuard } from './pages/auth/auth.guard';
+import {AuthGuard} from "./core";
 
-import { OrdersConfirmComponent } from './orders-confirm/orders-confirm.component';
-import { CustomerordersComponent } from './pages/customerorders/customerorders.component';
+
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'login', loadChildren: () => import('./pages/auth/login/login.module')
@@ -29,7 +28,6 @@ const routes: Routes = [
   },
   { path: 'product/:id', loadChildren: () => import('./pages/product-detail/product-detail.module')
       .then(m => m.ProductDetailModule),  canActivate: [AuthGuard] },
-
   {
     path: 'seller-admin-panel', loadChildren: () => import('./pages/seller-admin-panel/seller-admin-panel.module')
       .then(m => m.SellerAdminPanelModule)
@@ -39,13 +37,13 @@ const routes: Routes = [
       .then(m => m.SettingsModule)
   },
   {
-    component:OrdersConfirmComponent,
-    path:'sellerorders'
+    path: 'seller-orders', loadChildren: () => import('./pages/orders-confirm/orders-confirm.module')
+      .then(m => m.OrdersConfirmModule)
   },
   {
-    component:CustomerordersComponent,
-    path:'customerorders'
-  }
+    path: 'customer-orders', loadChildren: () => import('./pages/customer-orders/customer-orders.module')
+      .then(m => m.CustomerOrdersModule)
+  },
 ];
 
 @NgModule({

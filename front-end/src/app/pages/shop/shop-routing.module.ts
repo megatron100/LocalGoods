@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ShopComponent} from "./shop.component";
-import {AuthGuard} from "../auth/auth.guard";
-import {USER_ROLES} from "../../constants/constants";
+import {AuthGuard} from "../../core";
+import {USER_ROLES} from "../../shared/constants/constants";
 
 const routes: Routes = [
   {

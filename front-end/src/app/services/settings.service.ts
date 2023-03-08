@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs";
+import {ErrorService} from "../shared/error-handling/error.service";
+import {ResponseData, UserUpdateResponseData} from "../core";
 import {
   API,
   API_PATH,
@@ -7,11 +10,7 @@ import {
   PATH_ADD_CERTIFICATE,
   PATH_CHANGE_PASS,
   PATH_EDIT
-} from "../constants/constants";
-import {UserUpdateResponseData} from "../interfaces/userUpdateResponseData";
-import {ResponseData} from "../interfaces/responseData";
-import {catchError} from "rxjs";
-import {ErrorService} from "../shared/error-handling/error.service";
+} from "../shared/constants/constants";
 
 @Injectable({
   providedIn: 'root'

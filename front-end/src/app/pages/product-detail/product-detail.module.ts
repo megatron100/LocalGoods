@@ -7,7 +7,7 @@ import { ProductDetailComponent } from './product-detail.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ProductDetailComponent],
   imports: [
     SharedModule,
     CommonModule,

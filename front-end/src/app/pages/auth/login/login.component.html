@@ -33,14 +33,25 @@
       </mat-form-field>
 
       <mat-form-field color='accent' appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          type="password"
+        <mat-label style='text-align: center'>Password</mat-label>
+        <div class='input'>
+          <input
+          [type]="isPassIsVisible ? 'text' : 'password'"
           id="password"
           formControlName="password"
           autocomplete="on"
           matInput
         >
+          <i
+            class="pass-visibility"
+            (click)="onTogglePassVisible()"
+            [ngClass]="
+          !isPassIsVisible
+            ? 'icon-pass-visible'
+            : 'icon-pass-invisible'
+        "
+          ></i>
+        </div>
         <mat-error
           class='help-block'
           *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"

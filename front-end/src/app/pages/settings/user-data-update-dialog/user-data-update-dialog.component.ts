@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {SettingsService} from "../../../services/settings.service";
 import {Subscription} from "rxjs";
-import {AuthService} from "../../auth/auth.service";
 import {Store} from "@ngrx/store";
 import * as fromShop from "../../../store";
 import {UserState} from "../../../store/user.reducer";
@@ -10,6 +9,7 @@ import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/mes
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
+import {AuthService} from "../../../core";
 
 @Component({
   selector: 'app-user-data-update-dialog',

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EMAIL_PATTERN} from "../../../constants/constants";
-import {AuthService} from "../auth.service";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
+import {AuthService} from "../../../core";
+import {EMAIL_PATTERN} from "../../../shared/constants/constants";
 
 
 @Component({
@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
   isLoading = false;
+  isPassIsVisible = false;
+  isRePassIsVisible = false;
 
   constructor(private authService: AuthService, public dialog: MatDialog) {
   }
@@ -52,5 +54,13 @@ export class RegisterComponent implements OnInit {
         }
       })
 
+  }
+
+  onTogglePassVisible() {
+    this.isPassIsVisible = !this.isPassIsVisible;
+  }
+
+  onToggleRePassVisible() {
+    this.isRePassIsVisible = !this.isRePassIsVisible;
   }
 }

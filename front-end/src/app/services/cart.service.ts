@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { API, API_PATH,  } from '../constants/constants';
 import { Observable, of } from 'rxjs';
-import { AddToCart } from '../interfaces/addToCartModel';
+import {AddToCart} from "../core";
+import {API, API_PATH} from "../shared/constants/constants";
 
 @Injectable({
   providedIn: 'root'

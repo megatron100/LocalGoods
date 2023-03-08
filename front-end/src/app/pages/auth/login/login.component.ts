@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EMAIL_PATTERN} from "../../../constants/constants";
-import {AuthService} from "../auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
+import {EMAIL_PATTERN} from "../../../shared/constants/constants";
+import {AuthService} from "../../../core";
 
 @Component({
   selector: 'app-login',
@@ -13,6 +13,7 @@ import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/
 export class LoginComponent implements OnInit {
 
   isLoading = false;
+  isPassIsVisible = false;
 
   loginForm: FormGroup = new FormGroup({
     'email': new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
@@ -47,5 +48,9 @@ export class LoginComponent implements OnInit {
           this.isLoading = false
         }
       });
+  }
+
+  onTogglePassVisible() {
+    this.isPassIsVisible = !this.isPassIsVisible;
   }
 }

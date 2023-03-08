@@ -4,9 +4,9 @@ import {Store} from "@ngrx/store";
 import * as fromShop from '../../store/index'
 import {ShopState} from "../../store/shop.reducer";
 import { CartService } from 'src/app/services/cart.service';
-import { AddToCart } from 'src/app/interfaces/addToCartModel';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import {AddToCart} from "../../core";
 
 @Component({
   selector: 'app-shop',

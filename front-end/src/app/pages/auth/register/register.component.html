@@ -32,7 +32,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="full-width" color='accent' appearance="outline">
+      <mat-form-field color='accent' appearance="outline">
         <mat-label>Email</mat-label>
         <input
           type="email"
@@ -60,13 +60,24 @@
 
       <mat-form-field color='accent' appearance="outline">
         <mat-label>Password</mat-label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          autocomplete="on"
-          matInput
-        >
+        <div class='input'>
+          <input
+            [type]="isPassIsVisible ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            autocomplete="on"
+            matInput
+          >
+          <i
+            class="pass-visibility"
+            (click)="onTogglePassVisible()"
+            [ngClass]="
+          !isPassIsVisible
+            ? 'icon-pass-visible'
+            : 'icon-pass-invisible'
+        "
+          ></i>
+        </div>
         <mat-error
           class='help-block'
           *ngIf="!registerForm.get('password')?.valid && registerForm.get('password')?.touched"
@@ -86,13 +97,24 @@
 
       <mat-form-field color='accent' appearance="outline">
         <mat-label>Confirm password</mat-label>
-        <input
-          type="password"
-          id="rePassword"
-          formControlName="rePassword"
-          autocomplete="on"
-          matInput
-        >
+        <div class='input'>
+          <input
+            [type]="isRePassIsVisible ? 'text' : 'password'"
+            id="rePassword"
+            formControlName="rePassword"
+            autocomplete="on"
+            matInput
+          >
+          <i
+            class="pass-visibility"
+            (click)="onToggleRePassVisible()"
+            [ngClass]="
+          !isRePassIsVisible
+            ? 'icon-pass-visible'
+            : 'icon-pass-invisible'
+        "
+          ></i>
+        </div>
         <mat-error
           class='help-block'
           *ngIf="!registerForm.get('password')?.valid && registerForm.get('password')?.touched"

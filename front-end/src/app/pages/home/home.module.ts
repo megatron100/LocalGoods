@@ -8,7 +8,7 @@ import { ShopService } from 'src/app/services/shop.service';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HomeComponent],
   imports: [
     SharedModule,
     CommonModule,

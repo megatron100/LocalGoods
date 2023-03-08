@@ -5,11 +5,11 @@ import {
   Validators
 } from "@angular/forms";
 import {CustomValidators} from "../../../validators/check-pass-validator";
-import {MyErrorStateMatcherDirective} from "../../../directives/my-error-state-matcher.directive";
 import {SettingsService} from "../../../services/settings.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
+import {MyErrorStateMatcherDirective} from "../../../shared/directives/my-error-state-matcher.directive";
 
 @Component({
   selector: 'app-user-update-pass-dialog',

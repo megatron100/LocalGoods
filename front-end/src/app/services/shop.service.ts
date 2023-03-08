@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import {IProduct} from "../interfaces/product";
 import { catchError} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { API, API_PATH,  } from '../constants/constants';
+import {IProduct} from "../core";
+import {API, API_PATH} from "../shared/constants/constants";
 
 @Injectable({
   providedIn: 'root'
