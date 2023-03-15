@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Subscription} from "rxjs";
 import {CartService} from 'src/app/services/cart.service';
 import {Store} from "@ngrx/store";
@@ -18,9 +18,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cart!: IProduct[];
   user!: User;
 
+  @ViewChild('menu', {read: ViewContainerRef}) menu!: ViewContainerRef;
+
   constructor(public authService: AuthService,
               private cartService: CartService,
-              private store: Store<fromShop.AppState>
+              private store: Store<fromShop.AppState>,
   ) {
   }
 
@@ -33,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isUserAuth = !!user;
       });
     this.cart = this.cartService.cartContent;
+
     this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {

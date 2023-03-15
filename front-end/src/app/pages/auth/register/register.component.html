@@ -1,10 +1,11 @@
-<div *ngIf="isLoading" class='container' style='background-color: inherit'>
-  <div style="text-align: center">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
-</div>
-
 <div class='container' *ngIf="!isLoading">
+  <div class='form-header'>
+    <h2 class="form-header__title">Sign Up</h2>
+    <span class="form-header__text">
+  Have an account?
+        <a routerLink="/login" class="form-header__link">Sign In</a>
+    </span>
+  </div>
   <form class='form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-form-field color='accent' appearance="outline">

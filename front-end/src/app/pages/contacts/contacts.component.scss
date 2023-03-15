@@ -1,3 +1,5 @@
+@import "src/styles/mixins/index";
+
 .contacts-wrapper {
   height: 100%;
   display: flex;
@@ -10,7 +12,7 @@
     border-radius: 4px;
 
     .header {
-      background-color: #39a94b;
+      @include header-bg;
       color: #FFFFFF;
       height: 60px;
       padding: 10px 20px;

@@ -39,6 +39,11 @@ a {text-decoration: none}
   .form {
     width: 100%;
     box-sizing: border-box;
+
+    .mat-card {
+      background: $gray60;
+      //color: #39a94b;
+    }
   }
 
   padding: 15px;
@@ -88,7 +93,31 @@ a {text-decoration: none}
   }
 }
 
-.help-block {
-  color: red
+.form-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: $gray80;
+  margin-bottom: 20px;
+
+  &__title {
+    @include main-text(
+        $font-large0,
+      $line-height: 36px,
+      $font-weight: $font-weight-900,
+      $font-family: $font-source-sans-pro-black
+    );
+
+    margin: 0!important;
+  }
+
+  &__text {
+    @include main-text($font-size: $font-medium, $line-height: 24px);
+  }
+
+  &__link {
+    color: $blue;
+    text-decoration: none;
+  }
 }
 

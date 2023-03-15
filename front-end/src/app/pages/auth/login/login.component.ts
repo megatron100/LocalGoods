@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
-import {EMAIL_PATTERN} from "../../../shared/constants/constants";
 import {AuthService} from "../../../core";
+import {FormValidator, ValidationType} from "../../../validators";
 
 @Component({
   selector: 'app-login',
@@ -11,20 +11,27 @@ import {AuthService} from "../../../core";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  isLoading = false;
   isPassIsVisible = false;
 
-  loginForm: FormGroup = new FormGroup({
-    'email': new FormControl(null, [Validators.required, Validators.pattern(EMAIL_PATTERN)]),
-    'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
-  });
+  loginForm!: FormGroup
 
-  constructor(private authService: AuthService, public dialog: MatDialog) {
+  constructor(
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private formValidator: FormValidator
+  ) {
   }
 
   ngOnInit(): void {
-
+    this.loginForm = new FormGroup({
+      'email': new FormControl(null, [Validators.required, this.formValidator.validate(ValidationType.EMAIL)]),
+      'password': new FormControl(null,
+        [
+          Validators.required,
+          // Validators.minLength(this.formValidator.minPasswordLength),
+          // this.formValidator.validate(ValidationType.PASSWORD)
+        ])
+    });
   }
 
   onSubmit() {
@@ -32,12 +39,9 @@ export class LoginComponent implements OnInit {
       return
     }
 
-    this.isLoading = true
-
     this.authService.login(this.loginForm.value)
       .subscribe({
         next: () => {
-          this.isLoading = true
         },
         error: err => {
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
@@ -45,9 +49,20 @@ export class LoginComponent implements OnInit {
             panelClass: 'color' // Add your custom panel class
           });
           dialogRef.afterClosed()
-          this.isLoading = false
         }
       });
+  }
+
+  get _errorMessage() {
+    return this.formValidator.errorMessage;
+  }
+
+  get _email() {
+    return this.loginForm.get('email');
+  }
+
+  get _password() {
+    return this.loginForm.get('password');
   }
 
   onTogglePassVisible() {

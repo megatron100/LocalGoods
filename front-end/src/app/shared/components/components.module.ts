@@ -28,7 +28,8 @@ import {MatSortModule} from "@angular/material/sort";
     HeaderComponent,
     ProductCardComponent,
     SubMenuHeaderComponent,
-    LoadingSpinnerComponent],
+    LoadingSpinnerComponent,
+    ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

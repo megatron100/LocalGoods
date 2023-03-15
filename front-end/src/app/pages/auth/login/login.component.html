@@ -1,10 +1,12 @@
-<div *ngIf="isLoading" class='container' style='background-color: inherit'>
-  <div style="text-align: center" >
-    <app-loading-spinner></app-loading-spinner>
+<div class='container'>
+  <div class='form-header'>
+    <h2 class="form-header__title">Sign In</h2>
+    <span class="form-header__text">
+  New user?
+        <a routerLink="/register" class="form-header__link">Create an account</a>
+    </span>
   </div>
-</div>
-<div class='container' *ngIf="!isLoading">
-  <form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
+  <form class='form' [formGroup]='loginForm' (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-form-field color='accent' appearance="outline">
         <mat-label>Email</mat-label>
@@ -16,18 +18,15 @@
           matInput
         >
         <mat-error
-          class='help-block'
-          *ngIf="!loginForm.get('email')?.valid && loginForm.get('email')?.touched"
+          *ngIf="_email?.invalid && _email?.touched"
         >
           <mat-error
-            class="help-block"
-            *ngIf="loginForm.get('email')?.errors?.['required']"
-          > This field is required!
+            *ngIf="_email?.hasError('required')"
+          > {{ _errorMessage.required }}
           </mat-error>
           <mat-error
-            class="help-block"
-            *ngIf="loginForm.get('email')?.errors?.['pattern']"
-          > This email is not valid!
+            *ngIf="_email?.hasError('message')"
+          > {{ loginForm.controls['email'].errors?.['message'] }}
           </mat-error>
         </mat-error>
       </mat-form-field>
@@ -36,12 +35,12 @@
         <mat-label style='text-align: center'>Password</mat-label>
         <div class='input'>
           <input
-          [type]="isPassIsVisible ? 'text' : 'password'"
-          id="password"
-          formControlName="password"
-          autocomplete="on"
-          matInput
-        >
+            [type]="isPassIsVisible ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            autocomplete="on"
+            matInput
+          >
           <i
             class="pass-visibility"
             (click)="onTogglePassVisible()"
@@ -53,18 +52,19 @@
           ></i>
         </div>
         <mat-error
-          class='help-block'
-          *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"
+          *ngIf="_password?.invalid && _password?.touched"
         >
           <mat-error
-            class="help-block"
-            *ngIf="loginForm.get('password')?.errors?.['required']"
-          > This field is required!
+            *ngIf="_password?.hasError('required')"
+          > {{ _errorMessage.required }}
           </mat-error>
           <mat-error
-            class="help-block"
-            *ngIf="loginForm.get('password')?.errors?.['minlength']"
-          > Password should have 6 characters minimum!
+            *ngIf="_password?.hasError('minlength')"
+          > {{ _errorMessage.minlength }}
+          </mat-error>
+          <mat-error
+            *ngIf="_password?.hasError('message') && !_password?.hasError('minlength')"
+          > {{ loginForm.controls['password'].errors?.['message'] }}
           </mat-error>
         </mat-error>
       </mat-form-field>
