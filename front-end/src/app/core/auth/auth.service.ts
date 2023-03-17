@@ -20,6 +20,8 @@ import {User} from "../../pages/auth/models/user.model";
 import {RegisterModel} from "../../pages/auth/models/register.model";
 import {AuthResponseData, ResponseData} from "../interfaces";
 import {LoginModel} from "../../pages/auth/models/login.model";
+import {FormData} from "../interfaces";
+
 
 @Injectable({
   providedIn: 'root'
@@ -141,5 +143,9 @@ export class AuthService {
     } = JSON.parse(localStorage.getItem('userData') || '{}');
     this.roleAs = user.role;
     return this.roleAs;
+  }
+
+  getRegisterJSON() {
+    return this.http.get<FormData>('/assets/form-json-templates/register.json')
   }
 }

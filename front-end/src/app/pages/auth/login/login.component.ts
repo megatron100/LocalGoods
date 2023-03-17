@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
       'password': new FormControl(null,
         [
           Validators.required,
-          // Validators.minLength(this.formValidator.minPasswordLength),
-          // this.formValidator.validate(ValidationType.PASSWORD)
+          Validators.minLength(this.formValidator.minPasswordLength),
+          this.formValidator.validate(ValidationType.PASSWORD)
         ])
     });
   }

@@ -1,0 +1,60 @@
+{
+  "controls": [
+    {
+      "name": "name",
+      "label": "Nickname",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true,
+        "minLength": 3,
+        "message": "onlyLatins"
+      }
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "value": "",
+      "type": "email",
+      "validators": {
+        "required": true,
+        "message": "email"
+      }
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "value": "",
+      "type": "password",
+      "validators": {
+        "required": true,
+        "minLength": 8,
+        "message": "password"
+      }
+    },
+    {
+      "name": "rePassword",
+      "label": "Confirm password",
+      "value": "",
+      "type": "password",
+      "validators": {
+        "required": true,
+        "minLength": 8,
+        "message": "password"
+      }
+    },
+    {
+      "name": "role",
+      "label": "Role",
+      "value": "",
+      "type": "select",
+      "options": {
+        "value": ["customer", "seller"],
+        "name": ["Buyer", "Seller"]
+      },
+      "validators": {
+        "required": true
+      }
+    }
+  ]
+}

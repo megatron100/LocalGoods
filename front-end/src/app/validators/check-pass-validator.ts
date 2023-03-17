@@ -8,4 +8,12 @@ export class CustomValidators {
     let confirmPass = group.get('passConfirm')?.value
     return pass === confirmPass ? null : { notSame: true }
   }
+
+  static xxx(pass1: string, pass2: string): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      let pass = group.get(pass1)?.value;
+      let confirmPass = group.get(pass2)?.value
+      return pass === confirmPass ? null : { notSame: true }
+    }
+  }
 }

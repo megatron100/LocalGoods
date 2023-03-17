@@ -4,7 +4,7 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-import {CustomValidators} from "../../../validators/check-pass-validator";
+import {CustomValidators} from "../../../validators";
 import {SettingsService} from "../../../services/settings.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";

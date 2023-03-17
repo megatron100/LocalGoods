@@ -5,12 +5,14 @@ import { ValidationType } from './enum';
 @Injectable({ providedIn: 'root' })
 export class FormValidator {
   readonly minPasswordLength = 8;
+  readonly minTextFieldLength = 3;
 
   readonly minProjectIdLength = 8;
 
   readonly errorMessage = {
     required: 'Please fill in this field',
     minlength: `Must be at least ${this.minPasswordLength} characters`,
+    minTextInput: `Must be at least ${this.minTextFieldLength} characters`,
     passwordsMustMatch: 'Passwords do not match',
     greaterThanLesson: 'Should be greater than lesson time',
   };
