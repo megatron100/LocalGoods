@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService, Control, FormData} from "../../../../core";
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import {AuthService, FormData} from "../../../../core";
 import {MatDialog} from "@angular/material/dialog";
 import {CustomValidators, FormValidator} from "../../../../validators";
 import {MessageDialogComponent} from "../../../../shared/dialogs/message-dialog/message-dialog.component";
 import {ErrorDialogComponent} from "../../../../shared/error-handling/error-dialog/error-dialog.component";
+import {FormService} from "../../../../services/form.service";
 
 @Component({
   selector: 'app-register-form',
@@ -14,63 +15,28 @@ import {ErrorDialogComponent} from "../../../../shared/error-handling/error-dial
 })
 export class RegisterFormComponent implements OnChanges {
 
-  registerForm: FormGroup = new FormGroup({});
+  registerForm: FormGroup = new FormGroup(
+    {},
+    {
+      validators: CustomValidators.checkPasswords('password', 'rePassword')
+    }
+  );
   isPassIsVisible = false;
   isRePassIsVisible = false;
 
   @Input() jsonFormData!: FormData;
 
-  constructor(private authService: AuthService, public dialog: MatDialog, private formValidator: FormValidator) {
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private formValidator: FormValidator,
+    private formService: FormService
+  ) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes["jsonFormData"].firstChange) {
-      this.createForm(this.jsonFormData.controls)
-    }
-    console.log(';(', this.registerForm)
-  }
-
-  createForm(controls: Control[]) {
-    for (const control of controls) {
-      const validatorsToAdd = [];
-      console.log('!!!', control)
-      for (const [key, value] of Object.entries(control?.validators)) {
-        switch (key) {
-          case 'required':
-            if(value) {
-              validatorsToAdd.push(Validators.required);
-            }
-            break;
-          case 'requiredTrue':
-            if(value) {
-              validatorsToAdd.push(Validators.requiredTrue);
-            }
-            break;
-          case 'minLength':
-            validatorsToAdd.push(Validators.minLength(value));
-            break;
-          case 'maxLength':
-            validatorsToAdd.push(Validators.maxLength(value));
-            break;
-          case 'message':
-            validatorsToAdd.push(this.formValidator.validate(value));
-            break;
-          case 'pattern':
-            validatorsToAdd.push(Validators.pattern(value));
-            break;
-          case 'nullValidator':
-            validatorsToAdd.push(Validators.nullValidator);
-            break;
-          default:
-            break;
-        }
-      }
-
-      this.registerForm?.addControl(
-        control?.name,
-        new FormControl(control?.value, validatorsToAdd)
-      )
-      this.registerForm?.addValidators(CustomValidators.xxx('password', 'rePassword'))
+      this.formService.createForm(this.jsonFormData.controls, this.registerForm)
     }
   }
 

@@ -4,7 +4,7 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-import {CustomValidators} from "../../../validators";
+import {CustomValidators, FormValidator} from "../../../validators";
 import {SettingsService} from "../../../services/settings.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
@@ -20,16 +20,20 @@ export class UserUpdatePassDialogComponent implements OnInit {
   passForm!: FormGroup;
   matcher = new MyErrorStateMatcherDirective();
 
-  constructor(private settingsService: SettingsService, public dialog: MatDialog) {
+  constructor(
+    private settingsService: SettingsService,
+    public dialog: MatDialog,
+    private formValidator: FormValidator
+  ) {
 
   }
 
   ngOnInit(): void {
     this.passForm = new FormGroup({
-      existingPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      newPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      passConfirm: new FormControl(null, [Validators.minLength(6)]),
-    }, { validators: CustomValidators.checkPasswords })
+      existingPassword: new FormControl(null, [Validators.required, Validators.minLength(this.formValidator.minPasswordLength)]),
+      newPassword: new FormControl(null, [Validators.required, Validators.minLength(this.formValidator.minPasswordLength)]),
+      passConfirm: new FormControl(null, [Validators.minLength(this.formValidator.minPasswordLength)]),
+    }, { validators: CustomValidators.checkPasswords('newPassword', 'passConfirm')})
   }
 
   onSubmit() {

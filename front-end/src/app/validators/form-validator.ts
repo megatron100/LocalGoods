@@ -12,7 +12,7 @@ export class FormValidator {
   readonly errorMessage = {
     required: 'Please fill in this field',
     minlength: `Must be at least ${this.minPasswordLength} characters`,
-    minTextInput: `Must be at least ${this.minTextFieldLength} characters`,
+    minTextInputLength: `Must be at least ${this.minTextFieldLength} characters`,
     passwordsMustMatch: 'Passwords do not match',
     greaterThanLesson: 'Should be greater than lesson time',
   };

@@ -1,12 +1,12 @@
 <div class='container'>
   <div class='form-header'>
-    <h2 class="form-header__title">Sign Up</h2>
+    <h2 class="form-header__title">Sign In</h2>
     <span class="form-header__text">
-  Have an account?
-        <a routerLink="/login" class="form-header__link">Sign In</a>
+  New user?
+        <a routerLink="/register" class="form-header__link">Create an account</a>
     </span>
   </div>
-  <form class='form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
+  <form class='form' [formGroup]='loginForm' (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-form-field *ngFor=" let control of jsonFormData?.controls" color='accent' appearance="outline">
         <mat-label>{{control.label}}</mat-label>
@@ -26,14 +26,6 @@
                  autocomplete="on"
                  matInput
           >
-          <input *ngIf="control.name === 'rePassword'"
-                 [type]="isRePassIsVisible ? 'text' : 'password'"
-                 [id]='control.name'
-                 [formControlName]='control.name'
-                 [value]='control.value'
-                 autocomplete="on"
-                 matInput
-          >
           <i *ngIf="control.name === 'password'"
              class="pass-visibility"
              (click)="onTogglePassVisible()"
@@ -43,39 +35,22 @@
                     : 'icon-pass-invisible'
                 "
           ></i>
-          <i *ngIf="control.name === 'rePassword'"
-             class="pass-visibility"
-             (click)="onToggleRePassVisible()"
-             [ngClass]="
-                  !isRePassIsVisible
-                    ? 'icon-pass-visible'
-                    : 'icon-pass-invisible'
-                "
-          ></i>
         </div>
-        <mat-select *ngIf="control.type === 'select'"
-                    [formControlName]="control.name"
-        >
-          <mat-option *ngFor="let value of control.options.value" [value]="value">{{value | uppercase}}</mat-option>
-        </mat-select>
         <mat-error *ngIf="getError(control.name)?.invalid && getError(control.name)?.touched">
           <mat-error *ngIf="getError(control.name)?.hasError('required')">
             {{_errorMessage.required}}
           </mat-error>
           <mat-error
             *ngIf="getError(control.name)?.hasError('minlength')"
-          > {{ _errorMessage.minTextInputLength }}
+          > {{ _errorMessage.minlength }}
           </mat-error>
           <mat-error *ngIf="getError(control.name)?.hasError('message') && !getError(control.name)?.hasError('minlength')">
-            {{registerForm.controls[control.name].errors?.['message']}}
+            {{loginForm.controls[control.name].errors?.['message']}}
           </mat-error>
         </mat-error>
       </mat-form-field>
-      <mat-error *ngIf="registerForm.hasError('notSame')">
-        Passwords do not match
-      </mat-error>
       <div>
-        <button [disabled]='!registerForm?.valid' mat-raised-button type='submit' color="accent">Register</button>
+        <button [disabled]='!loginForm?.valid' mat-raised-button type='submit' color="accent">Login</button>
       </div>
     </mat-card>
   </form>
