@@ -69,4 +69,11 @@ export class SettingsService {
         catchError(this.errorService.handleError),
       )
   }
+
+  getDialCode(body: any) {
+    return this.http.post<any>('https://countriesnow.space/api/v0.1/countries/codes', body)
+      .pipe(
+        catchError(this.errorService.handleError),
+      )
+  }
 }

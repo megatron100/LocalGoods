@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup, FormGroupDirective} from "@angular/forms";
 import {SettingsService} from "../../../../services/settings.service";
 import {map} from "rxjs";
@@ -14,9 +14,11 @@ export class AddressComponent implements OnInit {
   countries: any[] = [];
   states: any[] = [];
   cities: any[] = [];
-  @Input() selectedCountry!: string;
-  @Input() selectedState!: string;
-  @Input() selectedCity!: string;
+  @Input() country!: string;
+  @Input() state!: string;
+  @Input() mobile!: string;
+  @Output() dialCode: EventEmitter<any> = new EventEmitter<any>()
+  selectedCountry!: string;
 
   form!: FormGroup;
 
@@ -27,7 +29,6 @@ export class AddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.settingsService.getCountries()
       .pipe(
         map(({data}) => {
@@ -42,14 +43,13 @@ export class AddressComponent implements OnInit {
 
     this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
 
-    this.countryValueChange(this.selectedCountry);
-    this.stateValueChange(this.selectedState);
-    this.cityValueChange(this.selectedCountry);
+    this.countryValueChange(this.country);
+    this.stateValueChange(this.state);
   }
+
 
   countryValueChange(value: any) {
     this.selectedCountry = value;
-    console.log(value)
     this.settingsService.getStates({"country": value})
       .pipe(
         map(({data}) => {
@@ -61,10 +61,18 @@ export class AddressComponent implements OnInit {
       .subscribe(value => {
         this.states = value
       })
+
+    if (value !== this.country) {
+      this.settingsService.getDialCode({"country": value})
+        .subscribe({
+          next: ({data}) => {
+            this.dialCode.emit(data.dial_code)
+          }
+        })
+    }
   }
 
   stateValueChange(value: any) {
-    this.selectedState = value;
     this.settingsService.getCities({"country": this.selectedCountry, "state": value})
       .pipe(
         map(({data}) => {
@@ -76,9 +84,5 @@ export class AddressComponent implements OnInit {
       .subscribe(value => {
         this.cities = value
       })
-  }
-
-  cityValueChange(value: any) {
-    this.selectedCity = value;
   }
 }

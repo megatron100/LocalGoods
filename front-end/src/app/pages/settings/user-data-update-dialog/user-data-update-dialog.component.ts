@@ -23,6 +23,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
   country!: string;
   area!: string;
   city!: string;
+  mobile!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -40,14 +41,13 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let name = '';
-    let mobile = '';
     let postCode = '';
 
     this.subscription = this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
           name = state.user.nickName;
-          mobile = state.user.mobile || '';
+          this.mobile = state.user.mobile || '';
           postCode = state.user.address?.pinCode || '';
           this.country = state.user.address?.country || ''
           this.city = state.user.address?.city || ''
@@ -58,7 +58,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
         name: new FormControl(name, [Validators.required, Validators.minLength(3)]),
-        mobile: new FormControl(mobile, [Validators.required]),
+        mobile: new FormControl(this.mobile, [Validators.required]),
       }),
       address: new FormGroup({
         postCode: new FormControl(postCode, [Validators.required]),
@@ -90,5 +90,9 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe()
+  }
+
+  setDialCode($event: any) {
+    this.userForm.get('basicInfo')?.get('mobile')?.setValue($event)
   }
 }

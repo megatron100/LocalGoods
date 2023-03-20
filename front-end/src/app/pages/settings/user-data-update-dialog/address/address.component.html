@@ -7,7 +7,7 @@
       <mat-label>Country</mat-label>
       <mat-select
         formControlName="country"
-
+        (valueChange)="countryValueChange($event)"
       >
         <mat-option *ngFor="let value of countries" [value]="value">{{value | uppercase}}</mat-option>
       </mat-select>
@@ -22,7 +22,7 @@
       <mat-label>State</mat-label>
       <mat-select
         formControlName="area"
-
+        (valueChange)="stateValueChange($event)"
       >
         <mat-option *ngFor="let value of states" [value]="value">{{value | uppercase}}</mat-option>
       </mat-select>
@@ -36,8 +36,7 @@
     <mat-form-field color='accent'>
       <mat-label>City</mat-label>
       <mat-select
-      formControlName="city"
-
+        formControlName="city"
       >
         <mat-option *ngFor="let value of cities" [value]="value">{{value | uppercase}}</mat-option>
       </mat-select>
@@ -50,7 +49,7 @@
     <!-- Post code -->
     <mat-form-field color='accent'>
       <mat-label>Post Code</mat-label>
-      <input type='text' matInput placeholder="Ex. 12345" formControlName="postCode" />
+      <input type='text' matInput placeholder="Ex. 12345" formControlName="postCode"/>
       <mat-error *ngIf="form.hasError('required', 'postCode')">
         This field is required!
       </mat-error>

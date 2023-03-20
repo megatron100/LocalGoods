@@ -1,12 +1,19 @@
 <h2 mat-dialog-title style='font-size: 22px'>Edit my credentials</h2>
 <div mat-dialog-content class='container'>
   <form class='form' [formGroup]='userForm' (ngSubmit)="onSubmit()">
-    <app-basic-info formGroupName="basicInfo"></app-basic-info>
+    <app-basic-info formGroupName="basicInfo" [selectedDialCode]="mobile"></app-basic-info>
     <hr>
     <br>
     <br>
     <hr>
-    <app-address formGroupName="address" [selectedCountry]="country" [selectedState]="area" [selectedCity]="city"></app-address>
+    <app-address
+      formGroupName="address"
+      [country]="country"
+      [state]="area"
+      [mobile]="mobile"
+      (dialCode)="setDialCode($event)"
+
+    ></app-address>
   </form>
 </div>
 
