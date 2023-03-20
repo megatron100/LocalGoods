@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError} from "rxjs";
 import {ErrorService} from "../shared/error-handling/error.service";
-import {ResponseData, UserUpdateResponseData} from "../core";
+import {
+  City,
+  Country,
+  ResponseData,
+  StateInfo,
+  UserUpdateResponseData
+} from "../core";
 import {
   API,
   API_PATH,
@@ -12,12 +18,14 @@ import {
   PATH_EDIT
 } from "../shared/constants/constants";
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  constructor(private http: HttpClient, private errorService: ErrorService) { }
+  constructor(private http: HttpClient, private errorService: ErrorService) {
+  }
 
   updateUserInfo(body: {}) {
     return this.http.put<UserUpdateResponseData>(`${API}${API_PATH}/${PATH_EDIT}`, body)
@@ -39,4 +47,26 @@ export class SettingsService {
         catchError(this.errorService.handleError),
       )
   };
+
+  getCountries() {
+    return this.http.get<Country>('https://countriesnow.space/api/v0.1/countries/info?returns=name')
+      .pipe(
+        catchError(this.errorService.handleError),
+      )
+  }
+
+  getStates(body: any) {
+    return this.http.post<StateInfo>('https://countriesnow.space/api/v0.1/countries/states', body)
+      .pipe(
+        catchError(this.errorService.handleError),
+      )
+  }
+
+
+  getCities(body: any) {
+    return this.http.post<City>('https://countriesnow.space/api/v0.1/countries/state/cities', body)
+      .pipe(
+        catchError(this.errorService.handleError),
+      )
+  }
 }

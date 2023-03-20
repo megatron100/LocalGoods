@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit {
     this.http
       .get('/assets/form-json-templates/register.json')
       .subscribe((formData: any) => {
-        console.log('FormData', formData);
         this.formData = formData;
       })
   }
