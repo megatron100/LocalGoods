@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {FormData} from "../../../core";
+import {FormService} from "../../../services/form.service";
 
 @Component({
   selector: 'app-login',
@@ -11,14 +11,12 @@ export class LoginComponent implements OnInit {
 
   public formData!: FormData;
 
-  constructor(private http: HttpClient) {
+  constructor(private formService: FormService) {
   }
 
   ngOnInit(): void {
-    this.http
-      .get('/assets/form-json-templates/login.json')
+    this.formService.getLoginJson()
       .subscribe((formData: any) => {
-        console.log('FormData', formData);
         this.formData = formData;
       })
   }

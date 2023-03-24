@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormData} from "../../../core";
-import {HttpClient} from "@angular/common/http";
+import {FormService} from "../../../services/form.service";
 
 
 @Component({
@@ -12,11 +12,10 @@ export class RegisterComponent implements OnInit {
 
   public formData!: FormData;
 
-  constructor(private http: HttpClient) { }
+  constructor(private formService: FormService) { }
 
   ngOnInit(): void {
-    this.http
-      .get('/assets/form-json-templates/register.json')
+    this.formService.getRegisterJson()
       .subscribe((formData: any) => {
         this.formData = formData;
       })
