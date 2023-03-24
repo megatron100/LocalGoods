@@ -18,7 +18,7 @@
     <!-- Mobile -->
     <mat-form-field color='accent'>
       <mat-label>Mobile</mat-label>
-      <input type="phone" matInput placeholder="Ex. +381111111111" formControlName="mobile" />
+      <input type="phone" matInput placeholder="Ex. +381111111111" formControlName="mobile" value="selectedDialCode" />
       <mat-error *ngIf="form.hasError('required', 'mobile')">
         This field is required!
       </mat-error>

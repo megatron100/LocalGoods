@@ -18,8 +18,12 @@ import {AuthService} from "../../../core";
 })
 export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
 
-  userForm!: FormGroup;
+  userForm: FormGroup = new FormGroup({});
   private subscription!: Subscription;
+  country!: string;
+  area!: string;
+  city!: string;
+  mobile!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -32,52 +36,35 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initForm()
+    this.initForm();
   }
 
   private initForm() {
     let name = '';
-    let mobile = '';
     let postCode = '';
-    let country = '';
-    let city = '';
-    let area = '';
-
-    this.userForm = new FormGroup({
-      basicInfo: new FormGroup({
-        name: new FormControl(null, [Validators.required]),
-        mobile: new FormControl(null, [Validators.required]),
-      }),
-      address: new FormGroup({
-        postCode: new FormControl(null, [Validators.required]),
-        country: new FormControl(null, [Validators.required]),
-        city: new FormControl(null, [Validators.required]),
-        area: new FormControl(null, [Validators.required]),
-      })
-    });
 
     this.subscription = this.store.select('userData')
       .subscribe((state: UserState) => {
         if (state.user) {
           name = state.user.nickName;
-          mobile = state.user.mobile || '';
+          this.mobile = state.user.mobile || '';
           postCode = state.user.address?.pinCode || '';
-          country = state.user.address?.country || ''
-          city = state.user.address?.city || ''
-          area = state.user.address?.area || ''
+          this.country = state.user.address?.country || ''
+          this.city = state.user.address?.city || ''
+          this.area = state.user.address?.area || ''
         }
       })
 
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
         name: new FormControl(name, [Validators.required, Validators.minLength(3)]),
-        mobile: new FormControl(mobile, [Validators.required]),
+        mobile: new FormControl(this.mobile, [Validators.required]),
       }),
       address: new FormGroup({
         postCode: new FormControl(postCode, [Validators.required]),
-        country: new FormControl(country, [Validators.required]),
-        city: new FormControl(city, [Validators.required]),
-        area: new FormControl(area, [Validators.required]),
+        country: new FormControl(this.country, [Validators.required]),
+        city: new FormControl(this.city, [Validators.required]),
+        area: new FormControl(this.area, [Validators.required]),
       })
     })
   }
@@ -105,4 +92,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
+  setDialCode($event: any) {
+    this.userForm.get('basicInfo')?.get('mobile')?.setValue($event)
+  }
 }
