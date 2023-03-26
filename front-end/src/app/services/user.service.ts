@@ -6,7 +6,7 @@ import * as UserActions from '../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
 import {UserUpdateResponseData} from "../core";
-import {API, API_PATH, PATH_GET_PROFILE} from "../shared/constants/constants";
+import {API_PATH, PATH_GET_PROFILE} from "../shared/constants/constants";
 
 
 @Injectable({
@@ -18,14 +18,7 @@ export class UserService {
   }
 
   updateUser() {
-    return this.http.get<UserUpdateResponseData>(`${API}${API_PATH}/${PATH_GET_PROFILE}`,
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        }
-      })
+    return this.http.get<UserUpdateResponseData>(`/${API_PATH}/${PATH_GET_PROFILE}`)
       .subscribe(({data, message}) => {
         this.updateUserInStore(data)
       })

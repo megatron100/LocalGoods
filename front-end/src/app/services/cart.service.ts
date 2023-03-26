@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {catchError} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {AddToCart} from "../core";
-import {API, API_PATH} from "../shared/constants/constants";
+import {API_PATH} from "../shared/constants/constants";
+import {ErrorService} from "../shared/error-handling/error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,58 +12,53 @@ import {API, API_PATH} from "../shared/constants/constants";
 export class CartService {
   cartContent: any[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private errorService: ErrorService
+  ) {
   }
 
 
-  addToCart( model:AddToCart): Observable<any> {
+  addToCart(model: AddToCart): Observable<any> {
 
-    return this.http.post<AddToCart>(`${API}${API_PATH}/Cart/AddToCart`, model)
+    return this.http.post<AddToCart>(`${API_PATH}/Cart/AddToCart`, model)
       .pipe(
-        catchError(this.handleError<any>('getData')),
+        catchError(this.errorService.handleError),
       );
   }
 
   getCart(): Observable<any> {
-    return this.http.get<any>(`${API}${API_PATH}/Cart/CartItems`)
+    return this.http.get<any>(`${API_PATH}/Cart/CartItems`)
       .pipe(
-        catchError(this.handleError<any>('getData'))
+        catchError(this.errorService.handleError)
       )
   }
 
   removeItem(id: number) {
-    return this.http.delete<any>(`${API}${API_PATH}/Cart/remove/${id}`)
+    return this.http.delete<any>(`${API_PATH}/Cart/remove/${id}`)
       .pipe(
-        catchError(this.handleError<any>('getData'))
+        catchError(this.errorService.handleError)
       )
   }
 
   clearCart() {
-    return this.http.delete<any>(`${API}${API_PATH}/Cart/ClearCart`)
+    return this.http.delete<any>(`${API_PATH}/Cart/ClearCart`)
       .pipe(
-        catchError(this.handleError<any>('getData'))
+        catchError(this.errorService.handleError)
       )
   }
-  orderFromCart(){
-    return this.http.get<any>(`${API}${API_PATH}/order/orderfromcart`)
+
+  orderFromCart() {
+    return this.http.get<any>(`${API_PATH}/order/orderfromcart`)
       .pipe(
-        catchError(this.handleError<any>('getData'))
+        catchError(this.errorService.handleError)
       )
   }
+
   minusQuantity(id: number) {
-    return this.http.delete<any>(`${API}${API_PATH}/Cart/minus/${id}`)
+    return this.http.delete<any>(`${API_PATH}/Cart/minus/${id}`)
       .pipe(
-        catchError(this.handleError<any>('getData'))
+        catchError(this.errorService.handleError)
       )
-
   }
-
-
-
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-      return of(result as T);
-    }
-  }
-
 }

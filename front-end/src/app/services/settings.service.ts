@@ -10,7 +10,6 @@ import {
   UserUpdateResponseData
 } from "../core";
 import {
-  API,
   API_PATH,
   API_PATH_SELLER,
   PATH_ADD_CERTIFICATE,
@@ -28,21 +27,21 @@ export class SettingsService {
   }
 
   updateUserInfo(body: {}) {
-    return this.http.put<UserUpdateResponseData>(`${API}${API_PATH}/${PATH_EDIT}`, body)
+    return this.http.put<UserUpdateResponseData>(`/${API_PATH}/${PATH_EDIT}`, body)
       .pipe(
         catchError(this.errorService.handleError),
       )
   };
 
   changePassword(body: {}) {
-    return this.http.put<ResponseData>(`${API}${API_PATH}/${PATH_CHANGE_PASS}`, body)
+    return this.http.put<ResponseData>(`/${API_PATH}/${PATH_CHANGE_PASS}`, body)
       .pipe(
         catchError(this.errorService.handleError),
       )
   };
 
   addCertificate(body: {}) {
-    return this.http.post<ResponseData>(`${API}/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
+    return this.http.post<ResponseData>(`/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
       .pipe(
         catchError(this.errorService.handleError),
       )

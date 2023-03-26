@@ -20,13 +20,13 @@ export class ProductDetailComponent implements OnInit {
   @Input() product: any;
 
   ngOnInit(): void {
-    this.getProductDets();
+    this.getProductDetails();
   }
 
 
-  getProductDets(): void {
+  private getProductDetails(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.shopService.getProductDets(id)
+    this.shopService.getProductDetails(id)
         .subscribe(response => {
           this.product = response.data
         })

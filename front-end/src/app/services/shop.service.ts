@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError} from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 import {IProduct} from "../core";
-import {API, API_PATH} from "../shared/constants/constants";
+import {API_PATH} from "../shared/constants/constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(private http: HttpClient) {
+  }
 
   public productList$ = new BehaviorSubject([]);
   products: IProduct[] = [
@@ -38,28 +39,27 @@ export class ShopService {
   ];
 
   getProducts() {
-    return this.http.get<any>(`${API}${API_PATH}/Home/GetProducts`)
-          .pipe(
-            catchError(this.handleError<any>('getData')),
-          )
-          // .subscribe(res => {
-          //   this.productList$.next(res.data.otherProducts)
-          // });
+    return this.http.get<any>(`/${API_PATH}/Home/GetProducts`)
+      .pipe(
+        catchError(this.handleError<any>('getData')),
+      )
+    // .subscribe(res => {
+    //   this.productList$.next(res.data.otherProducts)
+    // });
   }
 
-  getProductDets(id: number): Observable<any> {
-    return this.http.get<any>(`${API}${API_PATH}/Home/GetProductById/${id}`)
-                .pipe(
-
-                  catchError(this.handleError<any>('getData')),
-                );
+  getProductDetails(id: number): Observable<any> {
+    return this.http.get<any>(`/${API_PATH}/Home/GetProductById/${id}`)
+      .pipe(
+        catchError(this.handleError<any>('getData')),
+      );
   }
 
   getCategories(): Observable<any> {
-    return this.http.get<any>(`${API}${API_PATH}/Categories`)
-    .pipe(
-      catchError(this.handleError<any>('getData')),
-    );
+    return this.http.get<any>(`/${API_PATH}/Categories`)
+      .pipe(
+        catchError(this.handleError<any>('getData')),
+      );
   }
 
 

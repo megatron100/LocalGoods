@@ -5,7 +5,8 @@ import {UserService} from "./user.service";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
 import {ErrorService} from "../shared/error-handling/error.service";
 import {
-  API, API_PATH,
+  API,
+  API_PATH,
   API_PATH_SELLER,
   PATH_ADD_PRODUCT,
   PATH_DELETE_PRODUCT_BY_ID,
@@ -25,7 +26,7 @@ export class SellerProductStorageService {
   }
 
   storeProduct(product: SellerProductItemModel) {
-    return this.http.post<any>(`${API}/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
+    return this.http.post<any>(`/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
       .pipe(
         catchError(this.errorService.handleError),
         map(({data}) => {
@@ -35,7 +36,7 @@ export class SellerProductStorageService {
   };
 
   deleteProduct(id: string) {
-    return this.http.delete<any>(`${API}/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`)
+    return this.http.delete<any>(`/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`)
       .pipe(
         catchError(this.errorService.handleError),
         map(({data}) => {
@@ -46,7 +47,7 @@ export class SellerProductStorageService {
 
   updateProduct(id: string, product: SellerProductItemModel) {
     const body = {...product, productId: id}
-    return this.http.put<any>(`${API}${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
+    return this.http.put<any>(`/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
       .pipe(
         catchError(this.errorService.handleError),
         map(({data}) => {
@@ -56,7 +57,7 @@ export class SellerProductStorageService {
   };
 
   getProductById(id: string) {
-    return this.http.get<any>(`${API}/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
+    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
       .pipe(
         catchError(this.errorService.handleError),
         map(({data}) => {
@@ -66,7 +67,7 @@ export class SellerProductStorageService {
   };
 
   getProducts() {
-    return this.http.get<any>(`${API}${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
+    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
       .pipe(
         catchError(this.errorService.handleError),
         map(({data}) => {
@@ -76,13 +77,14 @@ export class SellerProductStorageService {
   };
 
   getCategories() {
-    return this.http.get<any>(`${API}/${API_PATH}/${PATH_GET_CATEGORIES}`)
+    return this.http.get<any>(`/${API_PATH}/${PATH_GET_CATEGORIES}`)
       .pipe(
         catchError(this.errorService.handleError),
       )
   };
 
-  uploadImage(file: FormData){
+  uploadImage(file: FormData) {
+    console.log(file)
     return this.http.post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
       headers: {'Content-Type': 'multipart/form-data',}
     })

@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, catchError, tap} from "rxjs";
+import {BehaviorSubject, catchError, Observable, tap} from "rxjs";
 
 import {
-  API,
   API_PATH_AUTH,
   EXPIRE_IN,
   PATH_LOGIN,
@@ -41,8 +40,8 @@ export class AuthService {
   ) {
   }
 
-  register(body: RegisterModel) {
-    return this.http.post<ResponseData>(`${API}/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
+  register(body: RegisterModel): Observable<ResponseData> {
+    return this.http.post<ResponseData>(`/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
       .pipe(
         catchError(this.errorService.handleError),
         tap(
@@ -54,8 +53,8 @@ export class AuthService {
   };
 
 
-  login(body: LoginModel) {
-    return this.http.post<AuthResponseData>(`${API}/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
+  login(body: LoginModel): Observable<AuthResponseData> {
+    return this.http.post<AuthResponseData>(`/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
         catchError(this.errorService.handleError),
         tap(
