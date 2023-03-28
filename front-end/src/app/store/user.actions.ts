@@ -1,6 +1,7 @@
 import {Action} from "@ngrx/store";
 import {User} from "../pages/auth/models/user.model";
 import {CertificateModel} from "../pages/seller-admin-panel/models/certificate.model";
+import {SellerInfo} from "../core";
 
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -16,24 +17,7 @@ export class CreateUser implements Action{
 export class UpdateUser implements Action{
   readonly type = UPDATE_USER;
 
-  constructor(public payload: {
-    "address": {
-      "postCode": string,
-      "country": string,
-      "city": string,
-      "area": string
-    },
-    "basicInfo": {
-      "name": string,
-      "mobile": string,
-      "certification": {
-        "qualityCertificateTitle" : string,
-        "qualityCertificateDescription": string,
-        "qualityCertificateLink": string,
-        "taxNumber": string
-      }
-    }
-  }) {
+  constructor(public payload: SellerInfo) {
   }
 }
 

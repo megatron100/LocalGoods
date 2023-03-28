@@ -5,7 +5,7 @@ import * as fromShop from "../store";
 import * as UserActions from '../store/user.actions';
 import {MatDialog} from "@angular/material/dialog";
 import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
-import {UserUpdateResponseData} from "../core";
+import {SellerInfo, UserUpdateResponseData} from "../core";
 import {API_PATH, PATH_GET_PROFILE} from "../shared/constants/constants";
 
 
@@ -13,19 +13,18 @@ import {API_PATH, PATH_GET_PROFILE} from "../shared/constants/constants";
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient, private store: Store<fromShop.AppState>, public dialog: MatDialog) {
   }
 
   updateUser() {
     return this.http.get<UserUpdateResponseData>(`/${API_PATH}/${PATH_GET_PROFILE}`)
-      .subscribe(({data, message}) => {
+      .subscribe(({data: data, message: message}) => {
         this.updateUserInStore(data)
       })
   }
 
   updateUserInStore(data: any) {
-    const updatedUserData = {
+    const updatedUserData: SellerInfo = {
       "address": {
         "postCode": '',
         "country": '',
@@ -43,6 +42,7 @@ export class UserService {
         }
       }
     }
+
     if (data.certification !== null) {
       this.updateSellerData(data, updatedUserData)
       updatedUserData.basicInfo.certification.qualityCertificateTitle = data?.certification.qualityCertificateTitle;

@@ -73,7 +73,7 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
      this.settingsService.updateUserInfo(this.userForm.value)
       .subscribe({
-        next: ({data, message}) => {
+        next: ({data: data, message: message}) => {
           this.userService.updateUserInStore(data)
           const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
           dialogRef.afterClosed()
