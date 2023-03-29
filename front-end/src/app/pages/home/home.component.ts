@@ -50,11 +50,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
   onClickAdd(prod: any) {
-    let quantityWithId = 'product-quantity-' + prod.id;
+    const quantityWithId = 'product-quantity-' + prod.id;
     const quantity = document.getElementById(
       quantityWithId
     ) as HTMLInputElement;
-    let model: AddToCart = {
+    const model: AddToCart = {
       id: prod.id,
       quantity: Number(quantity.value),
     };

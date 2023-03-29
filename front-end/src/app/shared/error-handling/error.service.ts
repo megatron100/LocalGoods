@@ -7,11 +7,9 @@ import { throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class ErrorService {
-  constructor() {}
-
   handleError(errorRes: HttpErrorResponse) {
     const { error, status } = errorRes;
-    let err = new ErrorModel(status, error?.message);
+    const err = new ErrorModel(status, error?.message);
     return throwError(() => err);
   }
 }

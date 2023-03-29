@@ -20,9 +20,9 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<unknown>> {
     return this.store.select('userData').pipe(
       take(1),
       exhaustMap((state: UserState) => {
@@ -32,8 +32,6 @@ export class AuthInterceptor implements HttpInterceptor {
         const modifiedReq = request.clone({
           headers: new HttpHeaders({
             Authorization: `Bearer ${state.user?.token}` as string,
-            // 'Accept': 'application/json',
-            // 'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           }),
         });

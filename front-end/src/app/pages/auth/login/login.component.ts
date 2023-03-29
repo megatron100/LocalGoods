@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {
-    this.formService.getLoginJson().subscribe((formData: any) => {
+    this.formService.getLoginJson().subscribe((formData: FormData) => {
       this.formData = formData;
     });
   }

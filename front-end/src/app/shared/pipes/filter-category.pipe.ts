@@ -6,7 +6,7 @@ import { IProduct } from '../../core';
 })
 export class FilterCategoryPipe implements PipeTransform {
   transform(products: IProduct[], args: string): IProduct[] {
-    let search = [...products];
+    const search = [...products];
     if (args === '') {
       return products.slice();
     } else {

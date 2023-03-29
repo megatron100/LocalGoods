@@ -22,7 +22,7 @@ export function userReducer(
         ...state,
         user: payload,
       };
-    case UserAction.UPDATE_USER:
+    case UserAction.UPDATE_USER: {
       const userData: {
         userId: string;
         email: string;
@@ -63,6 +63,7 @@ export function userReducer(
         ...state,
         user: updatedUser,
       };
+    }
     case UserAction.CREATE_CERTIFICATE:
       return {
         ...state,

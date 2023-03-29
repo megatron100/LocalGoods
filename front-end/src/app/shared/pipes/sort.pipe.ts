@@ -6,7 +6,7 @@ import { IProduct } from '../../core';
 })
 export class SortPipe implements PipeTransform {
   transform(products: IProduct[], args: string): IProduct[] {
-    let sorted = [...products];
+    const sorted = [...products];
     switch (args) {
       case 'ASC Name':
         sorted.sort((a: IProduct, b: IProduct) => {

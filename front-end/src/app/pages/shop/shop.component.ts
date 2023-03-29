@@ -14,10 +14,10 @@ import { AddToCart } from '../../core';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  products: any[] = [];
-  sortValue: string = '';
-  searchValue: string = '';
-  category: string = '';
+  products = [];
+  sortValue = '';
+  searchValue = '';
+  category = '';
 
   constructor(
     public shopService: ShopService,
@@ -49,7 +49,7 @@ export class ShopComponent implements OnInit {
   }
 
   onClickAdd(prod: any) {
-    let model: AddToCart = {
+    const model: AddToCart = {
       id: prod.id,
       quantity: 1,
     };

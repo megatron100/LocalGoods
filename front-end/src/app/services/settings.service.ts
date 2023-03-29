@@ -23,19 +23,19 @@ import {
 export class SettingsService {
   constructor(private http: HttpClient, private errorService: ErrorService) {}
 
-  updateUserInfo(body: {}) {
+  updateUserInfo(body: any) {
     return this.http
       .put<UserUpdateResponseData>(`/${API_PATH}/${PATH_EDIT}`, body)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  changePassword(body: {}) {
+  changePassword(body: any) {
     return this.http
       .put<ResponseData>(`/${API_PATH}/${PATH_CHANGE_PASS}`, body)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  addCertificate(body: {}) {
+  addCertificate(body: any) {
     return this.http
       .post<ResponseData>(`/${API_PATH_SELLER}/${PATH_ADD_CERTIFICATE}`, body)
       .pipe(catchError(this.errorService.handleError));

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
@@ -9,15 +9,10 @@ import { AddToCart } from '../../../core';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss'],
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent {
   @Input() product: any;
 
-  constructor(
-    private cartService: CartService,
-    public dialog: MatDialog
-  ) {}
-
-  ngOnInit(): void {}
+  constructor(private cartService: CartService, public dialog: MatDialog) {}
 
   onClickAdd(model: AddToCart) {
     this.cartService.addToCart(model).subscribe((res) => {

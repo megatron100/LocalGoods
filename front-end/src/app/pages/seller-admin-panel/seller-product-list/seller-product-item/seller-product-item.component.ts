@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SellerProductItemModel } from '../../models/seller-product-item.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateSellerProductDialogComponent } from '../dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
@@ -14,7 +14,7 @@ import { ErrorDialogComponent } from '../../../../shared/error-handling/error-di
   templateUrl: './seller-product-item.component.html',
   styleUrls: ['./seller-product-item.component.scss'],
 })
-export class SellerProductItemComponent implements OnInit {
+export class SellerProductItemComponent {
   @Input() sellerProduct!: SellerProductItemModel;
 
   constructor(
@@ -23,8 +23,6 @@ export class SellerProductItemComponent implements OnInit {
     public sellerService: SellerService,
     public sellerProductStorageService: SellerProductStorageService
   ) {}
-
-  ngOnInit(): void {}
 
   onProductDelete() {
     this.sellerProductStorageService

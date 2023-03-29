@@ -8,7 +8,7 @@ import { CustomerOrderServiceService } from '../../services/CustomerOrderService
 })
 export class CustomerOrdersComponent implements OnInit {
   orders: any;
-  message: string = '';
+  message = '';
 
   constructor(private orderServices: CustomerOrderServiceService) {}
 

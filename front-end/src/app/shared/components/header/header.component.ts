@@ -19,7 +19,7 @@ import { User } from '../../../pages/auth/models/user.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isUserAuth: boolean = false;
+  isUserAuth = false;
   private userSub!: Subscription;
   cart!: IProduct[];
   user!: User;

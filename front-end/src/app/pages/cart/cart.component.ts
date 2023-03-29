@@ -84,7 +84,7 @@ export class CartComponent implements OnInit {
   }
 
   plusOne(id: number) {
-    let model: AddToCart = {
+    const model: AddToCart = {
       id: id,
       quantity: 1,
     };

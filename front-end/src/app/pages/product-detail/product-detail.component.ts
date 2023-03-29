@@ -33,11 +33,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onClickAdd(id: number) {
-    let quantityWithId = 'product-quantity-' + id;
+    const quantityWithId = 'product-quantity-' + id;
     const quantity = document.getElementById(
       quantityWithId
     ) as HTMLInputElement;
-    let model: AddToCart = {
+    const model: AddToCart = {
       id: id,
       quantity: Number(quantity.value),
     };

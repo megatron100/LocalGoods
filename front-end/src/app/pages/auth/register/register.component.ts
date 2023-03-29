@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   constructor(private formService: FormService) {}
 
   ngOnInit(): void {
-    this.formService.getRegisterJson().subscribe((formData: any) => {
+    this.formService.getRegisterJson().subscribe((formData: FormData) => {
       this.formData = formData;
     });
   }

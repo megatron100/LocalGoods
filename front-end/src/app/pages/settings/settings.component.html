@@ -10,38 +10,38 @@
           <table class="resp-tab">
             <tr>
               <td>Post Code</td>
-              <td>{{ user.address?.pinCode || "no info" }}</td>
+              <td>{{ user.address?.pinCode || 'no info' }}</td>
             </tr>
             <tr>
               <td>UserAddress</td>
-              <td>{{ user.address?.country || "no info" }}</td>
+              <td>{{ user.address?.country || 'no info' }}</td>
             </tr>
             <tr>
               <td>City</td>
-              <td>{{ user.address?.city || "no info" }}</td>
+              <td>{{ user.address?.city || 'no info' }}</td>
             </tr>
             <tr>
               <td>Area</td>
-              <td>{{ user.address?.area || "no info" }}</td>
+              <td>{{ user.address?.area || 'no info' }}</td>
             </tr>
           </table>
         </td>
       </tr>
       <tr *ngIf="user.role === 'seller'">
         <td>Certification</td>
-        <td>{{ user.certification ? "yes" : "no" }}</td>
+        <td>{{ user.certification ? 'yes' : 'no' }}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{ user.email || "no info" }}</td>
+        <td>{{ user.email || 'no info' }}</td>
       </tr>
       <tr>
         <td>Name</td>
-        <td>{{ user.nickName || "no info" }}</td>
+        <td>{{ user.nickName || 'no info' }}</td>
       </tr>
       <tr>
         <td>Mobile</td>
-        <td>{{ user.mobile || "no info" }}</td>
+        <td>{{ user.mobile || 'no info' }}</td>
       </tr>
     </table>
     <div class="panel-footer">

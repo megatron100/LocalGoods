@@ -36,7 +36,6 @@ export class LoginFormComponent implements OnChanges {
       return;
     }
     this.authService.login(this.loginForm.value).subscribe({
-      next: () => {},
       error: (err) => {
         const dialogRef = this.dialog.open(ErrorDialogComponent, {
           data: err,

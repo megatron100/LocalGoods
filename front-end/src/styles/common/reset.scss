@@ -1,5 +1,5 @@
-@import "src/styles/constants/index";
-@import "src/styles/mixins/index";
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
 
 /* You can add global styles to this file, and also import other style files */
 html,
@@ -10,7 +10,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 a {
   text-decoration: none;
@@ -26,15 +26,15 @@ a {
 }
 
 .container {
-  @include media-breakpoint-between("xxs", "xs") {
+  @include media-breakpoint-between('xxs', 'xs') {
     width: 100%;
     padding: 15px 0;
   }
-  @include media-breakpoint-between("s", "s") {
+  @include media-breakpoint-between('s', 's') {
     width: 100%;
     padding: 15px 0;
   }
-  @include media-breakpoint-between("md", "md") {
+  @include media-breakpoint-between('md', 'md') {
     width: 500px;
   }
   @include media-breakpoint-between(lg, lg) {
@@ -94,11 +94,11 @@ a {
   }
 
   .icon-pass-visible {
-    @include icon("action-eye-off-24");
+    @include icon('action-eye-off-24');
   }
 
   .icon-pass-invisible {
-    @include icon("action-eye-24");
+    @include icon('action-eye-24');
   }
 }
 
