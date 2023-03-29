@@ -1,32 +1,32 @@
 <h2 mat-dialog-title style='font-size: 22px'>Add certificate</h2>
 <div class='container'>
-  <form class='form' [formGroup]='addCertifForm' (ngSubmit)="onSubmit()">
+  <form class='form' [formGroup]='addCertificateForm' (ngSubmit)="onSubmit()">
     <mat-card class='form-container'>
       <mat-form-field color='accent'>
         <mat-label>Certificate Title</mat-label>
         <input type="text" matInput placeholder="Certificate Title" formControlName="qualityCertificateTitle"/>
-        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateTitle')">
+        <mat-error *ngIf="addCertificateForm.hasError('required', 'qualityCertificateTitle')">
           This field is required
         </mat-error>
       </mat-form-field>
       <mat-form-field color='accent'>
         <mat-label>Certificate Description</mat-label>
         <input type="text" matInput placeholder="Certificate Description" formControlName="qualityCertificateDescription"/>
-        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateDescription')">
+        <mat-error *ngIf="addCertificateForm.hasError('required', 'qualityCertificateDescription')">
           This field is required
         </mat-error>
       </mat-form-field>
       <mat-form-field color='accent'>
         <mat-label>Certificate Link</mat-label>
         <input type="text" matInput placeholder="Certificate Link" formControlName="qualityCertificateLink"/>
-        <mat-error *ngIf="addCertifForm.hasError('required', 'qualityCertificateLink')">
+        <mat-error *ngIf="addCertificateForm.hasError('required', 'qualityCertificateLink')">
           This field is required
         </mat-error>
       </mat-form-field>
       <mat-form-field color='accent'>
         <mat-label>Tax number</mat-label>
         <input type="text" matInput placeholder="Tax number" formControlName="taxNumber"/>
-        <mat-error *ngIf="addCertifForm.hasError('required', 'taxNumber')">
+        <mat-error *ngIf="addCertificateForm.hasError('required', 'taxNumber')">
           This field is required
         </mat-error>
       </mat-form-field>
@@ -34,7 +34,7 @@
   </form>
 </div>
 <mat-dialog-actions>
-  <button [disabled]='!addCertifForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
+  <button [disabled]='!addCertificateForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
     Save
   </button>
 </mat-dialog-actions>
