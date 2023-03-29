@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SettingsService} from "../../../services/settings.service";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
@@ -10,29 +10,32 @@ import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../services/user.service";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
 import {AuthService} from "../../../core";
+import {AutoUnsubscribe} from "../../../shared/utils/decorators";
 
+
+@AutoUnsubscribe('subscription')
+@AutoUnsubscribe('subscription2')
 @Component({
   selector: 'app-user-data-update-dialog',
   templateUrl: './user-data-update-dialog.component.html',
   styleUrls: ['./user-data-update-dialog.component.scss']
 })
-export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
+export class UserDataUpdateDialogComponent implements OnInit {
 
   userForm: FormGroup = new FormGroup({});
-  private subscription!: Subscription;
+  private subscription = new Subscription();
   country!: string;
   area!: string;
   city!: string;
   mobile!: string;
 
   constructor(
-    private fb: FormBuilder,
     private settingsService: SettingsService,
     private authService: AuthService,
     private store: Store<fromShop.AppState>,
     public dialog: MatDialog,
     public userService: UserService
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -43,17 +46,18 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
     let name = '';
     let postCode = '';
 
-    this.subscription = this.store.select('userData')
-      .subscribe((state: UserState) => {
-        if (state.user) {
-          name = state.user.nickName;
-          this.mobile = state.user.mobile || '';
-          postCode = state.user.address?.pinCode || '';
-          this.country = state.user.address?.country || ''
-          this.city = state.user.address?.city || ''
-          this.area = state.user.address?.area || ''
-        }
-      })
+    this.subscription.add(
+      this.store.select('userData')
+        .subscribe((state: UserState) => {
+          if (state.user) {
+            name = state.user.nickName;
+            this.mobile = state.user.mobile || '';
+            postCode = state.user.address?.pinCode || '';
+            this.country = state.user.address?.country || ''
+            this.city = state.user.address?.city || ''
+            this.area = state.user.address?.area || ''
+          }
+        }));
 
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
@@ -67,29 +71,27 @@ export class UserDataUpdateDialogComponent implements OnInit, OnDestroy {
         area: new FormControl(this.area, [Validators.required]),
       })
     })
+
   }
 
 
   onSubmit() {
-     this.settingsService.updateUserInfo(this.userForm.value)
+    this.settingsService.updateUserInfo(this.userForm.value)
       .subscribe({
-        next: ({data: data, message: message}) => {
-          this.userService.updateUserInStore(data)
-          const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
-          dialogRef.afterClosed()
-        },
-        error: err => {
-          const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            data: err,
-            panelClass: 'color'
-          });
-          dialogRef.afterClosed()
+          next: ({data: data, message: message}) => {
+            this.userService.updateUserInStore(data)
+            const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+            dialogRef.afterClosed()
+          },
+          error: err => {
+            const dialogRef = this.dialog.open(ErrorDialogComponent, {
+              data: err,
+              panelClass: 'color'
+            });
+            dialogRef.afterClosed()
+          }
         }
-      })
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
+      )
   }
 
   setDialCode($event: any) {

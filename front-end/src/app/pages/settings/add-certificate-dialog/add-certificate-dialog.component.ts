@@ -4,7 +4,10 @@ import {SettingsService} from "../../../services/settings.service";
 import {MessageDialogComponent} from "../../../shared/dialogs/message-dialog/message-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/error-dialog.component";
+import {AutoUnsubscribe} from "../../../shared/utils/decorators";
+import {Subscription} from "rxjs";
 
+@AutoUnsubscribe('subscription')
 @Component({
   selector: 'app-add-certificate-dialog',
   templateUrl: './add-certificate-dialog.component.html',
@@ -12,13 +15,14 @@ import {ErrorDialogComponent} from "../../../shared/error-handling/error-dialog/
 })
 export class AddCertificateDialogComponent implements OnInit {
 
-  addCertifForm!: FormGroup
+  addCertificateForm!: FormGroup;
+  subscription = new Subscription()
 
   constructor(private settingsService: SettingsService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.addCertifForm = new FormGroup({
+    this.addCertificateForm = new FormGroup({
       qualityCertificateTitle: new FormControl(null, [Validators.required]),
       qualityCertificateDescription: new FormControl(null, [Validators.required]),
       qualityCertificateLink: new FormControl(null, [Validators.required]),
@@ -27,19 +31,22 @@ export class AddCertificateDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    this.settingsService.addCertificate(this.addCertifForm.value)
-      .subscribe({
-        next: ({message}) => {
-          const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
-          dialogRef.afterClosed()
-        },
-        error: err => {
-          const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            data: err,
-            panelClass: 'color'
-          });
-          dialogRef.afterClosed()
-        }
-      })
+    this.subscription.add(
+      this.settingsService.addCertificate(this.addCertificateForm.value)
+        .subscribe({
+            next: ({message}) => {
+              const dialogRef = this.dialog.open(MessageDialogComponent, {data: message});
+              dialogRef.afterClosed()
+            },
+            error: err => {
+              const dialogRef = this.dialog.open(ErrorDialogComponent, {
+                data: err,
+                panelClass: 'color'
+              });
+              dialogRef.afterClosed()
+            }
+          }
+        )
+    )
   }
 }
