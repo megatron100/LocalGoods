@@ -3,14 +3,14 @@ a {
 }
 
 .product-card {
-    display: flex;
-    flex-direction: column;
-    margin: auto auto 10px;
-    width: 90vw;
-    padding: 15px 40px;
-    align-items: center;
-    border: 1px solid rgba($color: #000000, $alpha: 0.1);
-    border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  margin: auto auto 10px;
+  width: 90vw;
+  padding: 15px 40px;
+  align-items: center;
+  border: 1px solid rgba($color: #000000, $alpha: 0.1);
+  border-radius: 15px;
 }
 
 .product-container {
@@ -18,15 +18,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-around;
-
 }
 
 .product-pic {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 150px;
-    height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  height: 100px;
 }
 
 .product-name,
@@ -90,18 +89,16 @@ input:active {
   border: 1px solid #39a94b;
 }
 
-
 @media (min-width: 768px) {
-    .product-card {
-        flex-direction: column;
-        width: 250px;
-        margin: auto 5px 10px 5px;
-    }
+  .product-card {
+    flex-direction: column;
+    width: 250px;
+    margin: auto 5px 10px 5px;
+  }
 
   .product-container {
     flex-direction: column;
     align-items: center;
-
   }
 
   .product-content {

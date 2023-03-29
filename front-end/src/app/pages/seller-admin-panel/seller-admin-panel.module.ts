@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SellerAdminPanelComponent } from './seller-admin-panel.component';
-import {SellerAdminPanelRoutingModule} from './seller-admin-panel-routing.module';
-import {SharedModule} from "../../shared/shared.module";
+import { SellerAdminPanelRoutingModule } from './seller-admin-panel-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 import { SellerProductListComponent } from './seller-product-list/seller-product-list.component';
 import { SellerProductItemComponent } from './seller-product-list/seller-product-item/seller-product-item.component';
 import { SellerProductDetailsComponent } from './seller-product-list/seller-product-details/seller-product-details.component';
 import { SellerProductStartComponent } from './seller-product-list/seller-product-start/seller-product-start.component';
 import { CreateSellerProductDialogComponent } from './seller-product-list/dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
-import {MatSortModule} from "@angular/material/sort";
-import {MatPaginatorModule} from "@angular/material/paginator";
-
-
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -28,6 +26,6 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     SellerAdminPanelRoutingModule,
     MatSortModule,
     MatPaginatorModule,
-  ]
+  ],
 })
-export class SellerAdminPanelModule { }
+export class SellerAdminPanelModule {}

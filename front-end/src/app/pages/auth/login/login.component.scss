@@ -14,12 +14,10 @@
   }
 
   .icon-pass-visible {
-    @include icon('action-eye-24');
+    @include icon("action-eye-24");
   }
 
   .icon-pass-invisible {
-    @include icon('action-eye-off-24');
+    @include icon("action-eye-off-24");
   }
 }
-
-

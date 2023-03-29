@@ -8,9 +8,8 @@ describe('UserDataUpdateDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserDataUpdateDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UserDataUpdateDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserDataUpdateDialogComponent);
     component = fixture.componentInstance;

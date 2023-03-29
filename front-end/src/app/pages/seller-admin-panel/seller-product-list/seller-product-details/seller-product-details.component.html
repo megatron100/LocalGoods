@@ -1,29 +1,26 @@
-<mat-card class="product-card" *ngIf='(product$ | async); let product else loading'>
+<mat-card
+  class="product-card"
+  *ngIf="product$ | async; let product; else: loading"
+>
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.shortDesc }}</mat-card-subtitle>
   </mat-card-header>
-  <div class='content'>
-    <img mat-card-image [src]='product.photo' [alt]='product.name'>
+  <div class="content">
+    <img mat-card-image [src]="product.photo" [alt]="product.name" />
     <mat-card-content>
-      <p>
-        <span>Category:</span> {{ product.category }}
-      </p>
-      <p>
-        <span>Description:</span> {{ product.longDescription }}
-      </p>
-      <p>
-        <span>Price:</span> {{ product.price | currency: 'USD' }}
-      </p>
+      <p><span>Category:</span> {{ product.category }}</p>
+      <p><span>Description:</span> {{ product.longDescription }}</p>
+      <p><span>Price:</span> {{ product.price | currency : "USD" }}</p>
     </mat-card-content>
   </div>
   <mat-card-actions>
-    <button mat-raised-button routerLink='../'>Go back</button>
+    <button mat-raised-button routerLink="../">Go back</button>
   </mat-card-actions>
 </mat-card>
 <ng-template #loading>
-  <div class='loader-wrapper'>
+  <div class="loader-wrapper">
     <app-loading-spinner></app-loading-spinner>
   </div>
 </ng-template>

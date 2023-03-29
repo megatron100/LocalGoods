@@ -8,9 +8,8 @@ describe('SubMenuHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubMenuHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [SubMenuHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SubMenuHeaderComponent);
     component = fixture.componentInstance;

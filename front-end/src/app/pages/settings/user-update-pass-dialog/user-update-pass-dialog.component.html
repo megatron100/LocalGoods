@@ -1,10 +1,15 @@
-<h2 mat-dialog-title style='font-size: 22px'>Change my password</h2>
-<div class='container'>
-  <form class='form' [formGroup]='passForm' (ngSubmit)="onSubmit()">
-    <mat-card class='form-container'>
-      <mat-form-field color='accent'>
+<h2 mat-dialog-title style="font-size: 22px">Change my password</h2>
+<div class="container">
+  <form class="form" [formGroup]="passForm" (ngSubmit)="onSubmit()">
+    <mat-card class="form-container">
+      <mat-form-field color="accent">
         <mat-label>Current password</mat-label>
-        <input type="password" matInput placeholder="Enter current password" formControlName="existingPassword"/>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter current password"
+          formControlName="existingPassword"
+        />
         <mat-error *ngIf="passForm.hasError('required', 'existingPassword')">
           Please enter your new password
         </mat-error>
@@ -12,9 +17,14 @@
           Password should have 6 characters minimum!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>New password</mat-label>
-        <input type="password" matInput placeholder="Enter new password" formControlName="newPassword"/>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter new password"
+          formControlName="newPassword"
+        />
         <mat-error *ngIf="passForm.hasError('required', 'newPassword')">
           Please enter your new password
         </mat-error>
@@ -22,11 +32,14 @@
           Password should have 6 characters minimum!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>New password again</mat-label>
         <input
-          type="password" matInput placeholder="Enter new password again" formControlName="passConfirm"
-          [errorStateMatcher]='matcher'
+          type="password"
+          matInput
+          placeholder="Enter new password again"
+          formControlName="passConfirm"
+          [errorStateMatcher]="matcher"
         />
         <mat-error *ngIf="passForm.hasError('notSame')">
           Passwords do not match
@@ -36,7 +49,13 @@
   </form>
 </div>
 <mat-dialog-actions>
-  <button [disabled]='!passForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
+  <button
+    [disabled]="!passForm.valid"
+    type="submit"
+    (click)="onSubmit()"
+    mat-raised-button
+    mat-dialog-close="true"
+  >
     Save
   </button>
 </mat-dialog-actions>

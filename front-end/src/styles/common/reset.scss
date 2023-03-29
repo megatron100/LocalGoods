@@ -2,9 +2,19 @@
 @import "src/styles/mixins/index";
 
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100vh;  overflow-x: hidden; box-sizing: border-box}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
-a {text-decoration: none}
+html,
+body {
+  height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+a {
+  text-decoration: none;
+}
 
 .form-container {
   background-color: #919494;
@@ -15,26 +25,25 @@ a {text-decoration: none}
   justify-content: center;
 }
 
-
 .container {
-  @include media-breakpoint-between('xxs', 'xs') {
+  @include media-breakpoint-between("xxs", "xs") {
     width: 100%;
     padding: 15px 0;
-  };
-  @include media-breakpoint-between('s', 's') {
+  }
+  @include media-breakpoint-between("s", "s") {
     width: 100%;
     padding: 15px 0;
-  };
-  @include media-breakpoint-between('md', 'md') {
+  }
+  @include media-breakpoint-between("md", "md") {
     width: 500px;
-  };
+  }
   @include media-breakpoint-between(lg, lg) {
     width: 600px;
-  };
+  }
 
   @include media-breakpoint-between(xlg, xlg) {
     width: 800px;
-  };
+  }
 
   .form {
     width: 100%;
@@ -59,18 +68,18 @@ a {text-decoration: none}
 }
 
 .mat-row {
-  background-color: #8a8888!important;
+  background-color: #8a8888 !important;
   .mat-cell {
     font-size: 16px;
     font-weight: normal;
   }
 }
 
-  .mat-dialog-container {
-    @include media-breakpoint-between(md, xlg) {
-      max-height: 400px!important;
-    };
+.mat-dialog-container {
+  @include media-breakpoint-between(md, xlg) {
+    max-height: 400px !important;
   }
+}
 
 .input {
   display: flex;
@@ -85,11 +94,11 @@ a {text-decoration: none}
   }
 
   .icon-pass-visible {
-    @include icon('action-eye-off-24');
+    @include icon("action-eye-off-24");
   }
 
   .icon-pass-invisible {
-    @include icon('action-eye-24');
+    @include icon("action-eye-24");
   }
 }
 
@@ -102,13 +111,13 @@ a {text-decoration: none}
 
   &__title {
     @include main-text(
-        $font-large0,
+      $font-large0,
       $line-height: 36px,
       $font-weight: $font-weight-900,
       $font-family: $font-source-sans-pro-black
     );
 
-    margin: 0!important;
+    margin: 0 !important;
   }
 
   &__text {
@@ -120,4 +129,3 @@ a {text-decoration: none}
     text-decoration: none;
   }
 }
-

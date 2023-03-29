@@ -18,28 +18,25 @@ a {
   }
 }
 
-
 .cdk-overlay-pane {
   width: 100%;
 }
 
 .active a {
-  color: #555!important;
+  color: #555 !important;
   font-weight: 500;
 }
 
-.cart-num{
-  font-size:12px;
+.cart-num {
+  font-size: 12px;
   color: #fff;
   background: red;
-  border-radius:50%;
+  border-radius: 50%;
   padding: 0 5px;
 }
 
-
 @media (max-width: 768px) {
   .mat-toolbar {
-
     @include header-bg;
     display: flex;
     justify-content: space-between;
@@ -79,7 +76,7 @@ a {
             width: 22px;
             height: 2px;
             border-radius: 1px;
-            background-color: $gray60;;
+            background-color: $gray60;
           }
 
           .icon-bar + .icon-bar {
@@ -119,7 +116,3 @@ a {
     }
   }
 }
-
-
-
-

@@ -1,95 +1,99 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {catchError, map} from "rxjs";
-import {UserService} from "./user.service";
-import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
-import {ErrorService} from "../shared/error-handling/error.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs';
+import { UserService } from './user.service';
+import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
+import { ErrorService } from '../shared/error-handling/error.service';
 import {
   API,
   API_PATH,
   API_PATH_SELLER,
   PATH_ADD_PRODUCT,
   PATH_DELETE_PRODUCT_BY_ID,
-  PATH_EDIT_PRODUCT_BY_ID, PATH_GET_CATEGORIES, PATH_GET_PRODUCT_BY_ID, PATH_GET_PRODUCTS, PATH_UPLOAD
-} from "../shared/constants/constants";
-import {ResponseData} from "../core";
+  PATH_EDIT_PRODUCT_BY_ID,
+  PATH_GET_CATEGORIES,
+  PATH_GET_PRODUCT_BY_ID,
+  PATH_GET_PRODUCTS,
+  PATH_UPLOAD,
+} from '../shared/constants/constants';
+import { ResponseData } from '../core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SellerProductStorageService {
-
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private errorService: ErrorService) {
-  }
+    private errorService: ErrorService
+  ) {}
 
   storeProduct(product: SellerProductItemModel) {
-    return this.http.post<any>(`/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
+    return this.http
+      .post<any>(`/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
       .pipe(
         catchError(this.errorService.handleError),
-        map(({data}) => {
-          return this.userService.transformProductArrResponse(data)
+        map(({ data }) => {
+          return this.userService.transformProductArrResponse(data);
         })
-      )
-  };
+      );
+  }
 
   deleteProduct(id: string) {
-    return this.http.delete<any>(`/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`)
+    return this.http
+      .delete<any>(`/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`)
       .pipe(
         catchError(this.errorService.handleError),
-        map(({data}) => {
-          return this.userService.transformProductArrResponse(data)
+        map(({ data }) => {
+          return this.userService.transformProductArrResponse(data);
         })
-      )
-  };
+      );
+  }
 
   updateProduct(id: string, product: SellerProductItemModel) {
-    const body = {...product, productId: id}
-    return this.http.put<any>(`/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
+    const body = { ...product, productId: id };
+    return this.http
+      .put<any>(`/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
       .pipe(
         catchError(this.errorService.handleError),
-        map(({data}) => {
-          return this.userService.transformProductArrResponse(data)
+        map(({ data }) => {
+          return this.userService.transformProductArrResponse(data);
         })
-      )
-  };
+      );
+  }
 
   getProductById(id: string) {
-    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
+    return this.http
+      .get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
       .pipe(
         catchError(this.errorService.handleError),
-        map(({data}) => {
-          return this.userService.transformProductResponse(data)
+        map(({ data }) => {
+          return this.userService.transformProductResponse(data);
         })
-      )
-  };
+      );
+  }
 
   getProducts() {
-    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
-      .pipe(
-        catchError(this.errorService.handleError),
-        map(({data}) => {
-          return this.userService.transformProductArrResponse(data)
-        })
-      )
-  };
+    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`).pipe(
+      catchError(this.errorService.handleError),
+      map(({ data }) => {
+        return this.userService.transformProductArrResponse(data);
+      })
+    );
+  }
 
   getCategories() {
-    return this.http.get<any>(`/${API_PATH}/${PATH_GET_CATEGORIES}`)
-      .pipe(
-        catchError(this.errorService.handleError),
-      )
-  };
+    return this.http
+      .get<any>(`/${API_PATH}/${PATH_GET_CATEGORIES}`)
+      .pipe(catchError(this.errorService.handleError));
+  }
 
   uploadImage(file: FormData) {
-    console.log(file)
-    return this.http.post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
-      headers: {'Content-Type': 'multipart/form-data',}
-    })
-      .pipe(
-        catchError(this.errorService.handleError),
-      )
+    console.log(file);
+    return this.http
+      .post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .pipe(catchError(this.errorService.handleError));
   }
 }

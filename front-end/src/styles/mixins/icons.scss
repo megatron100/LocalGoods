@@ -1,8 +1,8 @@
-@import 'src/styles/constants/icons';
+@import "src/styles/constants/icons";
 
 // helper function to get the correct font family name
 @function iconfont-family($name) {
-  $slash: str-index($name, '/');
+  $slash: str-index($name, "/");
   $family: nth(map-keys($iconfont-data), length(map-keys($iconfont-data)));
 
   @if $slash {
@@ -27,7 +27,7 @@
 // helper function to get the correct icon of a group
 @function iconfont-item($name) {
   $group: iconfont-group($name);
-  $slash: str-index($name, '/');
+  $slash: str-index($name, "/");
 
   @if $slash {
     $name: str-slice($name, $slash + 1);
@@ -35,7 +35,7 @@
 
   @if false == map-has-key($group, $name) {
     @warn 'Undefined Iconfont Glyph `#{$name}`!';
-    @return '';
+    @return "";
   }
 
   @return map-get($group, $name);
@@ -43,7 +43,7 @@
 
 // Supportive styles for the icon font
 @mixin iconfont-styles($family: nth(map-keys($iconfont-data), 1)) {
-  font-family: '#{$family}';
+  font-family: "#{$family}";
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -75,7 +75,7 @@
 //       }
 //   }
 @mixin icon(
-  $icon: '',
+  $icon: "",
   $styles: true,
   $rotate: false,
   $position: before,
@@ -90,16 +90,16 @@
   }
 
   @if $position == both {
-    $position: 'before, &::after';
+    $position: "before, &::after";
   }
 
   // Either a ::before or ::after pseudo-element, or both
   &::#{$position} {
-    @if $icon != '' {
+    @if $icon != "" {
       // A particular icon has been specified
       $glyph: iconfont-item($icon);
 
-      content: '#{$glyph}';
+      content: "#{$glyph}";
     }
 
     @if $styles {

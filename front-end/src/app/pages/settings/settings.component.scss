@@ -39,7 +39,8 @@
       max-width: 100%;
     }
 
-    .resp-tab th, .resp-tab td {
+    .resp-tab th,
+    .resp-tab td {
       padding: 10px 20px;
       font-size: 13px;
       font-family: Verdana, sans-serif;
@@ -48,7 +49,7 @@
     }
 
     .resp-tab th {
-      color: #FFF;
+      color: #fff;
       background: #88898a;
       font-weight: bold;
       border: 1px solid #515252;
@@ -62,7 +63,7 @@
 
     .resp-tab td span {
       background: #88898a;
-      color: #FFF;
+      color: #fff;
       display: none;
       font-size: 11px;
       font-weight: bold;
@@ -81,7 +82,7 @@
 
   .panel {
     margin-bottom: 20px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
@@ -114,49 +115,47 @@
   }
 }
 
-  @media(max-width: 768px) {
-    .setting-container {
-      flex-direction: column;
+@media (max-width: 768px) {
+  .setting-container {
+    flex-direction: column;
 
-      .user-info {
+    .user-info {
+      width: 100%;
+
+      .resp-tab thead {
+        display: none;
+      }
+
+      .resp-tab tr {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+      }
+
+      .resp-tab td {
+        margin: 0 -1px -1px 0;
+        padding-top: 35px;
+        position: relative;
         width: 100%;
+      }
 
-        .resp-tab thead {
-          display: none;
-        }
-
-        .resp-tab tr {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          margin-bottom: 30px;
-        }
-
-        .resp-tab td {
-          margin: 0 -1px -1px 0;
-          padding-top: 35px;
-          position: relative;
-          width: 100%;
-        }
-
-        .resp-tab td span {
-          display: block;
-        }
+      .resp-tab td span {
+        display: block;
       }
     }
   }
-  @media(max-width: 480px) {
-    .setting-container {
-      flex-direction: column;
+}
+@media (max-width: 480px) {
+  .setting-container {
+    flex-direction: column;
 
-      .user-info {
+    .user-info {
+      width: 100%;
+
+      .resp-tab td {
         width: 100%;
-
-        .resp-tab td {
-          width: 100%;
-        }
       }
     }
   }
-
-
+}

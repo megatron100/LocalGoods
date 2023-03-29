@@ -16,10 +16,9 @@
   align-items: center;
 }
 
-
 .home-banner {
   height: 600px;
-  background-image: url('/assets/images/grocery.jpg');
+  background-image: url("/assets/images/grocery.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -131,10 +130,7 @@ input:active {
   border: 1px solid #39a94b;
 }
 
-
-
 @media (max-width: 1000px) {
-  
   h2 {
     text-align: center;
   }

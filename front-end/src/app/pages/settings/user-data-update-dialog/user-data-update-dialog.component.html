@@ -1,24 +1,32 @@
-<h2 mat-dialog-title style='font-size: 22px'>Edit my credentials</h2>
-<div mat-dialog-content class='container'>
-  <form class='form' [formGroup]='userForm' (ngSubmit)="onSubmit()">
-    <app-basic-info formGroupName="basicInfo" [selectedDialCode]="mobile"></app-basic-info>
-    <hr>
-    <br>
-    <br>
-    <hr>
+<h2 mat-dialog-title style="font-size: 22px">Edit my credentials</h2>
+<div mat-dialog-content class="container">
+  <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <app-basic-info
+      formGroupName="basicInfo"
+      [selectedDialCode]="mobile"
+    ></app-basic-info>
+    <hr />
+    <br />
+    <br />
+    <hr />
     <app-address
       formGroupName="address"
       [country]="country"
       [state]="area"
       [mobile]="mobile"
       (dialCode)="setDialCode($event)"
-
     ></app-address>
   </form>
 </div>
 
 <mat-dialog-actions>
-  <button [disabled]='!userForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
+  <button
+    [disabled]="!userForm.valid"
+    type="submit"
+    (click)="onSubmit()"
+    mat-raised-button
+    mat-dialog-close="true"
+  >
     Update
   </button>
 </mat-dialog-actions>

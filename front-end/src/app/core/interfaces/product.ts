@@ -4,5 +4,5 @@ export interface IProduct {
   price: number;
   description: string;
   seller: string;
-  category?: string
+  category?: string;
 }

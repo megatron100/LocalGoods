@@ -1,15 +1,17 @@
 <ng-container [formGroup]="form">
   <mat-card class="form-container">
-    <mat-card-title style='font-size: 16px'>Address Details</mat-card-title>
+    <mat-card-title style="font-size: 16px">Address Details</mat-card-title>
 
     <!-- UserAddress -->
-    <mat-form-field color='accent'>
+    <mat-form-field color="accent">
       <mat-label>Country</mat-label>
       <mat-select
         formControlName="country"
         (valueChange)="countryValueChange($event)"
       >
-        <mat-option *ngFor="let value of countries" [value]="value">{{value | uppercase}}</mat-option>
+        <mat-option *ngFor="let value of countries" [value]="value">{{
+          value | uppercase
+        }}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.hasError('required', 'country')">
         This field is required!
@@ -18,13 +20,15 @@
     <!-- /UserAddress -->
 
     <!-- Area -->
-    <mat-form-field color='accent'>
+    <mat-form-field color="accent">
       <mat-label>State</mat-label>
       <mat-select
         formControlName="area"
         (valueChange)="stateValueChange($event)"
       >
-        <mat-option *ngFor="let value of states" [value]="value">{{value | uppercase}}</mat-option>
+        <mat-option *ngFor="let value of states" [value]="value">{{
+          value | uppercase
+        }}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.hasError('required', 'area')">
         This field is required!
@@ -33,12 +37,12 @@
     <!-- /Area -->
 
     <!-- City -->
-    <mat-form-field color='accent'>
+    <mat-form-field color="accent">
       <mat-label>City</mat-label>
-      <mat-select
-        formControlName="city"
-      >
-        <mat-option *ngFor="let value of cities" [value]="value">{{value | uppercase}}</mat-option>
+      <mat-select formControlName="city">
+        <mat-option *ngFor="let value of cities" [value]="value">{{
+          value | uppercase
+        }}</mat-option>
       </mat-select>
       <mat-error *ngIf="form.hasError('required', 'city')">
         This field is required!
@@ -47,9 +51,14 @@
     <!-- /City -->
 
     <!-- Post code -->
-    <mat-form-field color='accent'>
+    <mat-form-field color="accent">
       <mat-label>Post Code</mat-label>
-      <input type='text' matInput placeholder="Ex. 12345" formControlName="postCode"/>
+      <input
+        type="text"
+        matInput
+        placeholder="Ex. 12345"
+        formControlName="postCode"
+      />
       <mat-error *ngIf="form.hasError('required', 'postCode')">
         This field is required!
       </mat-error>

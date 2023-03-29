@@ -1,8 +1,8 @@
-<div class='account'>
+<div class="account">
   <h3>User account {{ user.nickName }}</h3>
 </div>
-<div class='setting-container'>
-  <div class='user-info'>
+<div class="setting-container">
+  <div class="user-info">
     <table class="resp-tab">
       <tr>
         <td>Address</td>
@@ -10,46 +10,56 @@
           <table class="resp-tab">
             <tr>
               <td>Post Code</td>
-              <td>{{ user.address?.pinCode || 'no info' }}</td>
+              <td>{{ user.address?.pinCode || "no info" }}</td>
             </tr>
             <tr>
               <td>UserAddress</td>
-              <td>{{ user.address?.country || 'no info' }}</td>
+              <td>{{ user.address?.country || "no info" }}</td>
             </tr>
             <tr>
               <td>City</td>
-              <td>{{ user.address?.city || 'no info' }}</td>
+              <td>{{ user.address?.city || "no info" }}</td>
             </tr>
             <tr>
               <td>Area</td>
-              <td>{{ user.address?.area || 'no info' }}</td>
+              <td>{{ user.address?.area || "no info" }}</td>
             </tr>
-
           </table>
         </td>
       </tr>
       <tr *ngIf="user.role === 'seller'">
         <td>Certification</td>
-        <td>{{ user.certification ? 'yes' : 'no' }}</td>
+        <td>{{ user.certification ? "yes" : "no" }}</td>
       </tr>
       <tr>
         <td>Email</td>
-        <td>{{ user.email || 'no info' }}</td>
+        <td>{{ user.email || "no info" }}</td>
       </tr>
       <tr>
         <td>Name</td>
-        <td>{{user.nickName || 'no info'}}</td>
+        <td>{{ user.nickName || "no info" }}</td>
       </tr>
       <tr>
         <td>Mobile</td>
-        <td>{{ user.mobile || 'no info'}}</td>
+        <td>{{ user.mobile || "no info" }}</td>
       </tr>
     </table>
     <div class="panel-footer">
-      <button mat-raised-button (click)="openUserEditDialog()" type="button" color="accent">
+      <button
+        mat-raised-button
+        (click)="openUserEditDialog()"
+        type="button"
+        color="accent"
+      >
         Update
       </button>
-      <button *ngIf="user.role === 'seller'" mat-raised-button (click)="openAddCertificateDialog()" type="button" color="accent">
+      <button
+        *ngIf="user.role === 'seller'"
+        mat-raised-button
+        (click)="openAddCertificateDialog()"
+        type="button"
+        color="accent"
+      >
         Add Certificate
       </button>
     </div>
@@ -58,9 +68,19 @@
     <div class="panel-heading">Primary password</div>
     <div class="panel-body">
       <div class="alert alert-info">
-        <span>Your primary password can be changed by pressing the button below</span>
+        <span
+          >Your primary password can be changed by pressing the button
+          below</span
+        >
       </div>
-      <button mat-raised-button type="button" color="accent" (click)="openPassChangeDialog()">Change the primary password</button>
+      <button
+        mat-raised-button
+        type="button"
+        color="accent"
+        (click)="openPassChangeDialog()"
+      >
+        Change the primary password
+      </button>
     </div>
   </div>
 </div>

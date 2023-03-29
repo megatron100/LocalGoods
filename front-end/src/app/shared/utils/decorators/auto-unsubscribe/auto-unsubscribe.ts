@@ -1,12 +1,12 @@
 // @ts-nocheck
 
-import {markAsDecorated} from "./internals";
+import { markAsDecorated } from './internals';
 import {
   InjectableType,
   ɵComponentType as ComponentType,
   ɵDirectiveType as DirectiveType,
-} from "@angular/core";
-import {Subscription} from "rxjs";
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 
 const SUBSCRIPTIONS_KEY = 'subscription';
 
@@ -16,7 +16,7 @@ export function AutoUnsubscribe(
   return (type: any): void => {
     decorateProviderDirectiveOrComponent(type, subscriptionsKey);
     markAsDecorated(type);
-  }
+  };
 }
 
 function decorateProviderDirectiveOrComponent<T>(
@@ -39,7 +39,7 @@ function decorateNgOnDestroy(ngOnDestroy: any, subscriptionsKey: any) {
     // Check if subscriptions exists
     if (this[subscriptionsKey] instanceof Subscription) {
       this[subscriptionsKey].unsubscribe();
-      console.log('unsubscribed')
+      console.log('unsubscribed');
     }
   };
 }

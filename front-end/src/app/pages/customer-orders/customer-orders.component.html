@@ -1,18 +1,23 @@
 <div>
-  <h1> Order List</h1>
-  <div *ngIf='orders'>
+  <h1>Order List</h1>
+  <div *ngIf="orders">
     <div *ngFor="let order of orders">
-      <div class="card" style="  text-align: center;" >
-        <h4>Order ID: #{{order?.id}}</h4>
+      <div class="card" style="text-align: center">
+        <h4>Order ID: #{{ order?.id }}</h4>
         <div class="card-body">
           <div class="card-img-top">
-            <img src="{{order?.orderItem.imageLink}}" alt="image" width="100px" height="100px">
+            <img
+              src="{{ order?.orderItem.imageLink }}"
+              alt="image"
+              width="100px"
+              height="100px"
+            />
           </div>
           <div>
-            <h3 class="card-title">{{order?.orderItem.productTitle}}</h3>
+            <h3 class="card-title">{{ order?.orderItem.productTitle }}</h3>
           </div>
-          <h4 class="card-text ">Order Status: {{order?.orderStatus}}</h4>
-          <h4 class="card-text">Quantity: {{order?.quantity}}</h4>
+          <h4 class="card-text">Order Status: {{ order?.orderStatus }}</h4>
+          <h4 class="card-text">Quantity: {{ order?.quantity }}</h4>
         </div>
       </div>
     </div>

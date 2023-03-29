@@ -13,7 +13,7 @@
 
     .header {
       @include header-bg;
-      color: #FFFFFF;
+      color: #ffffff;
       height: 60px;
       padding: 10px 20px;
       display: flex;
@@ -67,7 +67,6 @@
   }
 }
 
-
 @media (max-width: 768px) {
   .contacts-wrapper {
     margin-top: 40px;
@@ -93,7 +92,6 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .contacts-wrapper {
-
     .content {
       width: 80%;
     }
@@ -102,7 +100,6 @@
 
 @media (min-width: 1024px) and (max-width: 1280px) {
   .contacts-wrapper {
-
     .content {
       width: 60%;
     }
@@ -111,7 +108,6 @@
 
 @media (min-width: 1280px) and (max-width: 1920px) {
   .contacts-wrapper {
-
     .content {
       width: 45%;
     }
