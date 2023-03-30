@@ -1,20 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Control} from "../core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {FormValidator} from "../validators";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import { Control } from '../core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormValidator } from '../validators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormService {
-
-  constructor(
-    private formValidator: FormValidator,
-    private http: HttpClient,
-  ) {
-  }
+  constructor(private formValidator: FormValidator, private http: HttpClient) {}
 
   createForm(controls: Control[], form: FormGroup) {
     for (const control of controls) {
@@ -54,17 +49,15 @@ export class FormService {
       form?.addControl(
         control?.name,
         new FormControl(control?.value, validatorsToAdd)
-      )
+      );
     }
   }
 
   getRegisterJson(): Observable<any> {
-    return this.http
-      .get('/assets/form-json-templates/register.json')
+    return this.http.get('/assets/form-json-templates/register.json');
   }
 
   getLoginJson(): Observable<any> {
-    return this.http
-      .get('/assets/form-json-templates/login.json')
+    return this.http.get('/assets/form-json-templates/login.json');
   }
-  }
+}

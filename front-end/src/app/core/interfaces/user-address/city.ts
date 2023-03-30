@@ -1,5 +1,5 @@
 export interface City {
-  error: boolean
-  msg: string
-  data: string[]
+  error: boolean;
+  msg: string;
+  data: string[];
 }

@@ -1,5 +1,5 @@
 export interface FormData {
-  controls: Control[]
+  controls: Control[];
 }
 
 export interface Control {

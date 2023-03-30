@@ -1,7 +1,5 @@
-@import "src/styles/constants/index";
+@import 'src/styles/constants/index';
 
-@mixin header-bg(
-  $background: $green-gradient,
-) {
+@mixin header-bg($background: $green-gradient) {
   background: $background;
 }

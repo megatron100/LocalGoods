@@ -1,6 +1,6 @@
 {
   "controls": [
-       {
+    {
       "name": "email",
       "label": "Email",
       "value": "",

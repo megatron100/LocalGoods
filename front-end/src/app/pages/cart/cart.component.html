@@ -1,30 +1,31 @@
 <div class="product-section">
-    <div class="item-section" *ngFor="let item of cart">
-      <div class="item-element" *ngIf="item.quantity > 0">
-          <app-product-card [product]='item.product'>
-            <div class="quantity-section">
-              <p class="quantity-text">{{item.quantity}}</p>
-              <button (click)="plusOne(item.product.id)">+</button>
-              <button (click)="minusOne(item.product.id)">-</button>
-            </div>
-            <div class="remove-item">
-              <button (click)="removeItem(item.id)">Remove</button>
-            </div>
-          </app-product-card>
-      </div>
+  <div class="item-section" *ngFor="let item of cart">
+    <div class="item-element" *ngIf="item.quantity > 0">
+      <app-product-card [product]="item.product">
+        <div class="quantity-section">
+          <p class="quantity-text">{{ item.quantity }}</p>
+          <button (click)="plusOne(item.product.id)">+</button>
+          <button (click)="minusOne(item.product.id)">-</button>
+        </div>
+        <div class="remove-item">
+          <button (click)="removeItem(item.id)">Remove</button>
+        </div>
+      </app-product-card>
     </div>
-    <div class="price-section">
-      <p class="price">Total Price: <span>${{calculatePrice()}}</span></p>
-     
-    </div>
+  </div>
+  <div class="price-section">
+    <p class="price">
+      Total Price: <span>${{ calculatePrice() }}</span>
+    </p>
+  </div>
 
-    <div class="price-section">
-      <p class="price">Total Quantity: <span>{{calculateQuantity()}}</span></p>
-     
-    </div>
-    <div class="cart-actions">
-      <button class="cart-buy" (click)="buyProducts()">Buy</button>
-      <button class="cart-clear" (click)="clearCart()">Clear Cart</button>
-    </div>
-    
+  <div class="price-section">
+    <p class="price">
+      Total Quantity: <span>{{ calculateQuantity() }}</span>
+    </p>
+  </div>
+  <div class="cart-actions">
+    <button class="cart-buy" (click)="buyProducts()">Buy</button>
+    <button class="cart-clear" (click)="clearCart()">Clear Cart</button>
+  </div>
 </div>

@@ -1,0 +1,7 @@
+node_modules
+dist
+src/app/utils
+src/single-spa
+test.helpers.ts
+auto-unsubscribe.ts
+karma.conf.js

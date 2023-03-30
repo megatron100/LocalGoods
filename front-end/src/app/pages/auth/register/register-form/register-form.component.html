@@ -1,72 +1,94 @@
-<div class='container'>
-  <div class='form-header'>
+<div class="container">
+  <div class="form-header">
     <h2 class="form-header__title">Sign Up</h2>
     <span class="form-header__text">
-  Have an account?
-        <a routerLink="/login" class="form-header__link">Sign In</a>
+      Have an account?
+      <a routerLink="/login" class="form-header__link">Sign In</a>
     </span>
   </div>
-  <form class='form' [formGroup]='registerForm' (ngSubmit)="onSubmit()">
+  <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <mat-card>
-      <mat-form-field *ngFor=" let control of jsonFormData?.controls" color='accent' appearance="outline">
-        <mat-label>{{control.label}}</mat-label>
-        <input *ngIf="['text', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)"
-               [type]='control.type'
-               [id]='control.name'
-               [formControlName]='control.name'
-               [value]='control.value'
-               matInput
-        >
+      <mat-form-field
+        *ngFor="let control of jsonFormData?.controls"
+        color="accent"
+        appearance="outline"
+      >
+        <mat-label>{{ control.label }}</mat-label>
+        <input
+          *ngIf="
+            ['text', 'email', 'number', 'search', 'tel', 'url'].includes(
+              control.type
+            )
+          "
+          [type]="control.type"
+          [id]="control.name"
+          [formControlName]="control.name"
+          [value]="control.value"
+          matInput
+        />
         <div class="input" *ngIf="control.type === 'password'">
-          <input *ngIf="control.name === 'password'"
-                 [type]="isPassIsVisible ? 'text' : 'password'"
-                 [id]='control.name'
-                 [formControlName]='control.name'
-                 [value]='control.value'
-                 autocomplete="on"
-                 matInput
-          >
-          <input *ngIf="control.name === 'rePassword'"
-                 [type]="isRePassIsVisible ? 'text' : 'password'"
-                 [id]='control.name'
-                 [formControlName]='control.name'
-                 [value]='control.value'
-                 autocomplete="on"
-                 matInput
-          >
-          <i *ngIf="control.name === 'password'"
-             class="pass-visibility"
-             (click)="onTogglePassVisible()"
-             [ngClass]="
-                  !isPassIsVisible
-                    ? 'icon-pass-visible'
-                    : 'icon-pass-invisible'
-                "
+          <input
+            *ngIf="control.name === 'password'"
+            [type]="isPassIsVisible ? 'text' : 'password'"
+            [id]="control.name"
+            [formControlName]="control.name"
+            [value]="control.value"
+            autocomplete="on"
+            matInput
+          />
+          <input
+            *ngIf="control.name === 'rePassword'"
+            [type]="isRePassIsVisible ? 'text' : 'password'"
+            [id]="control.name"
+            [formControlName]="control.name"
+            [value]="control.value"
+            autocomplete="on"
+            matInput
+          />
+          <i
+            *ngIf="control.name === 'password'"
+            class="pass-visibility"
+            (click)="onTogglePassVisible()"
+            [ngClass]="
+              !isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+            "
           ></i>
-          <i *ngIf="control.name === 'rePassword'"
-             class="pass-visibility"
-             (click)="onToggleRePassVisible()"
-             [ngClass]="
-                  !isRePassIsVisible
-                    ? 'icon-pass-visible'
-                    : 'icon-pass-invisible'
-                "
+          <i
+            *ngIf="control.name === 'rePassword'"
+            class="pass-visibility"
+            (click)="onToggleRePassVisible()"
+            [ngClass]="
+              !isRePassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+            "
           ></i>
         </div>
-        <mat-select *ngIf="control.type === 'select'"
-                    [formControlName]="control.name"
+        <mat-select
+          *ngIf="control.type === 'select'"
+          [formControlName]="control.name"
         >
-          <mat-option *ngFor="let value of control.options.value" [value]="value">{{value | uppercase}}</mat-option>
+          <mat-option
+            *ngFor="let value of control.options.value"
+            [value]="value"
+            >{{ value | uppercase }}</mat-option
+          >
         </mat-select>
-        <mat-error *ngIf="getError(control.name)?.invalid && getError(control.name)?.touched">
+        <mat-error
+          *ngIf="
+            getError(control.name)?.invalid && getError(control.name)?.touched
+          "
+        >
           <mat-error *ngIf="getError(control.name)?.hasError('required')">
-            {{_errorMessage.required}}
+            {{ _errorMessage.required }}
+          </mat-error>
+          <mat-error *ngIf="getError(control.name)?.hasError('minlength')">
+            {{ _errorMessage.minTextInputLength }}
           </mat-error>
           <mat-error
-            *ngIf="getError(control.name)?.hasError('minlength')"
-          > {{ _errorMessage.minTextInputLength }}
-          </mat-error>
-          <mat-error *ngIf="getError(control.name)?.hasError('message') && !getError(control.name)?.hasError('minlength')">
+            *ngIf="
+              getError(control.name)?.hasError('message') &&
+              !getError(control.name)?.hasError('minlength')
+            "
+          >
             {{registerForm.controls[control.name].errors?.['message']}}
           </mat-error>
         </mat-error>
@@ -75,9 +97,15 @@
         Passwords do not match
       </mat-error>
       <div>
-        <button [disabled]='!registerForm?.valid' mat-raised-button type='submit' color="accent">Register</button>
+        <button
+          [disabled]="!registerForm?.valid"
+          mat-raised-button
+          type="submit"
+          color="accent"
+        >
+          Register
+        </button>
       </div>
     </mat-card>
   </form>
 </div>
-

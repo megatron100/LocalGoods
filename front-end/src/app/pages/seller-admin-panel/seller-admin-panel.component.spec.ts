@@ -8,9 +8,8 @@ describe('SellerAdminPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SellerAdminPanelComponent ]
-    })
-    .compileComponents();
+      declarations: [SellerAdminPanelComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SellerAdminPanelComponent);
     component = fixture.componentInstance;

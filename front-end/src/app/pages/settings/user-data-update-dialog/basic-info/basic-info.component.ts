@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup, FormGroupDirective} from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-info',
@@ -7,15 +7,13 @@ import {FormGroup, FormGroupDirective} from "@angular/forms";
   styleUrls: ['./basic-info.component.scss'],
 })
 export class BasicInfoComponent implements OnInit {
-
   @Input() formGroupName!: string;
-  @Input() selectedDialCode!: string
+  @Input() selectedDialCode!: string;
 
-  form!: FormGroup
-  constructor(private rootFormGroup: FormGroupDirective) { }
+  form!: FormGroup;
+  constructor(private rootFormGroup: FormGroupDirective) {}
 
   ngOnInit(): void {
     this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
   }
-
 }

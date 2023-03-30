@@ -1,5 +1,11 @@
-export const EMAIL_PATTERN = '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$';
-export const PRODUCT_SORT_VALUES = ['ASC Name', 'DESC Name', 'ASC Price', 'DSC Price'];
+export const EMAIL_PATTERN =
+  '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$';
+export const PRODUCT_SORT_VALUES = [
+  'ASC Name',
+  'DESC Name',
+  'ASC Price',
+  'DSC Price',
+];
 export const API = 'https://localgoods1.azurewebsites.net/';
 export const API_PATH = 'api';
 export const API_PATH_AUTH = 'api/Auth';
@@ -25,5 +31,4 @@ export const USER_ROLES = ['seller', 'customer'];
 // Saurabh's edit
 export const ORDER_CONFIRM_PATH = 'GetPendingOrders';
 export const Customer_Orders = 'GetOrders';
-export const Local_api="https://localhost:7292/"
-
+export const Local_api = 'https://localhost:7292/';

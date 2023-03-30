@@ -1,58 +1,81 @@
-<div class='container'>
-  <div class='form-header'>
+<div class="container">
+  <div class="form-header">
     <h2 class="form-header__title">Sign In</h2>
     <span class="form-header__text">
-  New user?
-        <a routerLink="/register" class="form-header__link">Create an account</a>
+      New user?
+      <a routerLink="/register" class="form-header__link">Create an account</a>
     </span>
   </div>
-  <form class='form' [formGroup]='loginForm' (ngSubmit)="onSubmit()">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <mat-card>
-      <mat-form-field *ngFor=" let control of jsonFormData?.controls" color='accent' appearance="outline">
-        <mat-label>{{control.label}}</mat-label>
-        <input *ngIf="['text', 'email', 'number', 'search', 'tel', 'url'].includes(control.type)"
-               [type]='control.type'
-               [id]='control.name'
-               [formControlName]='control.name'
-               [value]='control.value'
-               matInput
-        >
+      <mat-form-field
+        *ngFor="let control of jsonFormData?.controls"
+        color="accent"
+        appearance="outline"
+      >
+        <mat-label>{{ control.label }}</mat-label>
+        <input
+          *ngIf="
+            ['text', 'email', 'number', 'search', 'tel', 'url'].includes(
+              control.type
+            )
+          "
+          [type]="control.type"
+          [id]="control.name"
+          [formControlName]="control.name"
+          [value]="control.value"
+          matInput
+        />
         <div class="input" *ngIf="control.type === 'password'">
-          <input *ngIf="control.name === 'password'"
-                 [type]="isPassIsVisible ? 'text' : 'password'"
-                 [id]='control.name'
-                 [formControlName]='control.name'
-                 [value]='control.value'
-                 autocomplete="on"
-                 matInput
-          >
-          <i *ngIf="control.name === 'password'"
-             class="pass-visibility"
-             (click)="onTogglePassVisible()"
-             [ngClass]="
-                  !isPassIsVisible
-                    ? 'icon-pass-visible'
-                    : 'icon-pass-invisible'
-                "
+          <input
+            *ngIf="control.name === 'password'"
+            [type]="isPassIsVisible ? 'text' : 'password'"
+            [id]="control.name"
+            [formControlName]="control.name"
+            [value]="control.value"
+            autocomplete="on"
+            matInput
+          />
+          <i
+            *ngIf="control.name === 'password'"
+            class="pass-visibility"
+            (click)="onTogglePassVisible()"
+            [ngClass]="
+              !isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+            "
           ></i>
         </div>
-        <mat-error *ngIf="getError(control.name)?.invalid && getError(control.name)?.touched">
+        <mat-error
+          *ngIf="
+            getError(control.name)?.invalid && getError(control.name)?.touched
+          "
+        >
           <mat-error *ngIf="getError(control.name)?.hasError('required')">
-            {{_errorMessage.required}}
+            {{ _errorMessage.required }}
+          </mat-error>
+          <mat-error *ngIf="getError(control.name)?.hasError('minlength')">
+            {{ _errorMessage.minlength }}
           </mat-error>
           <mat-error
-            *ngIf="getError(control.name)?.hasError('minlength')"
-          > {{ _errorMessage.minlength }}
-          </mat-error>
-          <mat-error *ngIf="getError(control.name)?.hasError('message') && !getError(control.name)?.hasError('minlength')">
+            *ngIf="
+              getError(control.name)?.hasError('message') &&
+              !getError(control.name)?.hasError('minlength')
+            "
+          >
             {{loginForm.controls[control.name].errors?.['message']}}
           </mat-error>
         </mat-error>
       </mat-form-field>
       <div>
-        <button [disabled]='!loginForm?.valid' mat-raised-button type='submit' color="accent">Login</button>
+        <button
+          [disabled]="!loginForm?.valid"
+          mat-raised-button
+          type="submit"
+          color="accent"
+        >
+          Login
+        </button>
       </div>
     </mat-card>
   </form>
 </div>
-

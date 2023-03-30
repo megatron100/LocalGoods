@@ -18,12 +18,14 @@ export class FormValidator {
   };
 
   private validationMessage = {
-    onlyLatinsNumbersSpecialChars: 'Should contain only Latin letters, numbers and symbols -, _',
+    onlyLatinsNumbersSpecialChars:
+      'Should contain only Latin letters, numbers and symbols -, _',
     onlyLatins: 'Should contain only Latin letters',
     onlyNumbers: 'Should contain only numbers',
     containLink: 'Should contain a link (https://...)',
     email: 'Should be a valid email address',
-    password: 'Should contain only Latin letters, numbers and at least 1 capital letter, 1 small letter and 1 number',
+    password:
+      'Should contain only Latin letters, numbers and at least 1 capital letter, 1 small letter and 1 number',
     dateInFuture: 'Should be time in the future',
   };
 

@@ -1,9 +1,9 @@
 export interface Country {
-  error: boolean
-  msg: string
-  data: CountryName[]
+  error: boolean;
+  msg: string;
+  data: CountryName[];
 }
 
 interface CountryName {
-  name: string,
+  name: string;
 }
