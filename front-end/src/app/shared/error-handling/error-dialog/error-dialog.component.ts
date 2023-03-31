@@ -16,6 +16,6 @@ export class ErrorDialogComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.dialogRef.close();
-    }, 3000);
+    }, 4000);
   }
 }

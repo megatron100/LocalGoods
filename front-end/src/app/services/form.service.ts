@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Control } from '../core';
+import { Control, FormData } from '../core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormValidator } from '../validators';
 import { HttpClient } from '@angular/common/http';
@@ -53,11 +53,17 @@ export class FormService {
     }
   }
 
-  getRegisterJson(): Observable<any> {
-    return this.http.get('/assets/form-json-templates/register.json');
+  getRegisterJson(): Observable<FormData> {
+    return this.http.get<FormData>('/assets/form-json-templates/register.json');
   }
 
-  getLoginJson(): Observable<any> {
-    return this.http.get('/assets/form-json-templates/login.json');
+  getLoginJson(): Observable<FormData> {
+    return this.http.get<FormData>('/assets/form-json-templates/login.json');
+  }
+
+  getUpdatePasswordJson(): Observable<FormData> {
+    return this.http.get<FormData>(
+      '/assets/form-json-templates/update-password.json'
+    );
   }
 }

@@ -12,6 +12,7 @@ export interface Control {
   required: boolean;
   validators: Validators;
   options: Options;
+  isPassIsVisible: boolean;
 }
 
 interface Validators {

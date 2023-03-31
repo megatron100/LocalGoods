@@ -9,7 +9,9 @@ import * as fromShop from '../../store';
 import { UserState } from '../../store/user.reducer';
 import { UserService } from '../../services/user.service';
 import { AddCertificateDialogComponent } from './add-certificate-dialog/add-certificate-dialog.component';
+import { AutoUnsubscribe } from '../../shared/utils/decorators';
 
+@AutoUnsubscribe('subscription')
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -18,6 +20,7 @@ import { AddCertificateDialogComponent } from './add-certificate-dialog/add-cert
 export class SettingsComponent implements OnInit {
   private userSub!: Subscription;
   user!: User;
+  subscription = new Subscription();
 
   constructor(
     public dialog: MatDialog,
@@ -27,14 +30,16 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.updateUser();
-    this.userSub = this.store
-      .select('userData')
-      .subscribe((state: UserState) => {
-        if (state.user) {
-          state.user;
-          this.user = state.user;
-        }
-      });
+    this.subscription.add(
+      (this.userSub = this.store
+        .select('userData')
+        .subscribe((state: UserState) => {
+          if (state.user) {
+            state.user;
+            this.user = state.user;
+          }
+        }))
+    );
   }
 
   openUserEditDialog() {

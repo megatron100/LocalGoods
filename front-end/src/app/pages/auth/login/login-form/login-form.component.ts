@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { AuthService, FormData } from '../../../../core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormValidator } from '../../../../validators';
@@ -10,6 +16,7 @@ import { FormService } from '../../../../services/form.service';
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent implements OnChanges {
   loginForm: FormGroup = new FormGroup({});
@@ -28,7 +35,6 @@ export class LoginFormComponent implements OnChanges {
     if (!changes['jsonFormData'].firstChange) {
       this.formService.createForm(this.jsonFormData.controls, this.loginForm);
     }
-    console.log('FC', this.loginForm);
   }
 
   onSubmit() {

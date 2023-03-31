@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { SettingsService } from '../../../../services/settings.service';
 import { map } from 'rxjs';
@@ -10,20 +17,21 @@ import { map } from 'rxjs';
 })
 export class AddressComponent implements OnInit {
   @Input() formGroupName!: string;
-  countries: any[] = [];
-  states: any[] = [];
-  cities: any[] = [];
+  countries: string[] = [];
+  states: string[] = [];
+  cities: string[] = [];
   @Input() country!: string;
   @Input() state!: string;
   @Input() mobile!: string;
-  @Output() dialCode: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dialCode: EventEmitter<string> = new EventEmitter<string>();
   selectedCountry!: string;
 
   form!: FormGroup;
 
   constructor(
     private rootFormGroup: FormGroupDirective,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private _detector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +54,7 @@ export class AddressComponent implements OnInit {
     this.stateValueChange(this.state);
   }
 
-  countryValueChange(value: any) {
+  countryValueChange(value: string) {
     this.selectedCountry = value;
     this.settingsService
       .getStates({ country: value })
@@ -70,7 +78,8 @@ export class AddressComponent implements OnInit {
     }
   }
 
-  stateValueChange(value: any) {
+  stateValueChange(value: string) {
+    this._detector.detectChanges();
     this.settingsService
       .getCities({ country: this.selectedCountry, state: value })
       .pipe(

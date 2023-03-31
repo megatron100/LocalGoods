@@ -15,6 +15,7 @@
       "label": "Password",
       "value": "",
       "type": "password",
+      "isPassIsVisible": false,
       "validators": {
         "required": true,
         "minLength": 8,
