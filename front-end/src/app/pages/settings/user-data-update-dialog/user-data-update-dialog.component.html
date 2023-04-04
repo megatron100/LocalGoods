@@ -3,7 +3,7 @@
   <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <app-basic-info
       formGroupName="basicInfo"
-      [selectedDialCode]="mobile"
+      [user]="user"
     ></app-basic-info>
     <hr />
     <br />
@@ -11,9 +11,7 @@
     <hr />
     <app-address
       formGroupName="address"
-      [country]="country"
-      [state]="area"
-      [mobile]="mobile"
+      [user]="user"
       (dialCode)="setDialCode($event)"
     ></app-address>
   </form>

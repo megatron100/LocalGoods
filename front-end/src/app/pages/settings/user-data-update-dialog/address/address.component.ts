@@ -1,7 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { SettingsService } from '../../../../services/settings.service';
 import { map } from 'rxjs';
+import { User } from '../../../auth/models/user.model';
 
 @Component({
   selector: 'app-address',
@@ -9,21 +17,20 @@ import { map } from 'rxjs';
   styleUrls: ['./address.component.scss'],
 })
 export class AddressComponent implements OnInit {
+  countries: string[] = [];
+  states: string[] = [];
+  cities: string[] = [];
   @Input() formGroupName!: string;
-  countries: any[] = [];
-  states: any[] = [];
-  cities: any[] = [];
-  @Input() country!: string;
-  @Input() state!: string;
-  @Input() mobile!: string;
-  @Output() dialCode: EventEmitter<any> = new EventEmitter<any>();
-  selectedCountry!: string;
+  @Input() user!: User;
+  @Output() dialCode: EventEmitter<string> = new EventEmitter<string>();
+  selectedCountry!: string | undefined;
 
   form!: FormGroup;
 
   constructor(
     private rootFormGroup: FormGroupDirective,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private _detector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,11 +49,13 @@ export class AddressComponent implements OnInit {
 
     this.form = this.rootFormGroup.control.get(this.formGroupName) as FormGroup;
 
-    this.countryValueChange(this.country);
-    this.stateValueChange(this.state);
+    if (this.user) {
+      this.countryValueChange(this.user.address?.country);
+      this.stateValueChange(this.user.address?.area);
+    }
   }
 
-  countryValueChange(value: any) {
+  countryValueChange(value: string | undefined) {
     this.selectedCountry = value;
     this.settingsService
       .getStates({ country: value })
@@ -61,7 +70,7 @@ export class AddressComponent implements OnInit {
         this.states = value;
       });
 
-    if (value !== this.country) {
+    if (value !== this.user.address?.country) {
       this.settingsService.getDialCode({ country: value }).subscribe({
         next: ({ data }) => {
           this.dialCode.emit(data.dial_code);
@@ -70,7 +79,8 @@ export class AddressComponent implements OnInit {
     }
   }
 
-  stateValueChange(value: any) {
+  stateValueChange(value: string | undefined) {
+    this._detector.detectChanges();
     this.settingsService
       .getCities({ country: this.selectedCountry, state: value })
       .pipe(

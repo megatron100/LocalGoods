@@ -28,17 +28,7 @@
         />
         <div class="input" *ngIf="control.type === 'password'">
           <input
-            *ngIf="control.name === 'password'"
-            [type]="isPassIsVisible ? 'text' : 'password'"
-            [id]="control.name"
-            [formControlName]="control.name"
-            [value]="control.value"
-            autocomplete="on"
-            matInput
-          />
-          <input
-            *ngIf="control.name === 'rePassword'"
-            [type]="isRePassIsVisible ? 'text' : 'password'"
+            [type]="control.isPassIsVisible ? 'text' : 'password'"
             [id]="control.name"
             [formControlName]="control.name"
             [value]="control.value"
@@ -46,19 +36,11 @@
             matInput
           />
           <i
-            *ngIf="control.name === 'password'"
+            *ngIf="control.type === 'password'"
             class="pass-visibility"
-            (click)="onTogglePassVisible()"
+            (click)="onTogglePassVisible(control.name)"
             [ngClass]="
-              !isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
-            "
-          ></i>
-          <i
-            *ngIf="control.name === 'rePassword'"
-            class="pass-visibility"
-            (click)="onToggleRePassVisible()"
-            [ngClass]="
-              !isRePassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+              !control.isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
             "
           ></i>
         </div>

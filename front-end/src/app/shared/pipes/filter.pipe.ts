@@ -6,8 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
   transform(products: any[], category: string): any[] {
     return products.filter((product) => {
-      console.log(products);
-
       return (
         product.productCategory.productCategoryName.toLowerCase() ===
         category.toLowerCase()

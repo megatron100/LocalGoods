@@ -26,8 +26,6 @@ export class RegisterFormComponent implements OnChanges {
       validators: CustomValidators.checkPasswords('password', 'rePassword'),
     }
   );
-  isPassIsVisible = false;
-  isRePassIsVisible = false;
 
   @Input() jsonFormData!: FormData;
 
@@ -76,11 +74,11 @@ export class RegisterFormComponent implements OnChanges {
     return this.formValidator.errorMessage;
   }
 
-  onTogglePassVisible() {
-    this.isPassIsVisible = !this.isPassIsVisible;
-  }
-
-  onToggleRePassVisible() {
-    this.isRePassIsVisible = !this.isRePassIsVisible;
+  onTogglePassVisible(controlName: string) {
+    for (const control of this.jsonFormData.controls) {
+      control.name === controlName
+        ? (control.isPassIsVisible = !control.isPassIsVisible)
+        : control.isPassIsVisible;
+    }
   }
 }

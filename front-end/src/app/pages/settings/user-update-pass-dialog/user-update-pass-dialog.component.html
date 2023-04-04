@@ -2,49 +2,62 @@
 <div class="container">
   <form class="form" [formGroup]="passForm" (ngSubmit)="onSubmit()">
     <mat-card class="form-container">
-      <mat-form-field color="accent">
-        <mat-label>Current password</mat-label>
+      <mat-form-field color="accent" *ngFor="let control of formData?.controls">
+        <mat-label>{{control.label}}</mat-label>
         <input
-          type="password"
+          *ngIf="
+            ['text', 'email', 'number', 'search', 'tel', 'url'].includes(
+              control.type
+            )
+          "
+          [type]="control.type"
+          [id]="control.name"
+          [formControlName]="control.name"
+          [value]="control.value"
           matInput
-          placeholder="Enter current password"
-          formControlName="existingPassword"
         />
-        <mat-error *ngIf="passForm.hasError('required', 'existingPassword')">
-          Please enter your new password
-        </mat-error>
-        <mat-error *ngIf="passForm.hasError('minlength', 'existingPassword')">
-          Password should have 6 characters minimum!
+        <div class="input" *ngIf="control.type === 'password'">
+          <input
+            [type]="control.isPassIsVisible ? 'text' : 'password'"
+            [id]="control.name"
+            [formControlName]="control.name"
+            [value]="control.value"
+            autocomplete="on"
+            matInput
+          />
+          <i
+            *ngIf="control.type === 'password'"
+            class="pass-visibility"
+            (click)="onTogglePassVisible(control.name)"
+            [ngClass]="
+              !control.isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+            "
+          ></i>
+        </div>
+        <mat-error
+          *ngIf="
+            getError(control.name)?.invalid && getError(control.name)?.touched
+          "
+        >
+          <mat-error *ngIf="getError(control.name)?.hasError('required')">
+            {{ _errorMessage.required }}
+          </mat-error>
+          <mat-error *ngIf="getError(control.name)?.hasError('minlength')">
+            {{ _errorMessage.minlength }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              getError(control.name)?.hasError('message') &&
+              !getError(control.name)?.hasError('minlength')
+            "
+          >
+            {{passForm.controls[control.name].errors?.['message']}}
+          </mat-error>
         </mat-error>
       </mat-form-field>
-      <mat-form-field color="accent">
-        <mat-label>New password</mat-label>
-        <input
-          type="password"
-          matInput
-          placeholder="Enter new password"
-          formControlName="newPassword"
-        />
-        <mat-error *ngIf="passForm.hasError('required', 'newPassword')">
-          Please enter your new password
-        </mat-error>
-        <mat-error *ngIf="passForm.hasError('minlength', 'newPassword')">
-          Password should have 6 characters minimum!
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field color="accent">
-        <mat-label>New password again</mat-label>
-        <input
-          type="password"
-          matInput
-          placeholder="Enter new password again"
-          formControlName="passConfirm"
-          [errorStateMatcher]="matcher"
-        />
-        <mat-error *ngIf="passForm.hasError('notSame')">
-          Passwords do not match
-        </mat-error>
-      </mat-form-field>
+      <mat-error *ngIf="passForm.hasError('notSame')">
+        Passwords do not match
+      </mat-error>
     </mat-card>
   </form>
 </div>

@@ -7,8 +7,6 @@ export class FormValidator {
   readonly minPasswordLength = 8;
   readonly minTextFieldLength = 3;
 
-  readonly minProjectIdLength = 8;
-
   readonly errorMessage = {
     required: 'Please fill in this field',
     minlength: `Must be at least ${this.minPasswordLength} characters`,
@@ -26,7 +24,6 @@ export class FormValidator {
     email: 'Should be a valid email address',
     password:
       'Should contain only Latin letters, numbers and at least 1 capital letter, 1 small letter and 1 number',
-    dateInFuture: 'Should be time in the future',
   };
 
   private pattern = {

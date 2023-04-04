@@ -26,6 +26,7 @@
       "label": "Password",
       "value": "",
       "type": "password",
+      "isPassIsVisible": false,
       "validators": {
         "required": true,
         "minLength": 8,
@@ -37,6 +38,7 @@
       "label": "Confirm password",
       "value": "",
       "type": "password",
+      "isPassIsVisible": false,
       "validators": {
         "required": true,
         "minLength": 8,

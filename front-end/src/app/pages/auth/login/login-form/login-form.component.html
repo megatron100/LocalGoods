@@ -7,7 +7,7 @@
     </span>
   </div>
   <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-card>
+    <mat-card class="form-container">
       <mat-form-field
         *ngFor="let control of jsonFormData?.controls"
         color="accent"
@@ -66,16 +66,19 @@
           </mat-error>
         </mat-error>
       </mat-form-field>
-      <div>
+      <mat-dialog-actions>
         <button
           [disabled]="!loginForm?.valid"
           mat-raised-button
+          mat-dialog-close="true"
           type="submit"
+          (click)="onSubmit()"
           color="accent"
         >
           Login
         </button>
-      </div>
+      </mat-dialog-actions>
     </mat-card>
   </form>
 </div>
+
