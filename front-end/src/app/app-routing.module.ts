@@ -57,11 +57,13 @@ const routes: Routes = [
       import('./pages/seller-admin-panel/seller-admin-panel.module').then(
         (m) => m.SellerAdminPanelModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'private/settings',
     loadChildren: () =>
       import('./pages/settings/settings.module').then((m) => m.SettingsModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'seller-orders',
@@ -69,6 +71,7 @@ const routes: Routes = [
       import('./pages/orders-confirm/orders-confirm.module').then(
         (m) => m.OrdersConfirmModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'customer-orders',
@@ -76,6 +79,7 @@ const routes: Routes = [
       import('./pages/customer-orders/customer-orders.module').then(
         (m) => m.CustomerOrdersModule
       ),
+    canActivate: [AuthGuard],
   },
 ];
 
