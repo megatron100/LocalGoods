@@ -5,7 +5,10 @@
     <!-- First name -->
     <mat-form-field color="accent">
       <mat-label>First name</mat-label>
-      <input matInput placeholder="Ex. Jane" formControlName="name" />
+      <input
+        matInput
+        placeholder="Ex. Jane"
+        formControlName="name" />
       <mat-error *ngIf="form.hasError('required', 'email')">
         This field is require!
       </mat-error>
@@ -23,7 +26,7 @@
         matInput
         placeholder="Ex. +381111111111"
         formControlName="mobile"
-        value="selectedDialCode"
+        [value]="user.mobile"
       />
       <mat-error *ngIf="form.hasError('required', 'mobile')">
         This field is required!

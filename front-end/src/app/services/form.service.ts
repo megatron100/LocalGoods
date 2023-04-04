@@ -66,4 +66,22 @@ export class FormService {
       '/assets/form-json-templates/update-password.json'
     );
   }
+
+  getUpdateUserDataJson(): Observable<FormData> {
+    return this.http.get<FormData>(
+      '/assets/form-json-templates/update-user-data.json'
+    );
+  }
+
+  getUpdateUserInfoJson(): Observable<FormData> {
+    return this.http.get<FormData>(
+      '/assets/form-json-templates/update-user-info.json'
+    );
+  }
+
+  getUpdateUserAddressJson(): Observable<FormData> {
+    return this.http.get<FormData>(
+      '/assets/form-json-templates/update-user-address.json'
+    );
+  }
 }

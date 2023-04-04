@@ -11,6 +11,7 @@ import { UserService } from '../../../services/user.service';
 import { ErrorDialogComponent } from '../../../shared/error-handling/error-dialog/error-dialog.component';
 import { AuthService } from '../../../core';
 import { AutoUnsubscribe } from '../../../shared/utils/decorators';
+import { User } from '../../auth/models/user.model';
 
 @AutoUnsubscribe('subscription')
 @AutoUnsubscribe('subscription2')
@@ -22,10 +23,8 @@ import { AutoUnsubscribe } from '../../../shared/utils/decorators';
 export class UserDataUpdateDialogComponent implements OnInit {
   userForm: FormGroup = new FormGroup({});
   private subscription = new Subscription();
-  country!: string;
-  area!: string;
+  user!: User;
   city!: string;
-  mobile!: string;
 
   constructor(
     private settingsService: SettingsService,
@@ -40,35 +39,31 @@ export class UserDataUpdateDialogComponent implements OnInit {
   }
 
   private initForm() {
-    let name = '';
-    let postCode = '';
-
     this.subscription.add(
       this.store.select('userData').subscribe((state: UserState) => {
         if (state.user) {
-          name = state.user.nickName;
-          this.mobile = state.user.mobile || '';
-          postCode = state.user.address?.pinCode || '';
-          this.country = state.user.address?.country || '';
-          this.city = state.user.address?.city || '';
-          this.area = state.user.address?.area || '';
+          this.user = state.user;
         }
       })
     );
 
     this.userForm = new FormGroup({
       basicInfo: new FormGroup({
-        name: new FormControl(name, [
+        name: new FormControl(this.user.nickName, [
           Validators.required,
           Validators.minLength(3),
         ]),
-        mobile: new FormControl(this.mobile, [Validators.required]),
+        mobile: new FormControl(this.user.mobile, [Validators.required]),
       }),
       address: new FormGroup({
-        postCode: new FormControl(postCode, [Validators.required]),
-        country: new FormControl(this.country, [Validators.required]),
-        city: new FormControl(this.city, [Validators.required]),
-        area: new FormControl(this.area, [Validators.required]),
+        postCode: new FormControl(this.user.address?.pinCode, [
+          Validators.required,
+        ]),
+        country: new FormControl(this.user.address?.country, [
+          Validators.required,
+        ]),
+        city: new FormControl(this.user.address?.city, [Validators.required]),
+        area: new FormControl(this.user.address?.area, [Validators.required]),
       }),
     });
   }
@@ -92,7 +87,7 @@ export class UserDataUpdateDialogComponent implements OnInit {
     });
   }
 
-  setDialCode($event: any) {
+  setDialCode($event: string) {
     this.userForm.get('basicInfo')?.get('mobile')?.setValue($event);
   }
 }

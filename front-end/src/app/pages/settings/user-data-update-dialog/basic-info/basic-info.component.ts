@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { User } from '../../../auth/models/user.model';
 
 @Component({
   selector: 'app-basic-info',
@@ -8,9 +9,10 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 })
 export class BasicInfoComponent implements OnInit {
   @Input() formGroupName!: string;
-  @Input() selectedDialCode!: string;
+  @Input() user!: User;
 
   form!: FormGroup;
+
   constructor(private rootFormGroup: FormGroupDirective) {}
 
   ngOnInit(): void {

@@ -4,6 +4,6 @@ export interface Country {
   data: CountryName[];
 }
 
-interface CountryName {
+export interface CountryName {
   name: string;
 }
