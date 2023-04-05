@@ -6,7 +6,8 @@ import { ShopState } from '../../store/shop.reducer';
 import { CartService } from 'src/app/services/cart.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart } from '../../core';
+import { AddToCart, IProduct } from '../../core';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
@@ -14,7 +15,7 @@ import { AddToCart } from '../../core';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  products = [];
+  products: IProduct[] = [];
   sortValue = '';
   searchValue = '';
   category = '';
@@ -30,22 +31,34 @@ export class ShopComponent implements OnInit {
     this.getProducts();
 
     this.store.select('sortData').subscribe((state: ShopState) => {
+      console.log('sort', state.sort);
       this.sortValue = state.sort;
     });
 
     this.store.select('sortData').subscribe((state: ShopState) => {
+      console.log('search', state.search);
       this.searchValue = state.search;
     });
     this.store.select('sortData').subscribe((state: ShopState) => {
-      console.log('categ', state.filterCat);
+      console.log('filter', state.filterCat);
       this.category = state.filterCat;
     });
   }
 
-  getProducts(): void {
-    this.shopService.getProducts().subscribe((response) => {
-      this.products = response.data.otherProducts;
-    });
+  private getProducts(): void {
+    this.shopService
+      .getProducts()
+      .pipe(
+        map((response) => {
+          return response.data?.otherProducts;
+        })
+      )
+      .subscribe({
+        next: (products) => {
+          this.products = products as IProduct[];
+        },
+        error: (err) => console.error(err),
+      });
   }
 
   onClickAdd(prod: any) {

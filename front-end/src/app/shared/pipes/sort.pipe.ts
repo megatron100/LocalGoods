@@ -54,6 +54,9 @@ export class SortPipe implements PipeTransform {
           return 0;
         });
         break;
+
+      default:
+        return products.slice();
     }
     return sorted.slice();
   }

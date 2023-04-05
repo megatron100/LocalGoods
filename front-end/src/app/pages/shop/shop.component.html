@@ -1,6 +1,6 @@
-<div>
+<div class="shop">
   <app-sub-menu-header></app-sub-menu-header>
-  <div class="product-section">
+  <div class="shop__product-section">
     <app-product-card
       *ngFor="
         let product of products
@@ -11,7 +11,7 @@
       [product]="product"
     >
       <div class="product-add__container">
-        <!-- <input type="number" name="product-quantity" id="product-quantity-{{product.id}}" value="1"> -->
+<!--         <input type="number" name="product-quantity" id="product-quantity-{{product.id}}" value="1">-->
         <button class="product-add" (click)="onClickAdd(product)">
           Add to Cart <i class="fas fa-shopping-cart"></i>
         </button>

@@ -34,21 +34,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getTopProds() {
-    let dataCont: any[];
-    this.shopService.getProducts().subscribe((res) => {
-      dataCont = res.data.otherProducts;
-      dataCont.sort(function (a, b) {
-        return (
-          parseFloat(b.seller.sellerRating) - parseFloat(a.seller.sellerRating)
-        );
-      });
-      this.topProds = dataCont.splice(0, 3);
-    });
+    // let dataCont: IProduct[];
+    // this.shopService.getProducts().subscribe((res) => {
+    //   dataCont = res.data.otherProducts;
+    //   dataCont.sort(function (a, b) {
+    //     return (
+    //       parseFloat(b.seller.sellerRating) - parseFloat(a.seller.sellerRating)
+    //     );
+    //   });
+    //   this.topProds = dataCont.splice(0, 3);
+    // });
   }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
   }
+
   onClickAdd(prod: any) {
     const quantityWithId = 'product-quantity-' + prod.id;
     const quantity = document.getElementById(

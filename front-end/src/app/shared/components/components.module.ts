@@ -5,7 +5,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { SubMenuHeaderComponent } from './sub-menu-header/sub-menu-header.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,6 +33,7 @@ import { MatSortModule } from '@angular/material/sort';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterLinkActive,
     RouterLink,
     MatToolbarModule,
@@ -70,6 +71,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonToggleModule,
     MatPaginatorModule,
     MatSortModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class ComponentsModule {}

@@ -1,32 +1,28 @@
-<div class="selects">
-  <div class="select">
-    <label for="sort">Sort by: </label>
-    <select name="sort" id="sort" (change)="sortValueChange($event)">
-      <option *ngFor="let sortValue of sortValues" [value]="sortValue">
-        {{ sortValue }}
-      </option>
-    </select>
-  </div>
+<div class="sub-menu">
+  <mat-form-field class="sub-menu__field" color="accent">
+    <mat-label class="sub-menu__label">Sort by:</mat-label>
+    <mat-select class="sub-menu__select" (valueChange)="sortValueChange($event)" >
+      <mat-option class="sub-menu__options" *ngFor="let sortValue of sortValues" [value]="sortValue">
+        {{sortValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  <div class="select">
-    <label for="search">Search: </label>
-    <input
-      type="text"
-      name="search"
-      id="search"
-      (input)="searchChange($event)"
-    />
-  </div>
+  <mat-form-field class="sub-menu__field" color="accent">
+    <mat-label class="sub-menu__label">Search: </mat-label>
+    <input matInput type="text" (input)="searchChange($event)" [(ngModel)]="value">
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
 
-  <div class="select">
-    <label for="filter">Filter by Category:</label>
-    <select name="filter" id="filter" (change)="filterCategory($event)">
-      <option
-        *ngFor="let category of categories"
-        [value]="category.productCategoryName"
-      >
-        {{ category.productCategoryName }}
-      </option>
-    </select>
-  </div>
+  <mat-form-field class="sub-menu__field" color="accent">
+    <mat-label class="sub-menu__label">Filter by Category:</mat-label>
+    <mat-select class="sub-menu__select" (valueChange)="filterCategory($event)">
+      <mat-option class="sub-menu__options" *ngFor="let category of categories" [value]="category">
+        {{category}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
+

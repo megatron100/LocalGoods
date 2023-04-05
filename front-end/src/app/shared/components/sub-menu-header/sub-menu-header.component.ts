@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import * as fromShop from '../../../store/index';
 import * as ShopActions from '../../../store/shop.actions';
 import { ShopService } from 'src/app/services/shop.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-sub-menu-header',
@@ -12,7 +13,8 @@ import { ShopService } from 'src/app/services/shop.service';
 })
 export class SubMenuHeaderComponent implements OnInit {
   sortValues: string[] = PRODUCT_SORT_VALUES;
-  categories!: any[];
+  categories: string[] = ['All goods'];
+  value = '';
 
   constructor(
     private store: Store<fromShop.AppState>,
@@ -21,23 +23,41 @@ export class SubMenuHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories();
+    this.sortValueChange(this.sortValues[0]);
+    this.filterCategory(this.categories[0]);
   }
 
   getCategories() {
-    this.shopService.getCategories().subscribe((res) => {
-      this.categories = ['', ...res.data];
-    });
+    this.shopService
+      .getCategories()
+      .pipe(
+        map((response) => {
+          const categoryArray: string[] = [];
+          for (const category of response.data) {
+            categoryArray.push(category.productCategoryName);
+          }
+          return categoryArray;
+        })
+      )
+      .subscribe({
+        next: (categories) =>
+          (this.categories = [...this.categories, ...categories]),
+        error: (err) => console.error(err),
+      });
   }
 
   sortValueChange($event: any) {
-    this.store.dispatch(new ShopActions.SortProducts($event.target.value));
+    console.log('ev', $event);
+    this.store.dispatch(new ShopActions.SortProducts($event));
   }
 
   searchChange($event: any) {
+    console.log('ev', $event);
     this.store.dispatch(new ShopActions.SearchProducts($event.target.value));
   }
 
   filterCategory($event: any) {
-    this.store.dispatch(new ShopActions.FilterCategories($event.target.value));
+    console.log('ev', $event);
+    this.store.dispatch(new ShopActions.FilterCategories($event));
   }
 }

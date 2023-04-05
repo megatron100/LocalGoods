@@ -1,57 +1,25 @@
-.selects {
+.sub-menu {
   display: flex;
   align-items: center;
-  margin: 0 15px 0 15px;
+  justify-content: space-between;
 
-  .select {
-    select,
-    input {
-      border: 1px solid #dddddd;
-      border-radius: 4px;
-      padding: 5px;
-      width: 20rem;
-
-      option {
-        color: #777777;
-        font-weight: 500;
-      }
-    }
-
-    label {
-      margin-right: 15px;
-      color: #777777;
-      font-weight: 500;
-    }
-
-    padding: 15px;
-    margin-left: 30px;
+  &__field {
+    width: 400px;
+    color: black;
+    margin: 0 15px;
   }
-}
 
-@media (max-width: 768px) {
-  .selects {
-    display: flex;
-    flex-direction: column;
-    align-items: inherit;
+  &__label {
+    color: black;
 
-    .select {
-      display: block;
-      select,
-      input {
-        height: 42px;
-        width: 100%;
+  }
 
-        option {
-          color: #777777;
-          font-weight: 500;
-        }
-      }
+  &__select {
+    color: #30e01c !important;
+  }
 
-      label {
-        display: block;
-        font-size: 24px;
-      }
-      margin-left: 0;
-    }
+  &__options {
+    background-color: #ecebe3;
+    color: #8a8888;
   }
 }
