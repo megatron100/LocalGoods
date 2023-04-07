@@ -1,6 +1,20 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
+.mat-paginator-outer-container{
+  background-color: $light-green;
+  justify-content: end;
+  color: $graphite;
+}
+
 .shop {
-  background-color: #daeed6;
   padding-top: 20px;
+
+  &__sub-menu-header {
+    position: sticky;
+    top: 0;
+  }
+
   &__product-section {
     display: flex;
     flex-wrap: wrap;
@@ -24,21 +38,21 @@ input {
 .product-add {
   font-size: 16px;
   padding: 5px 10px;
-  color: #fff;
+  color: $white;
   border: 1px solid transparent;
-  background-color: #39a94b;
+  background-color: $green;
   cursor: pointer;
   transition: 0.2s linear;
 }
 
 .product-add:hover {
-  color: #39a94b;
+  color: $green;
   background-color: transparent;
-  border: 1px solid #39a94b;
+  border: 1px solid $green;
 }
 
 input:active {
-  border: 1px solid #39a94b;
+  border: 1px solid $green;
 }
 
 @media (max-width: 768px) {

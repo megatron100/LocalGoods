@@ -8,7 +8,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field class="sub-menu__field" color="accent">
+  <mat-form-field class="sub-menu__field sub-menu__field-search" color="accent">
     <mat-label class="sub-menu__label">Search: </mat-label>
     <input matInput type="text" (input)="searchChange($event)" [(ngModel)]="value">
     <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">

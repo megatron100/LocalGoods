@@ -1,21 +1,33 @@
 <div class="shop">
-  <app-sub-menu-header></app-sub-menu-header>
+  <app-sub-menu-header class="shop__sub-menu-header"></app-sub-menu-header>
   <div class="shop__product-section">
-    <app-product-card
-      *ngFor="
+    <ng-container *ngIf="products.length !== 0 else loading">
+      <app-product-card *ngFor="
         let product of products
+          | pagination: pageIndex: pageSize
           | search : searchValue
           | sort : sortValue
           | filter : category
-      "
-      [product]="product"
-    >
-      <div class="product-add__container">
-<!--         <input type="number" name="product-quantity" id="product-quantity-{{product.id}}" value="1">-->
-        <button class="product-add" (click)="onClickAdd(product)">
-          Add to Cart <i class="fas fa-shopping-cart"></i>
-        </button>
-      </div>
-    </app-product-card>
+      " [product]="product">
+        <div class="product-add__container">
+          <!--         <input type="number" name="product-quantity" id="product-quantity-{{product.id}}" value="1">-->
+          <button class="product-add" (click)="onClickAdd(product)">
+            Add to Cart <i class="fas fa-shopping-cart"></i>
+          </button>
+        </div>
+      </app-product-card>
+    </ng-container>
+    <ng-template #loading>
+      <app-loading-spinner></app-loading-spinner>
+    </ng-template>
   </div>
 </div>
+<mat-paginator
+  class="mat-paginator-outer-container"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="handlePageEvent($event)"
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  aria-label="Select page of products"
+></mat-paginator>

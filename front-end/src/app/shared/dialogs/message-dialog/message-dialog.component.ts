@@ -8,13 +8,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class MessageDialogComponent implements OnInit {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: string,
     public dialogRef: MatDialogRef<MessageDialogComponent>
   ) {}
 
   ngOnInit(): void {
     setTimeout(() => {
       this.dialogRef.close();
-    }, 2000);
+    }, 4000);
   }
 }

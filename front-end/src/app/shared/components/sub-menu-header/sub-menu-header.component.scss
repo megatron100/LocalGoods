@@ -1,7 +1,9 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
 .sub-menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include display();
+  background: $light-green;
 
   &__field {
     width: 400px;
@@ -10,16 +12,29 @@
   }
 
   &__label {
-    color: black;
-
+    color: $graphite;
+    @include font-size($font-medium-plus, $font-medium)
   }
 
   &__select {
     color: #30e01c !important;
   }
 
-  &__options {
-    background-color: #ecebe3;
-    color: #8a8888;
+  @include media-breakpoint-between('md', 'lg') {
+    &__field {
+      width: 250px;
+    }
+    &__field-search {
+      width: 400px;
+    }
+  }
+
+  @include media-breakpoint-between('xxs', 'md') {
+    flex-direction: column;
+    &__field {
+      width: 90%;
+    }
   }
 }
+
+

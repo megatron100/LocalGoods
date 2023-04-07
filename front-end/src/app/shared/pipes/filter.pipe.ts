@@ -5,7 +5,7 @@ import { IProduct } from '../../core';
   name: 'filter',
 })
 export class FilterPipe implements PipeTransform {
-  transform(products: IProduct[], category: string): IProduct[] | undefined {
+  transform(products: IProduct[], category: string): IProduct[] {
     if (products) {
       return products.filter((product) => {
         if (category === 'All goods') {

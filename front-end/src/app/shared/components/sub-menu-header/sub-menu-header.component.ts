@@ -46,18 +46,16 @@ export class SubMenuHeaderComponent implements OnInit {
       });
   }
 
-  sortValueChange($event: any) {
-    console.log('ev', $event);
+  sortValueChange($event: string) {
     this.store.dispatch(new ShopActions.SortProducts($event));
   }
 
-  searchChange($event: any) {
-    console.log('ev', $event);
-    this.store.dispatch(new ShopActions.SearchProducts($event.target.value));
+  searchChange($event: Event) {
+    const searchValue = ($event.target as HTMLInputElement).value;
+    this.store.dispatch(new ShopActions.SearchProducts(searchValue));
   }
 
-  filterCategory($event: any) {
-    console.log('ev', $event);
+  filterCategory($event: string) {
     this.store.dispatch(new ShopActions.FilterCategories($event));
   }
 }

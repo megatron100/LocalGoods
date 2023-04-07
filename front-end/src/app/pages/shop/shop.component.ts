@@ -8,6 +8,7 @@ import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/me
 import { MatDialog } from '@angular/material/dialog';
 import { AddToCart, IProduct } from '../../core';
 import { map } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-shop',
@@ -19,6 +20,11 @@ export class ShopComponent implements OnInit {
   sortValue = '';
   searchValue = '';
   category = '';
+  pageSizeOptions = [10, 20, 60, 100];
+  length = 0;
+  pageSize = this.pageSizeOptions[0];
+  pageIndex = 0;
+  pageEvent!: PageEvent;
 
   constructor(
     public shopService: ShopService,
@@ -31,18 +37,21 @@ export class ShopComponent implements OnInit {
     this.getProducts();
 
     this.store.select('sortData').subscribe((state: ShopState) => {
-      console.log('sort', state.sort);
       this.sortValue = state.sort;
     });
-
     this.store.select('sortData').subscribe((state: ShopState) => {
-      console.log('search', state.search);
       this.searchValue = state.search;
     });
     this.store.select('sortData').subscribe((state: ShopState) => {
-      console.log('filter', state.filterCat);
       this.category = state.filterCat;
     });
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
   }
 
   private getProducts(): void {
@@ -56,6 +65,7 @@ export class ShopComponent implements OnInit {
       .subscribe({
         next: (products) => {
           this.products = products as IProduct[];
+          this.length = products?.length;
         },
         error: (err) => console.error(err),
       });

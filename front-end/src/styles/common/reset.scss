@@ -129,3 +129,17 @@ a {
     text-decoration: none;
   }
 }
+
+.mat-option {
+  background: #ecebe3;
+  color: $graphite;
+}
+
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple), .mat-option.mat-active {
+  background: $gray50;
+  color: #fff;
+}
+
+.mat-select-min-line, .mat-select-arrow {
+  color: $graphite;
+}
