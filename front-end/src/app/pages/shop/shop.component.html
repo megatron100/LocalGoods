@@ -9,10 +9,10 @@
           | sort : sortValue
           | filter : category
       " [product]="product">
-        <div class="product-add__container">
+        <div class="shop__product-add-container">
           <!--         <input type="number" name="product-quantity" id="product-quantity-{{product.id}}" value="1">-->
-          <button class="product-add" (click)="onClickAdd(product)">
-            Add to Cart <i class="fas fa-shopping-cart"></i>
+          <button mat-raised-button class="shop__product-add-button" (click)="onProductAddToCart(product)">
+            Add to Cart <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
       </app-product-card>

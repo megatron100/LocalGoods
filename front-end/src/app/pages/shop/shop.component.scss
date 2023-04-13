@@ -1,7 +1,7 @@
 @import 'src/styles/constants/index';
 @import 'src/styles/mixins/index';
 
-.mat-paginator-outer-container{
+.mat-paginator-outer-container {
   background-color: $light-green;
   justify-content: end;
   color: $graphite;
@@ -13,19 +13,44 @@
   &__sub-menu-header {
     position: sticky;
     top: 0;
+    z-index: 10;
   }
 
   &__product-section {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
+    max-width: 1192px;
+    margin: 0 auto;
   }
+
+  &__product-add-container {
+    display: flex;
+  }
+
+  &__product-add-button {
+    background-color: $green;
+    color: $white;
+
+    mat-icon {
+      margin-left: 10px;
+      font-size: 20px;
+    }
+  }
+
+  &__product-add-button:hover {
+    color: $green;
+    background-color: $white;
+  }
+
+  @include media-breakpoint-between('min', 's') {
+    &__product-section {
+      display: block;
+    }
+  }
+;
 }
 
-.product-add__container {
-  display: flex;
-}
 
 input {
   font-size: 16px;
@@ -35,28 +60,8 @@ input {
   outline: none;
 }
 
-.product-add {
-  font-size: 16px;
-  padding: 5px 10px;
-  color: $white;
-  border: 1px solid transparent;
-  background-color: $green;
-  cursor: pointer;
-  transition: 0.2s linear;
-}
-
-.product-add:hover {
-  color: $green;
-  background-color: transparent;
-  border: 1px solid $green;
-}
-
 input:active {
   border: 1px solid $green;
 }
 
-@media (max-width: 768px) {
-  .product-section {
-    flex-direction: row;
-  }
-}
+

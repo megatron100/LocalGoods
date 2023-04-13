@@ -71,7 +71,7 @@ export class ShopComponent implements OnInit {
       });
   }
 
-  onClickAdd(prod: any) {
+  onProductAddToCart(prod: any) {
     const model: AddToCart = {
       id: prod.id,
       quantity: 1,
