@@ -4,11 +4,10 @@ import { Store } from '@ngrx/store';
 import * as fromShop from '../../store/index';
 import { ShopState } from '../../store/shop.reducer';
 import { CartService } from 'src/app/services/cart.service';
-import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart, IProduct } from '../../core';
 import { map } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { IProduct } from '../../core';
 
 @Component({
   selector: 'app-shop',
@@ -69,19 +68,5 @@ export class ShopComponent implements OnInit {
         },
         error: (err) => console.error(err),
       });
-  }
-
-  onProductAddToCart(prod: any) {
-    const model: AddToCart = {
-      id: prod.id,
-      quantity: 1,
-    };
-
-    this.cartService.addToCart(model).subscribe((res) => {
-      const dialogRef = this.dialog.open(MessageDialogComponent, {
-        data: res.message,
-      });
-      dialogRef.afterClosed();
-    });
   }
 }

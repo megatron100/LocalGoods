@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AddToCart } from '../core';
+import { AddToCartResponseData } from '../core';
 import { API_PATH } from '../shared/constants/constants';
 import { ErrorService } from '../shared/error-handling/error.service';
 
@@ -14,9 +14,9 @@ export class CartService {
 
   constructor(private http: HttpClient, private errorService: ErrorService) {}
 
-  addToCart(model: AddToCart): Observable<any> {
+  addToCart(model: AddToCartResponseData): Observable<any> {
     return this.http
-      .post<AddToCart>(`${API_PATH}/Cart/AddToCart`, model)
+      .post<AddToCartResponseData>(`${API_PATH}/Cart/AddToCart`, model)
       .pipe(catchError(this.errorService.handleError));
   }
 

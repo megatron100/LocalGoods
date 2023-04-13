@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CartService } from 'src/app/services/cart.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/error-handling/error-dialog/error-dialog.component';
-import { AddToCart } from '../../core';
+import { AddToCartResponseData } from '../../core';
 
 @Component({
   selector: 'app-cart',
@@ -63,6 +63,7 @@ export class CartComponent implements OnInit {
   calculatePrice() {
     return this.cartWithQuantity.totalAmount;
   }
+
   calculateQuantity() {
     return this.cartWithQuantity.totalQuantity;
   }
@@ -84,7 +85,7 @@ export class CartComponent implements OnInit {
   }
 
   plusOne(id: number) {
-    const model: AddToCart = {
+    const model: AddToCartResponseData = {
       id: id,
       quantity: 1,
     };
