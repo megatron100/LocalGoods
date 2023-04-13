@@ -1,7 +1,11 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
 .root {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: $light-green;
 
   .app-container {
     flex: 1 1 auto;

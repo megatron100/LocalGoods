@@ -6,7 +6,9 @@ import { ShopState } from '../../store/shop.reducer';
 import { CartService } from 'src/app/services/cart.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart } from '../../core';
+import { AddToCart, IProduct } from '../../core';
+import { map } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-shop',
@@ -14,10 +16,15 @@ import { AddToCart } from '../../core';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  products = [];
+  products: IProduct[] = [];
   sortValue = '';
   searchValue = '';
   category = '';
+  pageSizeOptions = [10, 20, 60, 100];
+  length = 0;
+  pageSize = this.pageSizeOptions[0];
+  pageIndex = 0;
+  pageEvent!: PageEvent;
 
   constructor(
     public shopService: ShopService,
@@ -32,23 +39,39 @@ export class ShopComponent implements OnInit {
     this.store.select('sortData').subscribe((state: ShopState) => {
       this.sortValue = state.sort;
     });
-
     this.store.select('sortData').subscribe((state: ShopState) => {
       this.searchValue = state.search;
     });
     this.store.select('sortData').subscribe((state: ShopState) => {
-      console.log('categ', state.filterCat);
       this.category = state.filterCat;
     });
   }
 
-  getProducts(): void {
-    this.shopService.getProducts().subscribe((response) => {
-      this.products = response.data.otherProducts;
-    });
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
   }
 
-  onClickAdd(prod: any) {
+  private getProducts(): void {
+    this.shopService
+      .getProducts()
+      .pipe(
+        map((response) => {
+          return response.data?.otherProducts;
+        })
+      )
+      .subscribe({
+        next: (products) => {
+          this.products = products as IProduct[];
+          this.length = products?.length;
+        },
+        error: (err) => console.error(err),
+      });
+  }
+
+  onProductAddToCart(prod: any) {
     const model: AddToCart = {
       id: prod.id,
       quantity: 1,

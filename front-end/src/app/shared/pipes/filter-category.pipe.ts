@@ -11,7 +11,10 @@ export class FilterCategoryPipe implements PipeTransform {
       return products.slice();
     } else {
       return search
-        .filter((product) => product.category?.search(args) !== -1)
+        .filter(
+          (product) =>
+            product.productCategory?.productCategoryName.search(args) !== -1
+        )
         .slice();
     }
   }

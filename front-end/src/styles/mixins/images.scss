@@ -1,0 +1,11 @@
+@mixin image-size(
+  $width: 400px,
+  $height: 400px,
+  $object-fit: cover,
+  $align-self: center
+) {
+  width:   $width;
+  height: $height;
+  object-fit: $object-fit;
+  align-self: $align-self;
+}

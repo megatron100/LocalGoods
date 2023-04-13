@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
-import { AddToCart } from '../../../core';
+import { AddToCart, IProduct } from '../../../core';
 
 @Component({
   selector: 'app-product-card',
@@ -10,7 +10,7 @@ import { AddToCart } from '../../../core';
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent {
-  @Input() product: any;
+  @Input() product!: IProduct;
 
   constructor(private cartService: CartService, public dialog: MatDialog) {}
 
