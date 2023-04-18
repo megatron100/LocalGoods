@@ -10,7 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { Store } from '@ngrx/store';
 import * as fromShop from '../../../store';
 import { UserState } from '../../../store/user.reducer';
-import { AuthService, IProduct } from '../../../core';
+import { AuthService } from '../../../core';
 import { User } from '../../../pages/auth/models/user.model';
 
 @Component({
@@ -21,8 +21,8 @@ import { User } from '../../../pages/auth/models/user.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   isUserAuth = false;
   private userSub!: Subscription;
-  cart!: IProduct[];
   user!: User;
+  cartCounter = 0;
 
   @ViewChild('menu', { read: ViewContainerRef }) menu!: ViewContainerRef;
 
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       this.isUserAuth = !!user;
     });
-    this.cart = this.cartService.cartContent;
+    // this.cart = this.cartService.cartContent;
 
     this.store.select('userData').subscribe((state: UserState) => {
       if (state.user) {
@@ -47,7 +47,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       this.isUserAuth = !!state.user;
     });
-    this.cart = this.cartService.cartContent;
+    this.cartService.cartContent.subscribe({
+      next: (value) => (this.cartCounter = value.length),
+    });
   }
 
   onLogout() {

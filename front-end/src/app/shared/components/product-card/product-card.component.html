@@ -16,7 +16,7 @@
     </mat-card-content>
     <mat-card-actions>
       <div class="product-add-container">
-        <input class="product-add-input" type="number" name="product-quantity" id="product-quantity-{{product.id}}" min="1" value="1">
+        <input class="product-add-input" type="number" name="product-quantity" id="product-quantity-{{product.id}}" min="1" [value]="quantity" (change)="changeQuantity($event)">
         <button mat-raised-button class="product-add-button" (click)="onProductAddToCart(product)">
           Add to <mat-icon>shopping_cart</mat-icon>
         </button>

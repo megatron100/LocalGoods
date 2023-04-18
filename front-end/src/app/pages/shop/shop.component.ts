@@ -34,7 +34,6 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-
     this.store.select('sortData').subscribe((state: ShopState) => {
       this.sortValue = state.sort;
     });
@@ -44,6 +43,7 @@ export class ShopComponent implements OnInit {
     this.store.select('sortData').subscribe((state: ShopState) => {
       this.category = state.filterCat;
     });
+    this.cartService.getCart().subscribe();
   }
 
   handlePageEvent(e: PageEvent) {

@@ -21,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonToggleModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBadgeModule,
   ],
   exports: [
     FooterComponent,
@@ -73,6 +75,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSortModule,
     ReactiveFormsModule,
     FormsModule,
+    MatBadgeModule,
   ],
 })
 export class ComponentsModule {}

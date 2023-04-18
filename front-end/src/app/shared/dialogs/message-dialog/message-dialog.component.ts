@@ -15,6 +15,6 @@ export class MessageDialogComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.dialogRef.close();
-    }, 4000);
+    }, 3000);
   }
 }

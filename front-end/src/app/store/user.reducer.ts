@@ -23,16 +23,9 @@ export function userReducer(
         user: payload,
       };
     case UserAction.UPDATE_USER: {
-      const userData: {
-        userId: string;
-        email: string;
-        role: string;
-        nickName: string;
-        _token: string;
-        _refresh_token: string;
-        _tokenExpirationDate: string;
-        _refreshTokenExpirationDate: string;
-      } = JSON.parse(localStorage.getItem('userData') || '{}');
+      const userData: User = JSON.parse(
+        localStorage.getItem('userData') || '{}'
+      );
       const updatedUser = new User(
         userData.userId,
         userData.email,

@@ -1,7 +1,7 @@
 <div class="shop">
   <app-sub-menu-header class="shop__sub-menu-header"></app-sub-menu-header>
   <div class="shop__product-section">
-    <ng-container *ngIf="products.length !== 0 else loading">
+    <ng-container *ngIf="products.length !== 0; else loading">
       <app-product-card *ngFor="
         let product of products
           | pagination: pageIndex: pageSize

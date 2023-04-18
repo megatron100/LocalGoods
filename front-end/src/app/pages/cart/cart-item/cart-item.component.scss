@@ -1,0 +1,86 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
+mat-card {
+  display: flex;
+  background: transparent;
+  color: $graphite;
+  margin: 0;
+  max-width: 685px;
+
+  img {
+    @include image-size(100px, 100px);
+    margin: 0;
+  }
+
+  mat-card-content {
+    width: 285px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 46px 0 24px;
+
+    mat-card-subtitle {
+      color: $gray60;
+    }
+  }
+
+  mat-card-footer {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .price {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+
+      p:first-child {
+        margin-right: 5px;
+      }
+    }
+
+    .quantity-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .quantity-text {
+        width: 70px;
+
+        p {
+          text-align: center;
+          margin: 0 auto;
+          @include main-text($font-size: $font-large)
+        }
+      }
+
+      button {
+        @include button($background-color: $blue);
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+      }
+    }
+
+    .remove-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        @include button($background-color: $red);
+        border-radius: 3px;
+        padding: 5px;
+      }
+
+      button:hover {
+        color: #fff;
+        background-color: #fb2c2c;
+      }
+    }
+  }
+}
