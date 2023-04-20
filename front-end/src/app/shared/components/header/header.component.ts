@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   private authSubs = new Subscription();
   private userSubs = new Subscription();
   private cartSubs = new Subscription();
+  btnIsHighlighted = false;
 
   @ViewChild('menu', { read: ViewContainerRef }) menu!: ViewContainerRef;
 
@@ -54,6 +55,10 @@ export class HeaderComponent implements OnInit {
     this.cartSubs.add(
       this.cartService.cartContent.subscribe({
         next: (value: CartItem[]) => {
+          this.btnIsHighlighted = true;
+          setTimeout(() => {
+            this.btnIsHighlighted = false;
+          }, 300);
           this.cartCounter = value.length;
         },
       })
