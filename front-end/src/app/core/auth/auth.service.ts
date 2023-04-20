@@ -19,7 +19,6 @@ import { User } from '../../pages/auth/models/user.model';
 import { RegisterModel } from '../../pages/auth/models/register.model';
 import { AuthResponseData, ResponseData } from '../interfaces';
 import { LoginModel } from '../../pages/auth/models/login.model';
-import { FormData } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -105,7 +104,7 @@ export class AuthService {
     //We check whether our token is still active, if yes, so we activate the user
     if (loadedUserFromLS.token) {
       const expirationTime =
-        new Date(userData._refreshTokenExpirationDate).getTime() -
+        new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(expirationTime);
       this.store.dispatch(new UserActions.CreateUser(loadedUserFromLS));
@@ -140,7 +139,7 @@ export class AuthService {
 
     this.store.dispatch(new UserActions.CreateUser(user));
 
-    this.autoLogout(REFRESH_EXPIRE_IN * this.millisecondsInMinute);
+    this.autoLogout(EXPIRE_IN * this.millisecondsInMinute);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
@@ -150,9 +149,5 @@ export class AuthService {
     } = JSON.parse(localStorage.getItem('userData') || '{}');
     this.roleAs = user.role;
     return this.roleAs;
-  }
-
-  getRegisterJSON() {
-    return this.http.get<FormData>('/assets/form-json-templates/register.json');
   }
 }
