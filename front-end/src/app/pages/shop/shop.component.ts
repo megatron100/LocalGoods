@@ -4,19 +4,21 @@ import { Store } from '@ngrx/store';
 import * as fromShop from '../../store/index';
 import { ShopState } from '../../store/shop.reducer';
 import { CartService } from 'src/app/services/cart.service';
-import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart, IProduct } from '../../core';
-import { map } from 'rxjs';
+import { map, Observable, Subscription, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { IProduct } from '../../core';
+import { AutoUnsubscribe } from '../../shared/utils/decorators';
 
+@AutoUnsubscribe('getStateSubs')
+@AutoUnsubscribe('getCartSubs')
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  products: IProduct[] = [];
+  products$!: Observable<IProduct[]>;
   sortValue = '';
   searchValue = '';
   category = '';
@@ -25,6 +27,8 @@ export class ShopComponent implements OnInit {
   pageSize = this.pageSizeOptions[0];
   pageIndex = 0;
   pageEvent!: PageEvent;
+  private getStateSubs = new Subscription();
+  private getCartSubs = new Subscription();
 
   constructor(
     public shopService: ShopService,
@@ -35,16 +39,14 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-
-    this.store.select('sortData').subscribe((state: ShopState) => {
-      this.sortValue = state.sort;
-    });
-    this.store.select('sortData').subscribe((state: ShopState) => {
-      this.searchValue = state.search;
-    });
-    this.store.select('sortData').subscribe((state: ShopState) => {
-      this.category = state.filterCat;
-    });
+    this.getStateSubs.add(
+      this.store.select('sortData').subscribe((state: ShopState) => {
+        this.sortValue = state.sort;
+        this.searchValue = state.search;
+        this.category = state.filterCat;
+      })
+    );
+    this.getCartSubs.add(this.cartService.getCart().subscribe());
   }
 
   handlePageEvent(e: PageEvent) {
@@ -55,33 +57,11 @@ export class ShopComponent implements OnInit {
   }
 
   private getProducts(): void {
-    this.shopService
-      .getProducts()
-      .pipe(
-        map((response) => {
-          return response.data?.otherProducts;
-        })
-      )
-      .subscribe({
-        next: (products) => {
-          this.products = products as IProduct[];
-          this.length = products?.length;
-        },
-        error: (err) => console.error(err),
-      });
-  }
-
-  onProductAddToCart(prod: any) {
-    const model: AddToCart = {
-      id: prod.id,
-      quantity: 1,
-    };
-
-    this.cartService.addToCart(model).subscribe((res) => {
-      const dialogRef = this.dialog.open(MessageDialogComponent, {
-        data: res.message,
-      });
-      dialogRef.afterClosed();
-    });
+    this.products$ = this.shopService.getProducts().pipe(
+      tap((response) => (this.length = response.data?.otherProducts.length)),
+      map((response) => {
+        return response.data?.otherProducts;
+      })
+    );
   }
 }

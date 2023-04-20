@@ -1,0 +1,27 @@
+<mat-card *ngIf="cartItem">
+  <img mat-card-image [src]="cartItem.product.imageLink" [alt]="cartItem.product.shortDescription">
+  <mat-card-content>
+    <mat-card-title>{{ cartItem.product.productTitle }}</mat-card-title>
+    <mat-card-subtitle>{{ cartItem.product.shortDescription }}</mat-card-subtitle>
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="price">
+      <p>Price:</p>
+      <p>{{ cartItem.product.price | currency : 'USD' }}</p>
+    </div>
+    <div class="quantity-section">
+      <button [disabled]="!cartItem.quantity" type="button" (click)="onDecrease(cartItem.product.id)">-</button>
+      <div class="quantity-text">
+        <p>{{ cartItem.quantity }}</p>
+      </div>
+      <button type="button" (click)="onIncrease(cartItem.product.id)">+</button>
+    </div>
+    <div class="remove-item">
+      <button type="button" (click)="removeItem(cartItem.id)">Remove</button>
+    </div>
+  </mat-card-footer>
+</mat-card>
+
+
+
+

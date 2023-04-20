@@ -1,31 +1,34 @@
-<div class="product-section">
-  <div class="item-section" *ngFor="let item of cart">
-    <div class="item-element" *ngIf="item.quantity > 0">
-      <app-product-card [product]="item.product">
-        <div class="quantity-section">
-          <p class="quantity-text">{{ item.quantity }}</p>
-          <button (click)="plusOne(item.product.id)">+</button>
-          <button (click)="minusOne(item.product.id)">-</button>
+<div class="wrapper">
+  <div class="cart" *ngIf="totalCartQuantity$ |async as totalCartQuantity">
+    <div class="cart__product-section">
+      <h1>Your cart{{totalCartQuantity.totalAmount > 0 ? ':' : ' is empty'}}</h1>
+      <div class="cart__item-section">
+        <div class="cart__item-element" *ngFor="let item of cart$ | async">
+          <app-cart-item *ngIf="item.quantity>0" [cartItem]="item">
+          </app-cart-item>
         </div>
-        <div class="remove-item">
-          <button (click)="removeItem(item.id)">Remove</button>
-        </div>
-      </app-product-card>
+      </div>
+    </div>
+
+    <div class="cart__order-section">
+      <div class="cart__order-info">
+        <h1>Order</h1>
+        <p>Items: {{totalCartQuantity?.totalQuantity}}</p>
+        <p>Total amount: {{totalCartQuantity?.totalAmount | currency: 'USD'}}</p>
+        <button type="button" routerLink="/shop">Сontinue shopping</button>
+      </div>
+      <div class="cart__actions">
+        <button type="button" class="cart__buy-button" (click)="buyProducts()">Buy</button>
+        <button type="button" class="cart__clear-button" (click)="clearCart()">Clear Cart</button>
+      </div>
     </div>
   </div>
-  <div class="price-section">
-    <p class="price">
-      Total Price: <span>${{ calculatePrice() }}</span>
-    </p>
-  </div>
-
-  <div class="price-section">
-    <p class="price">
-      Total Quantity: <span>{{ calculateQuantity() }}</span>
-    </p>
-  </div>
-  <div class="cart-actions">
-    <button class="cart-buy" (click)="buyProducts()">Buy</button>
-    <button class="cart-clear" (click)="clearCart()">Clear Cart</button>
-  </div>
 </div>
+
+
+
+
+
+
+
+

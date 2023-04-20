@@ -4,8 +4,7 @@ import { ShopService } from 'src/app/services/shop.service';
 import { Subscription } from 'rxjs';
 import { User } from '../auth/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
-import { AddToCart, AuthService } from '../../core';
+import { AddToCartResponseData, AuthService } from '../../core';
 
 @Component({
   selector: 'app-home',
@@ -55,16 +54,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     const quantity = document.getElementById(
       quantityWithId
     ) as HTMLInputElement;
-    const model: AddToCart = {
+    const model: AddToCartResponseData = {
       id: prod.id,
       quantity: Number(quantity.value),
     };
 
-    this.cartService.addToCart(model).subscribe((res) => {
-      const dialogRef = this.dialog.open(MessageDialogComponent, {
-        data: res.message,
-      });
-      dialogRef.afterClosed();
-    });
+    this.cartService.addToCart(model).subscribe();
   }
 }

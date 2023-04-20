@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
-import { AddToCart } from '../../core';
+import { AddToCartResponseData } from '../../core';
 
 @Component({
   selector: 'app-product-detail',
@@ -37,7 +37,7 @@ export class ProductDetailComponent implements OnInit {
     const quantity = document.getElementById(
       quantityWithId
     ) as HTMLInputElement;
-    const model: AddToCart = {
+    const model: AddToCartResponseData = {
       id: id,
       quantity: Number(quantity.value),
     };
