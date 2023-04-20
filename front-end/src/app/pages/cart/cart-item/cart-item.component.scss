@@ -7,6 +7,15 @@ mat-card {
   color: $graphite;
   margin: 0;
   max-width: 685px;
+  @include media-breakpoint-between('min', 's') {
+    width: 370px;
+  }
+  @include media-breakpoint-between('s', 's') {
+    width: 400px;
+  }
+  @include media-breakpoint-between('md', 'md') {
+    width: 650px;
+  }
 
   img {
     @include image-size(100px, 100px);

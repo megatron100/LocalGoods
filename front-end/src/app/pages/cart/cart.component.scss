@@ -13,19 +13,35 @@
   padding: 30px;
   display: flex;
   justify-content: space-between;
+  @include media-breakpoint-between('xxs', 'md') {
+    flex-direction: column;
+  }
 
   &__product-section {
   }
 
   &__item-section {
     width: 600px;
+    @include media-breakpoint-between('', 's') {
+      width: 100%;
+    }
   }
 
   &__item-element {
+    @include media-breakpoint-between('xxs', 's') {
+      width: inherit;
+    }
   }
 
   &__actions {
     margin-top: 20px;
+    @include media-breakpoint-between('xxs', 'md') {
+      display: flex;
+      justify-content: start;
+      flex-direction: column;
+      align-items: end;
+      width: inherit;
+    }
   }
 
   &__buy-button {
@@ -40,6 +56,12 @@
     width: 50%;
     padding: 5px;
     border-radius: 3px;
+
+    @include media-breakpoint-between('xxs', 'md') {
+      width: max-content;
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
   }
 
   &__order-section {
@@ -48,11 +70,23 @@
     padding: 15px;
     border-radius: 3px;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
+    @include media-breakpoint-between('min', 's') {
+      display: flex;
+      margin-top: 30px;
+      width: 370px;
+    }
+    @include media-breakpoint-between('s', 'md') {
+      display: flex;
+      margin-top: 30px;
+      width: 400px;
+    }
   }
 
   &__order-info {
     display: flex;
     flex-direction: column;
+
     button {
       @include button($background-color: $epam-blue);
       padding: 5px;
