@@ -22,7 +22,7 @@
 
   &__item-section {
     width: 600px;
-    @include media-breakpoint-between('', 's') {
+    @include media-breakpoint-between('min', 's') {
       width: 100%;
     }
   }
