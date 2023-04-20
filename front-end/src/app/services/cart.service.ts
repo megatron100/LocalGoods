@@ -18,7 +18,6 @@ import { ErrorService } from '../shared/error-handling/error.service';
 export class CartService {
   cartContent = new BehaviorSubject<CartItem[]>([]);
   totalCartQuantity = new BehaviorSubject<null | CartData>(null);
-  cartCounter = new BehaviorSubject<number>(0);
   private cart: CartItem[] = [];
 
   constructor(private http: HttpClient, private errorService: ErrorService) {}
@@ -26,13 +25,17 @@ export class CartService {
   addToCart(model: AddToCartResponseData): Observable<CartResponseData> {
     return this.http
       .post<CartResponseData>(`${API_PATH}/Cart/AddToCart`, model)
-      .pipe(catchError(this.errorService.handleError));
+      .pipe(
+        tap((cart) => {
+          this.setCart(cart.data.cartItems);
+        }),
+        catchError(this.errorService.handleError)
+      );
   }
 
   getCart(): Observable<CartResponseData> {
     return this.http.get<CartResponseData>(`${API_PATH}/Cart/CartItems`).pipe(
       tap((cart) => {
-        console.log('get');
         this.setCart(cart.data.cartItems);
         this.setTotalCartQuantity(cart.data);
       }),
@@ -65,12 +68,16 @@ export class CartService {
   }
 
   changeQuantity(id: number, newQuantity: number, newAmount: number) {
-    for (const cart of this.cart) {
-      if (cart.product.id === id) {
-        cart.quantity = newQuantity;
-        cart.totalAmount = newAmount;
+    this.cart.forEach((item, index) => {
+      if (item.product.id === id) {
+        item.quantity = newQuantity;
+        item.totalAmount = newAmount;
       }
-    }
+      //delete item from cart array if quantity === 0
+      if (item.quantity === 0) {
+        this.cart.splice(index, 1);
+      }
+    });
     this.cartContent.next(this.cart.slice());
   }
 

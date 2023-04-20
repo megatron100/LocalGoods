@@ -1,25 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AddToCartResponseData, CartItem } from '../../../core';
 import { CartService } from '../../../services/cart.service';
+import { AutoUnsubscribe } from '../../../shared/utils/decorators';
+import { Subscription } from 'rxjs';
 
+@AutoUnsubscribe('removeItemSubs')
+@AutoUnsubscribe('addToCartSubs')
+@AutoUnsubscribe('decreaseQuantitySubs')
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.scss'],
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent {
   @Input() cartItem!: CartItem;
+  private removeItemSubs = new Subscription();
+  private addToCartSubs = new Subscription();
+  private decreaseQuantitySubs = new Subscription();
 
   constructor(private cartService: CartService) {}
-
-  ngOnInit(): void {
-    console.log('');
-  }
 
   removeItem(id: number) {
     this.cartService.removeItemFromCart(id);
     this.cartService.calcOrderData();
-    this.cartService.removeItem(id).subscribe();
+    this.removeItemSubs.add(this.cartService.removeItem(id).subscribe());
   }
 
   onIncrease(id: number) {
@@ -31,7 +35,7 @@ export class CartItemComponent implements OnInit {
       id: id,
       quantity: 1,
     };
-    this.cartService.addToCart(model).subscribe();
+    this.addToCartSubs.add(this.cartService.addToCart(model).subscribe());
   }
 
   onDecrease(id: number) {
@@ -39,6 +43,8 @@ export class CartItemComponent implements OnInit {
     this.cartService.calcOrderData();
     const newAmount = newQuantity * this.cartItem.product.price;
     this.cartService.changeQuantity(id, newQuantity, newAmount);
-    this.cartService.decreaseQuantity(id).subscribe();
+    this.decreaseQuantitySubs.add(
+      this.cartService.decreaseQuantity(id).subscribe()
+    );
   }
 }
