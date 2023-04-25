@@ -15,15 +15,8 @@ import {
   PATH_GET_PRODUCTS,
   PATH_UPLOAD,
 } from '../shared/constants/constants';
-import {
-  CategoryResponseData,
-  ProductResponseData,
-  ResponseData,
-} from '../core';
-import {
-  SellerProductItem,
-  SellerProductResponseData,
-} from '../core/interfaces/responseDatas/SellerProductResponseData';
+import { IProduct, ProductCategory, ResponseData } from '../core';
+import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +30,7 @@ export class SellerProductStorageService {
 
   storeProduct(product: SellerProductItem): Observable<SellerProductItem[]> {
     return this.http
-      .post<SellerProductResponseData>(
+      .post<ResponseData<IProduct[]>>(
         `/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`,
         product
       )
@@ -51,7 +44,7 @@ export class SellerProductStorageService {
 
   deleteProduct(id: string): Observable<SellerProductItem[]> {
     return this.http
-      .delete<SellerProductResponseData>(
+      .delete<ResponseData<IProduct[]>>(
         `/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`
       )
       .pipe(
@@ -68,7 +61,7 @@ export class SellerProductStorageService {
   ): Observable<SellerProductItem[]> {
     const body = { ...product, productId: id };
     return this.http
-      .put<SellerProductResponseData>(
+      .put<ResponseData<IProduct[]>>(
         `/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`,
         body
       )
@@ -82,7 +75,7 @@ export class SellerProductStorageService {
 
   getProductById(id: string): Observable<SellerProductItem> {
     return this.http
-      .get<ProductResponseData>(
+      .get<ResponseData<IProduct>>(
         `/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`
       )
       .pipe(
@@ -96,9 +89,7 @@ export class SellerProductStorageService {
 
   getProducts(): Observable<SellerProductItem[]> {
     return this.http
-      .get<SellerProductResponseData>(
-        `/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`
-      )
+      .get<ResponseData<IProduct[]>>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
       .pipe(
         catchError(this.errorService.handleError),
         map(({ data }) => {
@@ -107,15 +98,17 @@ export class SellerProductStorageService {
       );
   }
 
-  getCategories(): Observable<CategoryResponseData> {
+  getCategories(): Observable<ResponseData<ProductCategory[]>> {
     return this.http
-      .get<CategoryResponseData>(`/${API_PATH}/${PATH_GET_CATEGORIES}`)
+      .get<ResponseData<ProductCategory[]>>(
+        `/${API_PATH}/${PATH_GET_CATEGORIES}`
+      )
       .pipe(catchError(this.errorService.handleError));
   }
 
-  uploadImage(file: FormData): Observable<ResponseData> {
+  uploadImage(file: FormData): Observable<ResponseData<string>> {
     return this.http
-      .post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
+      .post<ResponseData<string>>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .pipe(catchError(this.errorService.handleError));

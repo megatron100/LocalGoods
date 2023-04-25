@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorService } from '../../shared/error-handling/error.service';
 import { User } from '../../pages/auth/models/user.model';
 import { RegisterModel } from '../../pages/auth/models/register.model';
-import { AuthResponseData, ResponseData } from '../interfaces';
+import { AuthData, ResponseData } from '../interfaces';
 import { LoginModel } from '../../pages/auth/models/login.model';
 
 @Injectable({
@@ -37,9 +37,9 @@ export class AuthService {
     private errorService: ErrorService
   ) {}
 
-  register(body: RegisterModel): Observable<ResponseData> {
+  register(body: RegisterModel): Observable<ResponseData<AuthData>> {
     return this.http
-      .post<ResponseData>(`/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
+      .post<ResponseData<AuthData>>(`/${API_PATH_AUTH}/${PATH_REGISTER}`, body)
       .pipe(
         catchError(this.errorService.handleError),
         tap(() => {
@@ -48,19 +48,19 @@ export class AuthService {
       );
   }
 
-  login(body: LoginModel): Observable<AuthResponseData> {
+  login(body: LoginModel): Observable<ResponseData<AuthData>> {
     return this.http
-      .post<AuthResponseData>(`/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
+      .post<ResponseData<AuthData>>(`/${API_PATH_AUTH}/${PATH_LOGIN}`, body)
       .pipe(
         catchError(this.errorService.handleError),
         tap(({ data }) => {
           this.handleAuth(
-            data.id,
-            data.email,
-            data.role,
-            data.name,
-            data.accessToken,
-            data.refreshToken
+            data?.email,
+            data?.id,
+            data?.role,
+            data?.name,
+            data?.accessToken,
+            data?.refreshToken
           );
           this.router.navigate(['./home']);
         })

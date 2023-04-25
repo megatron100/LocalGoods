@@ -1,3 +1,5 @@
+import { Certification } from './product';
+
 export interface SellerInfo {
   address: Address;
   basicInfo: BasicInfo;
@@ -14,11 +16,4 @@ interface BasicInfo {
   name: string;
   mobile: string;
   certification: Certification;
-}
-
-interface Certification {
-  qualityCertificateTitle: string;
-  qualityCertificateDescription: string;
-  qualityCertificateLink: string;
-  taxNumber: string;
 }

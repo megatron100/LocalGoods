@@ -6,8 +6,8 @@ import {
   AddToCartResponseData,
   CartData,
   CartItem,
-  CartResponseData,
-  ProductsResponseData,
+  ProductData,
+  ResponseData,
 } from '../core';
 import { API_PATH } from '../shared/constants/constants';
 import { ErrorService } from '../shared/error-handling/error.service';
@@ -22,9 +22,9 @@ export class CartService {
 
   constructor(private http: HttpClient, private errorService: ErrorService) {}
 
-  addToCart(model: AddToCartResponseData): Observable<CartResponseData> {
+  addToCart(model: AddToCartResponseData): Observable<ResponseData<CartData>> {
     return this.http
-      .post<CartResponseData>(`${API_PATH}/Cart/AddToCart`, model)
+      .post<ResponseData<CartData>>(`${API_PATH}/Cart/AddToCart`, model)
       .pipe(
         tap((cart) => {
           this.setCart(cart.data.cartItems);
@@ -33,37 +33,39 @@ export class CartService {
       );
   }
 
-  getCart(): Observable<CartResponseData> {
-    return this.http.get<CartResponseData>(`${API_PATH}/Cart/CartItems`).pipe(
-      tap((cart) => {
-        this.setCart(cart.data.cartItems);
-        this.setTotalCartQuantity(cart.data);
-      }),
-      catchError(this.errorService.handleError)
-    );
+  getCart(): Observable<ResponseData<CartData>> {
+    return this.http
+      .get<ResponseData<CartData>>(`${API_PATH}/Cart/CartItems`)
+      .pipe(
+        tap((cart) => {
+          this.setCart(cart.data.cartItems);
+          this.setTotalCartQuantity(cart.data);
+        }),
+        catchError(this.errorService.handleError)
+      );
   }
 
-  removeItem(id: number): Observable<CartResponseData> {
+  removeItem(id: number): Observable<ResponseData<CartData>> {
     return this.http
-      .delete<CartResponseData>(`${API_PATH}/Cart/remove/${id}`)
+      .delete<ResponseData<CartData>>(`${API_PATH}/Cart/remove/${id}`)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  clearCart(): Observable<ProductsResponseData> {
+  clearCart(): Observable<ResponseData<ProductData>> {
     return this.http
-      .delete<ProductsResponseData>(`${API_PATH}/Cart/ClearCart`)
+      .delete<ResponseData<ProductData>>(`${API_PATH}/Cart/ClearCart`)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  orderFromCart(): Observable<ProductsResponseData> {
+  orderFromCart(): Observable<ResponseData<ProductData>> {
     return this.http
-      .get<ProductsResponseData>(`${API_PATH}/order/orderfromcart`)
+      .get<ResponseData<ProductData>>(`${API_PATH}/order/orderfromcart`)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  decreaseQuantity(id: number): Observable<ProductsResponseData> {
+  decreaseQuantity(id: number): Observable<ResponseData<ProductData>> {
     return this.http
-      .delete<ProductsResponseData>(`${API_PATH}/Cart/minus/${id}`)
+      .delete<ResponseData<ProductData>>(`${API_PATH}/Cart/minus/${id}`)
       .pipe(catchError(this.errorService.handleError));
   }
 

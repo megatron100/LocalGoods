@@ -43,7 +43,13 @@ export interface Certification {
   qualityCertificateLink: string;
   qualityCertificateDeleteLink?: string;
   taxNumber: string;
-  id: number;
+  id?: number;
+}
+
+export interface ChangePassword {
+  existingPassword: string;
+  newPassword: string;
+  passConfirm: string;
 }
 
 export interface ProductCategory {

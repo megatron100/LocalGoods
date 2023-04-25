@@ -5,7 +5,7 @@ import * as fromShop from '../store';
 import * as UserActions from '../store/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
-import { IProduct, SellerInfo, User, UserUpdateResponseData } from '../core';
+import { IProduct, ResponseData, SellerInfo, User } from '../core';
 import { API_PATH, PATH_GET_PROFILE } from '../shared/constants/constants';
 import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
 
@@ -21,7 +21,7 @@ export class UserService {
 
   updateUser() {
     return this.http
-      .get<UserUpdateResponseData>(`/${API_PATH}/${PATH_GET_PROFILE}`)
+      .get<ResponseData<User>>(`/${API_PATH}/${PATH_GET_PROFILE}`)
       .subscribe(({ data }) => {
         this.updateUserInStore(data);
       });
