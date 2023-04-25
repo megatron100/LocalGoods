@@ -3,3 +3,4 @@ export * from './productResponseData';
 export * from './categoryResponseData';
 export * from './addToCartResponseData';
 export * from './cartResponseData';
+export * from './pendingOrderResponseData';

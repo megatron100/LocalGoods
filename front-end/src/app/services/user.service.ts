@@ -5,8 +5,9 @@ import * as fromShop from '../store';
 import * as UserActions from '../store/user.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
-import { SellerInfo, UserUpdateResponseData } from '../core';
+import { IProduct, SellerInfo, User, UserUpdateResponseData } from '../core';
 import { API_PATH, PATH_GET_PROFILE } from '../shared/constants/constants';
+import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +22,12 @@ export class UserService {
   updateUser() {
     return this.http
       .get<UserUpdateResponseData>(`/${API_PATH}/${PATH_GET_PROFILE}`)
-      .subscribe(({ data: data, message: message }) => {
+      .subscribe(({ data }) => {
         this.updateUserInStore(data);
       });
   }
 
-  updateUserInStore(data: any) {
+  updateUserInStore(data: User) {
     const updatedUserData: SellerInfo = {
       address: {
         postCode: '',
@@ -62,9 +63,9 @@ export class UserService {
     this.store.dispatch(new UserActions.UpdateUser(updatedUserData));
   }
 
-  transformProductArrResponse(data: any) {
-    const newProductArr: SellerProductItemModel[] = [];
-    data.forEach((product: any) => {
+  transformProductArrResponse(data: IProduct[]) {
+    const newProductArr: SellerProductItem[] = [];
+    data.forEach((product: IProduct) => {
       const productEl = new SellerProductItemModel(
         product.productTitle,
         product.imageLink,
@@ -79,7 +80,7 @@ export class UserService {
     return newProductArr;
   }
 
-  transformProductResponse(data: any) {
+  transformProductResponse(data: IProduct) {
     return new SellerProductItemModel(
       data.productTitle,
       data.imageLink,
@@ -91,7 +92,7 @@ export class UserService {
     );
   }
 
-  private updateSellerData(data: any, updatedUserData: any) {
+  private updateSellerData(data: User, updatedUserData: SellerInfo) {
     updatedUserData.address.area = data?.address?.area;
     updatedUserData.address.postCode = data?.address?.pinCode;
     updatedUserData.address.country = data?.address?.country;

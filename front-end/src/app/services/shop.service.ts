@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { CategoryResponseData, IProduct, ProductResponseData } from '../core';
+import { CategoryResponseData, IProduct, ProductsResponseData } from '../core';
 import { API_PATH } from '../shared/constants/constants';
 import { ErrorService } from '../shared/error-handling/error.service';
 
@@ -40,9 +40,9 @@ export class ShopService {
     // },
   ];
 
-  getProducts(): Observable<ProductResponseData> {
+  getProducts(): Observable<ProductsResponseData> {
     return this.http
-      .get<ProductResponseData>(`/${API_PATH}/Home/GetProducts`)
+      .get<ProductsResponseData>(`/${API_PATH}/Home/GetProducts`)
       .pipe(catchError(this.errorService.handleError));
     // .subscribe(res => {
     //   this.productList$.next(res.data.otherProducts)

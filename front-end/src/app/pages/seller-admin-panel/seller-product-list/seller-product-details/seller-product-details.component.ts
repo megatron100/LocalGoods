@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SellerProductItemModel } from '../../models/seller-product-item.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SellerProductStorageService } from '../../../../services/seller-product-storage.service';
 import { Observable } from 'rxjs';
 import { ErrorDialogComponent } from '../../../../shared/error-handling/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SellerProductItem } from '../../../../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Component({
   selector: 'app-seller-product-details',
@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./seller-product-details.component.scss'],
 })
 export class SellerProductDetailsComponent implements OnInit {
-  product$!: Observable<SellerProductItemModel>;
+  product$!: Observable<SellerProductItem>;
 
   constructor(
     private route: ActivatedRoute,

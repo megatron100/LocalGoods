@@ -7,7 +7,7 @@ import {
   CartData,
   CartItem,
   CartResponseData,
-  ProductResponseData,
+  ProductsResponseData,
 } from '../core';
 import { API_PATH } from '../shared/constants/constants';
 import { ErrorService } from '../shared/error-handling/error.service';
@@ -49,21 +49,21 @@ export class CartService {
       .pipe(catchError(this.errorService.handleError));
   }
 
-  clearCart(): Observable<ProductResponseData> {
+  clearCart(): Observable<ProductsResponseData> {
     return this.http
-      .delete<ProductResponseData>(`${API_PATH}/Cart/ClearCart`)
+      .delete<ProductsResponseData>(`${API_PATH}/Cart/ClearCart`)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  orderFromCart(): Observable<ProductResponseData> {
+  orderFromCart(): Observable<ProductsResponseData> {
     return this.http
-      .get<ProductResponseData>(`${API_PATH}/order/orderfromcart`)
+      .get<ProductsResponseData>(`${API_PATH}/order/orderfromcart`)
       .pipe(catchError(this.errorService.handleError));
   }
 
-  decreaseQuantity(id: number): Observable<ProductResponseData> {
+  decreaseQuantity(id: number): Observable<ProductsResponseData> {
     return this.http
-      .delete<ProductResponseData>(`${API_PATH}/Cart/minus/${id}`)
+      .delete<ProductsResponseData>(`${API_PATH}/Cart/minus/${id}`)
       .pipe(catchError(this.errorService.handleError));
   }
 
