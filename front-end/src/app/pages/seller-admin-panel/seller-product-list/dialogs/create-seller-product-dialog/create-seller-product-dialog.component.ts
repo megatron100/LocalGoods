@@ -9,8 +9,8 @@ import { SellerProductStorageService } from '../../../../../services/seller-prod
 import { CategoryModel } from '../../../models/category.model';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SellerService } from '../../../../../services/seller.service';
-import { SellerProductItemModel } from '../../../models/seller-product-item.model';
 import { ErrorDialogComponent } from '../../../../../shared/error-handling/error-dialog/error-dialog.component';
+import { SellerProductItem } from '../../../../../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Component({
   selector: 'app-create-seller-product-dialog',
@@ -27,7 +27,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     public store: Store<fromSellerProductList.AppState>,
     public sellerService: SellerService,
     public sellerProductStorageService: SellerProductStorageService,
-    @Inject(MAT_DIALOG_DATA) public data: SellerProductItemModel,
+    @Inject(MAT_DIALOG_DATA) public data: SellerProductItem,
     public dialog: MatDialog
   ) {}
 
@@ -64,7 +64,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
 
     this.sellerProductStorageService.getCategories().subscribe({
       next: ({ data }) => {
-        this.categories = [...(data as CategoryModel[])];
+        this.categories = [...data];
         this.store.dispatch(new ProductActions.GetCategories(data));
       },
       error: (err) => {
@@ -79,7 +79,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
       this.sellerProductStorageService
         .storeProduct(this.createProductForm.value)
         .subscribe({
-          next: (res: SellerProductItemModel[]) => {
+          next: (res: SellerProductItem[]) => {
             this.sellerService.setProducts(res);
           },
           error: (err) => {
@@ -94,7 +94,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
       this.sellerProductStorageService
         .updateProduct(this.data.id.toString(), this.createProductForm.value)
         .subscribe({
-          next: (res: SellerProductItemModel[]) => {
+          next: (res: SellerProductItem[]) => {
             this.sellerService.setProducts(res);
           },
           error: (err) => {
@@ -112,7 +112,7 @@ export class CreateSellerProductDialogComponent implements OnInit, OnDestroy {
     this.productsSubscription.unsubscribe();
   }
 
-  uploadFile(event: any) {
+  uploadFile(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     const formData = new FormData();
     formData.append('file', file as File);

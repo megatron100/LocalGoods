@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { UserService } from './user.service';
-import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
 import { ErrorService } from '../shared/error-handling/error.service';
 import {
   API,
@@ -16,7 +15,8 @@ import {
   PATH_GET_PRODUCTS,
   PATH_UPLOAD,
 } from '../shared/constants/constants';
-import { ResponseData } from '../core';
+import { IProduct, ProductCategory, ResponseData } from '../core';
+import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +28,12 @@ export class SellerProductStorageService {
     private errorService: ErrorService
   ) {}
 
-  storeProduct(product: SellerProductItemModel) {
+  storeProduct(product: SellerProductItem): Observable<SellerProductItem[]> {
     return this.http
-      .post<any>(`/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`, product)
+      .post<ResponseData<IProduct[]>>(
+        `/${API_PATH_SELLER}/${PATH_ADD_PRODUCT}`,
+        product
+      )
       .pipe(
         catchError(this.errorService.handleError),
         map(({ data }) => {
@@ -39,9 +42,11 @@ export class SellerProductStorageService {
       );
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(id: string): Observable<SellerProductItem[]> {
     return this.http
-      .delete<any>(`/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`)
+      .delete<ResponseData<IProduct[]>>(
+        `/${API_PATH_SELLER}/${PATH_DELETE_PRODUCT_BY_ID}/${id}`
+      )
       .pipe(
         catchError(this.errorService.handleError),
         map(({ data }) => {
@@ -50,10 +55,16 @@ export class SellerProductStorageService {
       );
   }
 
-  updateProduct(id: string, product: SellerProductItemModel) {
+  updateProduct(
+    id: string,
+    product: SellerProductItem
+  ): Observable<SellerProductItem[]> {
     const body = { ...product, productId: id };
     return this.http
-      .put<any>(`/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`, body)
+      .put<ResponseData<IProduct[]>>(
+        `/${API_PATH_SELLER}/${PATH_EDIT_PRODUCT_BY_ID}`,
+        body
+      )
       .pipe(
         catchError(this.errorService.handleError),
         map(({ data }) => {
@@ -62,36 +73,42 @@ export class SellerProductStorageService {
       );
   }
 
-  getProductById(id: string) {
+  getProductById(id: string): Observable<SellerProductItem> {
     return this.http
-      .get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`)
+      .get<ResponseData<IProduct>>(
+        `/${API_PATH_SELLER}/${PATH_GET_PRODUCT_BY_ID}/${id}`
+      )
       .pipe(
         catchError(this.errorService.handleError),
         map(({ data }) => {
+          console.log('Product: ', data);
           return this.userService.transformProductResponse(data);
         })
       );
   }
 
-  getProducts() {
-    return this.http.get<any>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`).pipe(
-      catchError(this.errorService.handleError),
-      map(({ data }) => {
-        return this.userService.transformProductArrResponse(data);
-      })
-    );
+  getProducts(): Observable<SellerProductItem[]> {
+    return this.http
+      .get<ResponseData<IProduct[]>>(`/${API_PATH_SELLER}/${PATH_GET_PRODUCTS}`)
+      .pipe(
+        catchError(this.errorService.handleError),
+        map(({ data }) => {
+          return this.userService.transformProductArrResponse(data);
+        })
+      );
   }
 
-  getCategories() {
+  getCategories(): Observable<ResponseData<ProductCategory[]>> {
     return this.http
-      .get<any>(`/${API_PATH}/${PATH_GET_CATEGORIES}`)
+      .get<ResponseData<ProductCategory[]>>(
+        `/${API_PATH}/${PATH_GET_CATEGORIES}`
+      )
       .pipe(catchError(this.errorService.handleError));
   }
 
-  uploadImage(file: FormData) {
-    console.log(file);
+  uploadImage(file: FormData): Observable<ResponseData<string>> {
     return this.http
-      .post<ResponseData>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
+      .post<ResponseData<string>>(`${API}${API_PATH}/${PATH_UPLOAD}`, file, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .pipe(catchError(this.errorService.handleError));

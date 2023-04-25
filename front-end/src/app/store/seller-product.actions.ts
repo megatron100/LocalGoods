@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
+import { ProductCategory } from '../core';
 
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_PRODUCT = 'SET_PRODUCT';
@@ -27,7 +28,7 @@ export class ChangeMode implements Action {
 export class GetCategories implements Action {
   readonly type = GET_CATEGORIES;
 
-  constructor(public payload: []) {}
+  constructor(public payload: ProductCategory[]) {}
 }
 
 export type SellerProductsActions =

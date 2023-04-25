@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { SellerProductItemModel } from '../../models/seller-product-item.model';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateSellerProductDialogComponent } from '../dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
 import { Store } from '@ngrx/store';
@@ -8,6 +7,7 @@ import * as ProductActions from '../../../../store/seller-product.actions';
 import { SellerService } from '../../../../services/seller.service';
 import { SellerProductStorageService } from '../../../../services/seller-product-storage.service';
 import { ErrorDialogComponent } from '../../../../shared/error-handling/error-dialog/error-dialog.component';
+import { SellerProductItem } from '../../../../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Component({
   selector: 'app-seller-product-item',
@@ -15,7 +15,7 @@ import { ErrorDialogComponent } from '../../../../shared/error-handling/error-di
   styleUrls: ['./seller-product-item.component.scss'],
 })
 export class SellerProductItemComponent {
-  @Input() sellerProduct!: SellerProductItemModel;
+  @Input() sellerProduct!: SellerProductItem;
 
   constructor(
     private dialog: MatDialog,
@@ -28,7 +28,7 @@ export class SellerProductItemComponent {
     this.sellerProductStorageService
       .deleteProduct(this.sellerProduct.id.toString())
       .subscribe({
-        next: (res: SellerProductItemModel[]) => {
+        next: (res: SellerProductItem[]) => {
           this.sellerService.setProducts(res);
         },
         error: (err) => {

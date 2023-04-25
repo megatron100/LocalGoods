@@ -1,11 +1,12 @@
 import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
 import * as ProductAction from './seller-product.actions';
+import { ProductCategory } from '../core';
 
 export interface SellerProductState {
   sellerProducts: SellerProductItemModel[];
   sellerProduct: SellerProductItemModel | null;
   isCreateMode: boolean;
-  categoryList: [];
+  categoryList: ProductCategory[];
 }
 
 const initialState: SellerProductState = {

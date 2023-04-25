@@ -1,8 +1,7 @@
-import { ProductData } from '../product';
-
-export interface ResponseData {
+export interface ResponseData<T> {
   responseId: string;
   status: boolean;
   message: string;
-  data: Record<string, unknown> | null | ProductData;
+  data: T;
 }
+

@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import * as fromSellerProductList from '../store';
 import * as ProductActions from '../store/seller-product.actions';
 import { Store } from '@ngrx/store';
-import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
 import { HttpClient } from '@angular/common/http';
 import {
   API_PATH_SELLER,
   ORDER_CONFIRM_PATH,
 } from '../shared/constants/constants';
+import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
+import { PendingOrderResponseData } from '../core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,21 +20,28 @@ export class SellerService {
     private http: HttpClient
   ) {}
 
-  getorders() {
+  getOrders(): Observable<PendingOrderResponseData> {
     return this.http
-      .get<any>(`/${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`)
+      .get<PendingOrderResponseData>(
+        `/${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`
+      )
       .pipe();
   }
 
-  setProducts(products: SellerProductItemModel[]) {
+  setProducts(products: SellerProductItem[]) {
     this.store.dispatch(new ProductActions.SetProducts(products));
   }
+
   //add service for decline order
-  declineOrder(id: any) {
-    return this.http.get<any>(`/${API_PATH_SELLER}/decline/${id}`);
+  declineOrder(id: number): Observable<PendingOrderResponseData> {
+    return this.http.get<PendingOrderResponseData>(
+      `/${API_PATH_SELLER}/decline/${id}`
+    );
   }
 
-  deliverOrder(id: any) {
-    return this.http.get<any>(`/${API_PATH_SELLER}/deliver/${id}`);
+  deliverOrder(id: number): Observable<PendingOrderResponseData> {
+    return this.http.get<PendingOrderResponseData>(
+      `/${API_PATH_SELLER}/deliver/${id}`
+    );
   }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { ShopService } from 'src/app/services/shop.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
-import { AddToCartResponseData } from '../../core';
+import { AddToCartResponseData, IProduct } from '../../core';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  @Input() product: any;
+  @Input() product!: IProduct;
 
   ngOnInit(): void {
     this.getProductDetails();
@@ -27,8 +27,8 @@ export class ProductDetailComponent implements OnInit {
 
   private getProductDetails(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.shopService.getProductDetails(id).subscribe((response) => {
-      this.product = response.data;
+    this.shopService.getProductDetails(id).subscribe(({ data }) => {
+      this.product = data;
     });
   }
 

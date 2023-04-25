@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SellerProductStorageService } from '../../../services/seller-product-storage.service';
 import { Subscription } from 'rxjs';
-import { SellerProductItemModel } from '../models/seller-product-item.model';
 import * as fromSellerProductList from '../../../store';
 import { Store } from '@ngrx/store';
 import { SellerProductState } from '../../../store/seller-product.reducer';
@@ -13,6 +12,7 @@ import * as ProductActions from '../../../store/seller-product.actions';
 import { CreateSellerProductDialogComponent } from './dialogs/create-seller-product-dialog/create-seller-product-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../../shared/error-handling/error-dialog/error-dialog.component';
+import { SellerProductItem } from '../../../core/interfaces/responseDatas/SellerProductResponseData';
 
 @Component({
   selector: 'app-seller-product-list',
@@ -21,7 +21,7 @@ import { ErrorDialogComponent } from '../../../shared/error-handling/error-dialo
 })
 export class SellerProductListComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
-  products!: SellerProductItemModel[];
+  products!: SellerProductItem[];
   displayedColumns: string[] = [
     'id',
     'name',
@@ -31,7 +31,7 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
     'photo',
     'actions',
   ];
-  dataSource!: MatTableDataSource<SellerProductItemModel>;
+  dataSource!: MatTableDataSource<SellerProductItem>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -45,7 +45,7 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sellerStorageService.getProducts().subscribe({
-      next: (res: SellerProductItemModel[]) => {
+      next: (res: SellerProductItem[]) => {
         this.sellerService.setProducts(res);
       },
       error: (err) => {
@@ -78,7 +78,7 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
 
   onProductDelete(id: number) {
     this.sellerProductStorageService.deleteProduct(id.toString()).subscribe({
-      next: (res: SellerProductItemModel[]) => {
+      next: (res: SellerProductItem[]) => {
         this.sellerService.setProducts(res);
       },
       error: (err) => {
@@ -88,7 +88,7 @@ export class SellerProductListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onProductUpdate(product: SellerProductItemModel) {
+  onProductUpdate(product: SellerProductItem) {
     this.store.dispatch(new ProductActions.ChangeMode(false));
     const dialogRef = this.dialog.open(CreateSellerProductDialogComponent, {
       data: product,
