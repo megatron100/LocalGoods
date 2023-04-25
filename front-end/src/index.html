@@ -18,16 +18,5 @@
   </head>
   <body class="mat-typography">
     <app-root></app-root>
-    <script>
-      function handleSubmit() {
-        let name = document.getElementById('Name').value;
-        let msg = document.getElementById('Msg').value;
-        console.log(name, msg);
-        let whatsappMessage =
-          'Hello, My name is ' + name + '\n' + 'Message:' + msg;
-        let newMessage = window.encodeURIComponent(whatsappMessage);
-        window.open('https://wa.me/+380676733950?text=' + newMessage);
-      }
-    </script>
   </body>
 </html>
