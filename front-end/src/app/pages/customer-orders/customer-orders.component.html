@@ -7,14 +7,14 @@
         <div class="card-body">
           <div class="card-img-top">
             <img
-              src="{{ order?.orderItem.imageLink }}"
+              src="{{ order?.orderItem?.imageLink }}"
               alt="image"
               width="100px"
               height="100px"
             />
           </div>
           <div>
-            <h3 class="card-title">{{ order?.orderItem.productTitle }}</h3>
+            <h3 class="card-title">{{ order?.orderItem?.productTitle }}</h3>
           </div>
           <h4 class="card-text">Order Status: {{ order?.orderStatus }}</h4>
           <h4 class="card-text">Quantity: {{ order?.quantity }}</h4>

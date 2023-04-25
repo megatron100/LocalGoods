@@ -52,7 +52,8 @@
     @include button($background-color: $pale-text-red);
   }
 
-  &__buy-button, &__clear-button {
+  &__buy-button,
+  &__clear-button {
     width: 50%;
     padding: 5px;
     border-radius: 3px;
@@ -69,7 +70,8 @@
     height: min-content;
     padding: 15px;
     border-radius: 3px;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
     @include media-breakpoint-between('min', 's') {
       display: flex;
@@ -94,7 +96,3 @@
     }
   }
 }
-
-
-
-

@@ -135,11 +135,13 @@ a {
   color: $graphite;
 }
 
-.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple), .mat-option.mat-active {
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
+.mat-option.mat-active {
   background: $gray50;
   color: #fff;
 }
 
-.mat-select-min-line, .mat-select-arrow {
+.mat-select-min-line,
+.mat-select-arrow {
   color: $graphite;
 }

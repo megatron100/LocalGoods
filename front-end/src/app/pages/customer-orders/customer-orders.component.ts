@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerOrderServiceService } from '../../services/CustomerOrderService/customer-order-service.service';
+import { Order } from '../../core';
 
 @Component({
   selector: 'app-customer-orders',
@@ -7,7 +8,7 @@ import { CustomerOrderServiceService } from '../../services/CustomerOrderService
   styleUrls: ['./customer-orders.component.scss'],
 })
 export class CustomerOrdersComponent implements OnInit {
-  orders: any;
+  orders!: Order[];
   message = '';
 
   constructor(private orderServices: CustomerOrderServiceService) {}
@@ -16,8 +17,6 @@ export class CustomerOrdersComponent implements OnInit {
     this.orderServices.getOrders().subscribe(({ data, message }) => {
       this.orders = data;
       this.message = message;
-      console.log(data);
-      console.log(message);
     });
   }
 }

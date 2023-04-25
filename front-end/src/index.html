@@ -20,13 +20,13 @@
     <app-root></app-root>
     <script>
       function handleSubmit() {
-        var name = document.getElementById('Name').value;
-        var msg = document.getElementById('Msg').value;
+        let name = document.getElementById('Name').value;
+        let msg = document.getElementById('Msg').value;
         console.log(name, msg);
-        var whatsappMessage =
+        let whatsappMessage =
           'Hello, My name is ' + name + '\n' + 'Message:' + msg;
-        var newmessage = window.encodeURIComponent(whatsappMessage);
-        window.open('https://wa.me/+916393542600?text=' + newmessage);
+        let newMessage = window.encodeURIComponent(whatsappMessage);
+        window.open('https://wa.me/+380676733950?text=' + newMessage);
       }
     </script>
   </body>

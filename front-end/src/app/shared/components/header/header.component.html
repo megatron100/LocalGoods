@@ -52,7 +52,8 @@
     <div class="navbar-nav navbar-right">
       <mat-icon
         [ngClass]="btnIsHighlighted ? 'bump' : ''"
-        [matBadge]="cartCounter" matBadgeColor="warn"
+        [matBadge]="cartCounter"
+        matBadgeColor="warn"
         style="cursor: pointer; position: relative"
         routerLink="/cart"
         *ngIf="isUserAuth && user.role === 'customer'"
@@ -138,7 +139,9 @@
     mat-menu-item
     routerLink="/customer-orders"
   >
-    <mat-icon [matBadge]="cartCounter" matBadgeColor="warn">shopping_basket</mat-icon><a>My Orders</a>
+    <mat-icon [matBadge]="cartCounter" matBadgeColor="warn"
+      >shopping_basket</mat-icon
+    ><a>My Orders</a>
   </button>
   <button
     *ngIf="isUserAuth && user.role === 'customer'"
@@ -161,5 +164,3 @@
     <mat-icon>lock_open</mat-icon><a style="cursor: pointer">Register</a>
   </button>
 </mat-menu>
-
-

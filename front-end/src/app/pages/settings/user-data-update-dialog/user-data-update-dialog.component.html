@@ -1,10 +1,7 @@
 <h2 mat-dialog-title style="font-size: 22px">Edit my credentials</h2>
 <div mat-dialog-content class="container">
   <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <app-basic-info
-      formGroupName="basicInfo"
-      [user]="user"
-    ></app-basic-info>
+    <app-basic-info formGroupName="basicInfo" [user]="user"></app-basic-info>
     <hr />
     <br />
     <br />

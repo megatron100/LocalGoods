@@ -32,7 +32,10 @@ mat-card {
 
   mat-card-content {
     h3 {
-      @include main-text($font-size: $font-medium-plus, $font-weight: $font-weight-800,);
+      @include main-text(
+        $font-size: $font-medium-plus,
+        $font-weight: $font-weight-800
+      );
     }
   }
 
@@ -83,16 +86,14 @@ mat-card {
         $font-weight: $font-weight-800,
         $line-height: 2,
         $font-family: $font-source-sans-pro-black
-      )
+      );
     }
   }
 
   @include media-breakpoint-between('min', 's') {
     margin: auto 5px 10px 5px;
     .mat-card-image {
-      @include image-size($width: 100%)
+      @include image-size($width: 100%);
     }
   }
 }
-
-

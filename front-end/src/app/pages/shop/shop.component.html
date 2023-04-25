@@ -2,13 +2,16 @@
   <app-sub-menu-header class="shop__sub-menu-header"></app-sub-menu-header>
   <div class="shop__product-section">
     <ng-container *ngIf="products$ | async as products; else loading">
-      <app-product-card *ngFor="
-        let product of products
-          | pagination: pageIndex: pageSize
-          | search : searchValue
-          | sort : sortValue
-          | filter : category
-      " [product]="product">
+      <app-product-card
+        *ngFor="
+          let product of products
+            | pagination : pageIndex : pageSize
+            | search : searchValue
+            | sort : sortValue
+            | filter : category
+        "
+        [product]="product"
+      >
       </app-product-card>
     </ng-container>
     <ng-template #loading>

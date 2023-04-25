@@ -8,7 +8,7 @@ import {
   ORDER_CONFIRM_PATH,
 } from '../shared/constants/constants';
 import { SellerProductItem } from '../core/interfaces/responseDatas/SellerProductResponseData';
-import { PendingOrderResponseData } from '../core';
+import { Order, ResponseData } from '../core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,11 +20,9 @@ export class SellerService {
     private http: HttpClient
   ) {}
 
-  getOrders(): Observable<PendingOrderResponseData> {
+  getOrders(): Observable<ResponseData<Order[]>> {
     return this.http
-      .get<PendingOrderResponseData>(
-        `/${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`
-      )
+      .get<ResponseData<Order[]>>(`/${API_PATH_SELLER}/${ORDER_CONFIRM_PATH}`)
       .pipe();
   }
 
@@ -33,14 +31,14 @@ export class SellerService {
   }
 
   //add service for decline order
-  declineOrder(id: number): Observable<PendingOrderResponseData> {
-    return this.http.get<PendingOrderResponseData>(
+  declineOrder(id: number): Observable<ResponseData<Order[]>> {
+    return this.http.get<ResponseData<Order[]>>(
       `/${API_PATH_SELLER}/decline/${id}`
     );
   }
 
-  deliverOrder(id: number): Observable<PendingOrderResponseData> {
-    return this.http.get<PendingOrderResponseData>(
+  deliverOrder(id: number): Observable<ResponseData<Order[]>> {
+    return this.http.get<ResponseData<Order[]>>(
       `/${API_PATH_SELLER}/deliver/${id}`
     );
   }

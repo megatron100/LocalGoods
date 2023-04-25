@@ -5,10 +5,7 @@
     <!-- First name -->
     <mat-form-field color="accent">
       <mat-label>First name</mat-label>
-      <input
-        matInput
-        placeholder="Ex. Jane"
-        formControlName="name" />
+      <input matInput placeholder="Ex. Jane" formControlName="name" />
       <mat-error *ngIf="form.hasError('required', 'email')">
         This field is require!
       </mat-error>

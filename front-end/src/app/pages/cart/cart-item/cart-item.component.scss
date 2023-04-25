@@ -62,7 +62,7 @@ mat-card {
         p {
           text-align: center;
           margin: 0 auto;
-          @include main-text($font-size: $font-large)
+          @include main-text($font-size: $font-large);
         }
       }
 

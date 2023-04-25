@@ -40,7 +40,9 @@
             class="pass-visibility"
             (click)="onTogglePassVisible(control.name)"
             [ngClass]="
-              !control.isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+              !control.isPassIsVisible
+                ? 'icon-pass-visible'
+                : 'icon-pass-invisible'
             "
           ></i>
         </div>

@@ -1,10 +1,12 @@
 <div class="wrapper">
-  <div class="cart" *ngIf="totalCartQuantity$ |async as totalCartQuantity">
+  <div class="cart" *ngIf="totalCartQuantity$ | async as totalCartQuantity">
     <div class="cart__product-section">
-      <h1>Your cart{{totalCartQuantity.totalAmount > 0 ? ':' : ' is empty'}}</h1>
+      <h1>
+        Your cart{{ totalCartQuantity.totalAmount > 0 ? ':' : ' is empty' }}
+      </h1>
       <div class="cart__item-section">
         <div class="cart__item-element" *ngFor="let item of cart$ | async">
-          <app-cart-item *ngIf="item.quantity>0" [cartItem]="item">
+          <app-cart-item *ngIf="item.quantity > 0" [cartItem]="item">
           </app-cart-item>
         </div>
       </div>
@@ -13,22 +15,20 @@
     <div class="cart__order-section">
       <div class="cart__order-info">
         <h1>Order</h1>
-        <p>Items: {{totalCartQuantity?.totalQuantity}}</p>
-        <p>Total amount: {{totalCartQuantity?.totalAmount | currency: 'USD'}}</p>
+        <p>Items: {{ totalCartQuantity?.totalQuantity }}</p>
+        <p>
+          Total amount: {{ totalCartQuantity?.totalAmount | currency : 'USD' }}
+        </p>
         <button type="button" routerLink="/shop">Сontinue shopping</button>
       </div>
       <div class="cart__actions">
-        <button type="button" class="cart__buy-button" (click)="buyProducts()">Buy</button>
-        <button type="button" class="cart__clear-button" (click)="clearCart()">Clear Cart</button>
+        <button type="button" class="cart__buy-button" (click)="buyProducts()">
+          Buy
+        </button>
+        <button type="button" class="cart__clear-button" (click)="clearCart()">
+          Clear Cart
+        </button>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-

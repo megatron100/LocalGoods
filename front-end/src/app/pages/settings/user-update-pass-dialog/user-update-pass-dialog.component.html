@@ -3,7 +3,7 @@
   <form class="form" [formGroup]="passForm" (ngSubmit)="onSubmit()">
     <mat-card class="form-container">
       <mat-form-field color="accent" *ngFor="let control of formData?.controls">
-        <mat-label>{{control.label}}</mat-label>
+        <mat-label>{{ control.label }}</mat-label>
         <input
           *ngIf="
             ['text', 'email', 'number', 'search', 'tel', 'url'].includes(
@@ -30,7 +30,9 @@
             class="pass-visibility"
             (click)="onTogglePassVisible(control.name)"
             [ngClass]="
-              !control.isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+              !control.isPassIsVisible
+                ? 'icon-pass-visible'
+                : 'icon-pass-invisible'
             "
           ></i>
         </div>

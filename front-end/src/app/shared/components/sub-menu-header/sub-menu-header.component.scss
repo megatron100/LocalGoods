@@ -13,7 +13,7 @@
 
   &__label {
     color: $graphite;
-    @include font-size($font-medium-plus, $font-medium)
+    @include font-size($font-medium-plus, $font-medium);
   }
 
   &__select {
@@ -36,5 +36,3 @@
     }
   }
 }
-
-

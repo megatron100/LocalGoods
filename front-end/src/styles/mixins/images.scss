@@ -4,7 +4,7 @@
   $object-fit: cover,
   $align-self: center
 ) {
-  width:   $width;
+  width: $width;
   height: $height;
   object-fit: $object-fit;
   align-self: $align-self;
