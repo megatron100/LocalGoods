@@ -1,61 +1,97 @@
-<h2 mat-dialog-title style='font-size: 22px'>{{ isCreateMode ? "Create product" : "Update product" }}</h2>
-<div class='container' >
-  <form [formGroup]='createProductForm' (ngSubmit)="onSubmit()">
-    <mat-card class='form-container'>
-      <mat-form-field color='accent'>
+<h2 mat-dialog-title style="font-size: 22px">
+  {{ isCreateMode ? 'Create product' : 'Update product' }}
+</h2>
+<div class="container">
+  <form [formGroup]="createProductForm" (ngSubmit)="onSubmit()">
+    <mat-card class="form-container">
+      <mat-form-field color="accent">
         <mat-label>Name</mat-label>
-        <input matInput placeholder='Ex. Milk' formControlName='name' type='text'>
+        <input
+          matInput
+          placeholder="Ex. Milk"
+          formControlName="name"
+          type="text"
+        />
         <mat-error *ngIf="createProductForm.hasError('required', 'name')">
           This field is required!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option *ngFor="let category of categories" [value]="category.productCategoryName">
-            {{category.productCategoryName}}
+          <mat-option
+            *ngFor="let category of categories"
+            [value]="category.productCategoryName"
+          >
+            {{ category.productCategoryName }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="createProductForm.hasError('required', 'category')">
           This field is required!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>Price</mat-label>
-        <input matInput placeholder='Enter product price' formControlName='price' type='number'>
+        <input
+          matInput
+          placeholder="Enter product price"
+          formControlName="price"
+          type="number"
+        />
         <mat-error *ngIf="createProductForm.hasError('required', 'price')">
           This field is required!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>Short Desc</mat-label>
-        <input matInput placeholder='Enter product short description' formControlName='shortDesc' type='text'>
+        <input
+          matInput
+          placeholder="Enter product short description"
+          formControlName="shortDesc"
+          type="text"
+        />
         <mat-error *ngIf="createProductForm.hasError('required', 'shortDesc')">
           This field is required!
         </mat-error>
       </mat-form-field>
-      <mat-form-field color='accent'>
+      <mat-form-field color="accent">
         <mat-label>Long Description</mat-label>
-        <input matInput placeholder='Enter product long description' formControlName='longDescription' type='text'>
-        <mat-error *ngIf="createProductForm.hasError('required', 'longDescription')">
+        <input
+          matInput
+          placeholder="Enter product long description"
+          formControlName="longDescription"
+          type="text"
+        />
+        <mat-error
+          *ngIf="createProductForm.hasError('required', 'longDescription')"
+        >
           This field is required!
         </mat-error>
       </mat-form-field>
     </mat-card>
-    <button
-      type="button"
-      mat-raised-button
-      (click)="fileInput.click()">
+    <button type="button" mat-raised-button (click)="fileInput.click()">
       Choose product image
     </button>
-    <input hidden (change)="uploadFile($event)" #fileInput type="file" id="file">
+    <input
+      hidden
+      (change)="uploadFile($event)"
+      #fileInput
+      type="file"
+      id="file"
+    />
     <mat-error *ngIf="createProductForm.hasError('required', 'photo')">
       Please load file!
     </mat-error>
   </form>
 </div>
 <mat-dialog-actions>
-  <button [disabled]='!createProductForm.valid' type='submit' (click)='onSubmit()' mat-raised-button mat-dialog-close=true>
+  <button
+    [disabled]="!createProductForm.valid"
+    type="submit"
+    (click)="onSubmit()"
+    mat-raised-button
+    mat-dialog-close="true"
+  >
     Save
   </button>
 </mat-dialog-actions>

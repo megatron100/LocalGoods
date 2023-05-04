@@ -1,3 +1,6 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
 li {
   list-style: none;
   margin-left: 15px;
@@ -9,30 +12,32 @@ a {
 
 .logo {
   font-size: 24px;
+  height: 100%;
+  img {
+    height: 100%;
+  }
 }
-
 
 .cdk-overlay-pane {
   width: 100%;
-} 
+}
 
 .active a {
-  color: #555!important;
+  color: #555 !important;
   font-weight: 500;
 }
 
-.cart-num{
-  font-size:12px;
+.cart-num {
+  font-size: 12px;
   color: #fff;
   background: red;
-  border-radius:50%;
+  border-radius: 50%;
   padding: 0 5px;
 }
 
-
 @media (max-width: 768px) {
   .mat-toolbar {
-    background-color: #39a94b;
+    @include header-bg;
     display: flex;
     justify-content: space-between;
 
@@ -52,7 +57,7 @@ a {
         }
 
         .navbar-toggle:focus {
-          background-color: #56725b;
+          background-color: $gray50;
         }
 
         .navbar-toggle {
@@ -71,7 +76,7 @@ a {
             width: 22px;
             height: 2px;
             border-radius: 1px;
-            background-color: #39a94b;;
+            background-color: $gray60;
           }
 
           .icon-bar + .icon-bar {
@@ -85,7 +90,7 @@ a {
 
 @media (min-width: 768px) {
   .mat-toolbar {
-    background-color: #39a94b;
+    @include header-bg;
 
     .navbar-collapse {
       display: flex;
@@ -112,6 +117,24 @@ a {
   }
 }
 
+.bump {
+  animation: bump 300ms ease-out;
+}
 
-
-
+@keyframes bump {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

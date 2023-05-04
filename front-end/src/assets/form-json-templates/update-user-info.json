@@ -1,0 +1,26 @@
+{
+  "controls": [
+    {
+      "name": "name",
+      "label": "First name",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true,
+        "minLength": 3,
+        "message": "onlyLatins"
+      }
+    },
+    {
+      "name": "mobile",
+      "label": "Mobile",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true,
+        "minLength": 3,
+        "message": "onlyLatins"
+      }
+    }
+  ]
+}

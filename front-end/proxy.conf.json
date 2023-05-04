@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://localgoods1.azurewebsites.net",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

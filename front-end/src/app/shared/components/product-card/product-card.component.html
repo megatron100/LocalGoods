@@ -1,18 +1,43 @@
-<div class="product-card">
-<!--    <div class="product-container">-->
-<!--        <a routerLink='/product/{{product.id}}'>-->
-<!--            <img src="{{product.imageLink}}" alt="{{product.productTitle}}" class="product-pic">-->
-<!--        </a>-->
-<!--        <div class="product-content">-->
-<!--            <a class="product-name__link" routerLink='/product/{{product.id}}'>-->
-<!--                <h3 class="product-name"> {{product.productTitle}}</h3>-->
-<!--            </a>-->
-<!--            <a href="#" class="product-seller__link">-->
-<!--                <h4 class="product-seller">Seller: {{product.seller.name}}</h4>-->
-<!--            </a>-->
-<!--            <p class="product-description">{{product.shortDescription}}</p>-->
-<!--            <p class="product-price">{{product.price | currency: 'USD'}}</p>-->
-<!--        </div>-->
-<!--    </div>-->
-    <ng-content></ng-content>
-</div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ product.productTitle }}</mat-card-title>
+    <mat-card-subtitle>{{ product.shortDescription }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    class="product-card__image"
+    mat-card-image
+    [src]="product.imageLink"
+    [alt]="product.productTitle"
+  />
+  <mat-card-content>
+    <h3>Seller info:</h3>
+    <p><b>Name:</b> {{ product.seller.name }}</p>
+    <p><b>UserAddres:</b> {{ product.seller.address.country }}</p>
+    <p><b>City:</b> {{ product.seller.address.city }}</p>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-card-content>
+      <h3>Price: {{ product.price | currency : 'USD' }}</h3>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="product-add-container">
+        <input
+          class="product-add-input"
+          type="number"
+          name="product-quantity"
+          id="product-quantity-{{ product.id }}"
+          min="1"
+          [value]="quantity"
+          (change)="changeQuantity($event)"
+        />
+        <button
+          mat-raised-button
+          class="product-add-button"
+          (click)="onProductAddToCart(product)"
+        >
+          Add to <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>

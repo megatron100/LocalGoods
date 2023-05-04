@@ -1,0 +1,40 @@
+{
+  "controls": [
+    {
+      "name": "country",
+      "label": "Country",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "city",
+      "label": "City",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "area",
+      "label": "State",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "postCode",
+      "label": "Post Code",
+      "value": "",
+      "type": "text",
+      "validators": {
+        "required": true
+      }
+    }
+  ]
+}

@@ -1,4 +1,3 @@
 export class ErrorModel {
-  constructor(public errorCode: number, public errorMessage: string) {
-  }
+  constructor(public errorCode: number, public errorMessage: string) {}
 }

@@ -1,7 +1,11 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
 .root {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: $light-green;
 
   .app-container {
     flex: 1 1 auto;
@@ -9,7 +13,7 @@
     display: inline-table;
   }
 }
-  /*background: #cd9cf2;*/
+/*background: #cd9cf2;*/
 
 /* Chrome 10-25, Safari 5.1-6 */
 /*background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));*/
@@ -17,4 +21,3 @@
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 /*background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
 }*/
-

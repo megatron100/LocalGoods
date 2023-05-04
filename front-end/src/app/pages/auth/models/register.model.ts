@@ -5,6 +5,5 @@ export class RegisterModel {
     public password: string,
     public confirmPass: string,
     public role: string
-  ) {
-  }
+  ) {}
 }

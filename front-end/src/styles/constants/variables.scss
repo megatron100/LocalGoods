@@ -15,7 +15,7 @@ $grid-breakpoints: (
   s: $width-s,
   md: $width-md,
   lg: $width-lg,
-  xlg: $width-xlg
+  xlg: $width-xlg,
 );
 
 // Base fonts
@@ -74,7 +74,6 @@ $min-gap: 6px;
 $medium-gap: 18px;
 $max-gap: 24px;
 $max-gap2: 28px;
-
 
 $input-border: 1px solid $gray40;
 $input-error-border: 1px solid $red;

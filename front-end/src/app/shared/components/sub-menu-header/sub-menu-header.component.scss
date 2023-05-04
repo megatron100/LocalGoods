@@ -1,55 +1,38 @@
-.selects {
-  display: flex;
-  align-items: center;
-  margin: 0 15px 0 15px;
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
 
-  .select {
-    select, input {
-      border: 1px solid #dddddd;
-      border-radius: 4px;
-      padding: 5px;
-      width: 20rem;
+.sub-menu {
+  @include display();
+  background: $light-green;
 
-      option {
-        color: #777777;
-        font-weight: 500;
-      }
-    }
-
-    label {
-      margin-right: 15px;
-      color: #777777;
-      font-weight: 500;
-    }
-
-    padding: 15px;
-    margin-left: 30px;
+  &__field {
+    width: 400px;
+    color: black;
+    margin: 0 15px;
   }
-}
 
-@media (max-width: 768px) {
-  .selects {
-    display: flex;
+  &__label {
+    color: $graphite;
+    @include font-size($font-medium-plus, $font-medium);
+  }
+
+  &__select {
+    color: #30e01c !important;
+  }
+
+  @include media-breakpoint-between('md', 'lg') {
+    &__field {
+      width: 250px;
+    }
+    &__field-search {
+      width: 400px;
+    }
+  }
+
+  @include media-breakpoint-between('xxs', 'md') {
     flex-direction: column;
-    align-items: inherit;
-
-    .select {
-      display: block;
-      select, input {
-        height: 42px;
-        width: 100%;
-
-        option {
-          color: #777777;
-          font-weight: 500;
-        }
-      }
-
-      label {
-        display: block;
-        font-size: 24px;
-      }
-      margin-left: 0;
+    &__field {
+      width: 90%;
     }
   }
 }
