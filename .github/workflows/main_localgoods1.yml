@@ -24,8 +24,8 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run:   dir
-        #run: dotnet build ${{env.DOTNET_ROOT}}/LocalGoods.Main --configuration Release
+         
+        run: dotnet build ${{env.DOTNET_ROOT}}/LocalGoods.Main --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/LocalGoods.Main
