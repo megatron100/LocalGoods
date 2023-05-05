@@ -1,139 +1,74 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddToCart } from 'src/app/interfaces/addToCartModel';
-import { IProduct } from 'src/app/interfaces/product';
 import { CartService } from 'src/app/services/cart.service';
-import { SellerService } from 'src/app/services/seller.service';
 import { MessageDialogComponent } from 'src/app/shared/dialogs/message-dialog/message-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/error-handling/error-dialog/error-dialog.component';
+import { CartData, CartItem } from '../../core';
+import { Observable, Subscription } from 'rxjs';
+import { AutoUnsubscribe } from '../../shared/utils/decorators';
 
+@AutoUnsubscribe('getCartSubs')
+@AutoUnsubscribe('orderSubs')
+@AutoUnsubscribe('clearCartSubs')
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
+  cart$!: Observable<CartItem[]>;
+  totalCartQuantity$!: Observable<null | CartData>;
+  private getCartSubs = new Subscription();
+  private orderSubs = new Subscription();
+  private clearCartSubs = new Subscription();
 
-
-  cart!: any[];
-  cartWithQuantity: any;
-
-  constructor( private cartService: CartService, public dialog: MatDialog ) { }
+  constructor(private cartService: CartService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
+    this.getCartSubs.add(this.cartService.getCart().subscribe());
     this.getCart();
-
+    this.getTotalQuantity();
   }
 
   getCart() {
-    this.cartService.getCart()
-        .subscribe(res => {
-          this.cart = res.data.cartItems;
-          this.cartWithQuantity = res.data;
-          console.log(this.cartWithQuantity);
+    this.cart$ = this.cartService.cartContent;
+  }
 
-
-        })
+  getTotalQuantity() {
+    this.totalCartQuantity$ = this.cartService.totalCartQuantity;
   }
 
   buyProducts() {
-    this.cartService.orderFromCart()
-      .subscribe(res => {
-        if(res.status==true)
-        {this.cart=[];
-        this.cartWithQuantity=[];
-        const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
-        dialogRef.afterClosed()
-         
-      }
-         
-        else if(res.status==false)
-        {
+    this.orderSubs.add(
+      this.cartService.orderFromCart().subscribe((res) => {
+        if (res.status) {
+          this.cartService.cartContent.next([]);
+          this.cartService.totalCartQuantity.next(null);
+          const dialogRef = this.dialog.open(MessageDialogComponent, {
+            data: res.message,
+          });
+          dialogRef.afterClosed();
+        } else if (!res.status) {
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
             data: res.message,
-            panelClass: 'color'
+            panelClass: 'color',
           });
-          dialogRef.afterClosed()
-          
+          dialogRef.afterClosed();
         }
-        console.log(res);
-
       })
-
-
+    );
   }
 
   clearCart() {
-    this.cartService.clearCart()
-        .subscribe(res => {
-          this.cart = []
-          this.cartWithQuantity =[];
-
-          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
-          dialogRef.afterClosed()
-
+    this.clearCartSubs.add(
+      this.cartService.clearCart().subscribe((res) => {
+        this.cartService.cartContent.next([]);
+        this.cartService.totalCartQuantity.next(null);
+        const dialogRef = this.dialog.open(MessageDialogComponent, {
+          data: res.message,
         });
-
-  }
-
-  calculatePrice() {
-    return this.cartWithQuantity.totalAmount;
-
-  }
-  calculateQuantity() {
-    return this.cartWithQuantity.totalQuantity;
-  }
-
-  removeItem(id: number) {
-    this.cartService.removeItem(id)
-        .subscribe(res => {
-           
-          this.cartWithQuantity=res.data;
-
-          for (let i = 0; i < this.cart.length; i++) {
-            if (this.cart[i].id === id) {
-              this.cart.splice(i, 1);
-            }
-          }
-          const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
-          dialogRef.afterClosed()
-        })
-
-
-  }
-
-  plusOne(id: number) {
-    let model: AddToCart={
-      id:id,
-      quantity:1
-    };
-
-
-
-
-    this.cartService.addToCart(model).subscribe(res => {
-       
-      this.cartWithQuantity=res.data;
-
-       this.getCart();
-       const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
-       dialogRef.afterClosed()
-    })
-  }
-
-
-
-  minusOne(id: number) {
-    this.cartService.minusQuantity(id).subscribe(res => {
-      console.log(res); 
-      this.cartWithQuantity=res.data;
-
-      this.getCart();
-      const dialogRef = this.dialog.open(MessageDialogComponent, {data: res.message});
-       dialogRef.afterClosed()
-    })
-
+        dialogRef.afterClosed();
+      })
+    );
   }
 }
-
-

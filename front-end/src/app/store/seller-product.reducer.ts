@@ -1,45 +1,46 @@
-import {SellerProductItemModel} from "../pages/seller-admin-panel/models/seller-product-item.model";
-import * as ProductAction from './seller-product.actions'
+import { SellerProductItemModel } from '../pages/seller-admin-panel/models/seller-product-item.model';
+import * as ProductAction from './seller-product.actions';
+import { ProductCategory } from '../core';
 
 export interface SellerProductState {
-  sellerProducts: SellerProductItemModel[],
-  sellerProduct: SellerProductItemModel | null,
-  isCreateMode: boolean,
-  categoryList: []
+  sellerProducts: SellerProductItemModel[];
+  sellerProduct: SellerProductItemModel | null;
+  isCreateMode: boolean;
+  categoryList: ProductCategory[];
 }
 
 const initialState: SellerProductState = {
   sellerProducts: [],
   sellerProduct: null,
   isCreateMode: true,
-  categoryList: []
-}
+  categoryList: [],
+};
 
 export function sellerProductReducer(
   state: SellerProductState = initialState,
-  {payload, type}: ProductAction.SellerProductsActions
+  { payload, type }: ProductAction.SellerProductsActions
 ): SellerProductState {
   switch (type) {
     case ProductAction.SET_PRODUCTS:
       return {
         ...state,
-        sellerProducts: [...payload]
+        sellerProducts: [...payload],
       };
     case ProductAction.SET_PRODUCT:
       return {
         ...state,
-        sellerProduct: payload
+        sellerProduct: payload,
       };
     case ProductAction.CHANGE_MODE:
       return {
         ...state,
-        isCreateMode: payload
+        isCreateMode: payload,
       };
     case ProductAction.GET_CATEGORIES:
       return {
         ...state,
-        categoryList: [...payload]
-      }
+        categoryList: [...payload],
+      };
     default:
       return state;
   }

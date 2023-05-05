@@ -1,0 +1,99 @@
+@import 'src/styles/constants/index';
+@import 'src/styles/mixins/index';
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 40px;
+  align-items: start;
+  border-radius: 5px;
+  background-color: $gray5;
+  color: $graphite;
+
+  mat-card-header {
+    height: 70px;
+
+    .mat-card-title {
+      margin: 0;
+      @include main-text(
+        $font-size: $font-big,
+        $font-weight: $font-weight-800,
+        $line-height: 2,
+        $font-family: $font-source-sans-pro-black
+      );
+    }
+
+    .mat-card-subtitle {
+      margin: 0;
+      @include main-text($font-size: $font-normal);
+      color: $graphite;
+    }
+  }
+
+  mat-card-content {
+    h3 {
+      @include main-text(
+        $font-size: $font-medium-plus,
+        $font-weight: $font-weight-800
+      );
+    }
+  }
+
+  .mat-card-image {
+    @include image-size($height: 300px, $width: 300px);
+    margin: 15px 0;
+  }
+
+  mat-card-actions {
+    .product-add-container {
+      display: flex;
+
+      .product-add-input {
+        width: 3rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font: inherit;
+        padding-left: 0.5rem;
+      }
+
+      .product-add-button {
+        background-color: $green;
+        color: $white;
+
+        mat-icon {
+          margin-left: 10px;
+          font-size: 20px;
+        }
+      }
+
+      .product-add-button:hover {
+        color: $green;
+        background-color: $white;
+      }
+    }
+  }
+
+  mat-card-footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: end;
+    margin: 0;
+
+    mat-card-content > h3 {
+      @include main-text(
+        $font-size: $font-big,
+        $font-weight: $font-weight-800,
+        $line-height: 2,
+        $font-family: $font-source-sans-pro-black
+      );
+    }
+  }
+
+  @include media-breakpoint-between('min', 's') {
+    margin: auto 5px 10px 5px;
+    .mat-card-image {
+      @include image-size($width: 100%);
+    }
+  }
+}

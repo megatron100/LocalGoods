@@ -1,0 +1,49 @@
+<div class="sub-menu">
+  <mat-form-field class="sub-menu__field" color="accent">
+    <mat-label class="sub-menu__label">Sort by:</mat-label>
+    <mat-select
+      class="sub-menu__select"
+      (valueChange)="sortValueChange($event)"
+    >
+      <mat-option
+        class="sub-menu__options"
+        *ngFor="let sortValue of sortValues"
+        [value]="sortValue"
+      >
+        {{ sortValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="sub-menu__field sub-menu__field-search" color="accent">
+    <mat-label class="sub-menu__label">Search: </mat-label>
+    <input
+      matInput
+      type="text"
+      (input)="searchChange($event)"
+      [(ngModel)]="value"
+    />
+    <button
+      *ngIf="value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="value = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field class="sub-menu__field" color="accent">
+    <mat-label class="sub-menu__label">Filter by Category:</mat-label>
+    <mat-select class="sub-menu__select" (valueChange)="filterCategory($event)">
+      <mat-option
+        class="sub-menu__options"
+        *ngFor="let category of categories"
+        [value]="category"
+      >
+        {{ category }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

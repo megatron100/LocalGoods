@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="form-header">
+    <h2 class="form-header__title">Sign In</h2>
+    <span class="form-header__text">
+      New user?
+      <a routerLink="/register" class="form-header__link">Create an account</a>
+    </span>
+  </div>
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-card class="form-container">
+      <mat-form-field
+        *ngFor="let control of jsonFormData?.controls"
+        color="accent"
+        appearance="outline"
+      >
+        <mat-label>{{ control.label }}</mat-label>
+        <input
+          *ngIf="
+            ['text', 'email', 'number', 'search', 'tel', 'url'].includes(
+              control.type
+            )
+          "
+          [type]="control.type"
+          [id]="control.name"
+          [formControlName]="control.name"
+          [value]="control.value"
+          matInput
+        />
+        <div class="input" *ngIf="control.type === 'password'">
+          <input
+            *ngIf="control.name === 'password'"
+            [type]="isPassIsVisible ? 'text' : 'password'"
+            [id]="control.name"
+            [formControlName]="control.name"
+            [value]="control.value"
+            autocomplete="on"
+            matInput
+          />
+          <i
+            *ngIf="control.name === 'password'"
+            class="pass-visibility"
+            (click)="onTogglePassVisible()"
+            [ngClass]="
+              !isPassIsVisible ? 'icon-pass-visible' : 'icon-pass-invisible'
+            "
+          ></i>
+        </div>
+        <mat-error
+          *ngIf="
+            getError(control.name)?.invalid && getError(control.name)?.touched
+          "
+        >
+          <mat-error *ngIf="getError(control.name)?.hasError('required')">
+            {{ _errorMessage.required }}
+          </mat-error>
+          <mat-error *ngIf="getError(control.name)?.hasError('minlength')">
+            {{ _errorMessage.minlength }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              getError(control.name)?.hasError('message') &&
+              !getError(control.name)?.hasError('minlength')
+            "
+          >
+            {{loginForm.controls[control.name].errors?.['message']}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+      <mat-dialog-actions>
+        <button
+          [disabled]="!loginForm?.valid"
+          mat-raised-button
+          mat-dialog-close="true"
+          type="submit"
+          (click)="onSubmit()"
+          color="accent"
+        >
+          Login
+        </button>
+      </mat-dialog-actions>
+    </mat-card>
+  </form>
+</div>

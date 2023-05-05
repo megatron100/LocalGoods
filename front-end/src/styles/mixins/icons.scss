@@ -1,0 +1,129 @@
+@import 'src/styles/constants/icons';
+
+// helper function to get the correct font family name
+@function iconfont-family($name) {
+  $slash: str-index($name, '/');
+  $family: nth(map-keys($iconfont-data), length(map-keys($iconfont-data)));
+
+  @if $slash {
+    $family: str-slice($name, 0, $slash - 1);
+  }
+
+  @return $family;
+}
+
+// helper function to get the correct font group
+@function iconfont-group($name) {
+  $family: iconfont-family($name);
+
+  @if false == map-has-key($iconfont-data, $family) {
+    @warn 'Undefined Iconfont Family `#{$family}`!';
+    @return ();
+  }
+
+  @return map-get($iconfont-data, $family);
+}
+
+// helper function to get the correct icon of a group
+@function iconfont-item($name) {
+  $group: iconfont-group($name);
+  $slash: str-index($name, '/');
+
+  @if $slash {
+    $name: str-slice($name, $slash + 1);
+  }
+
+  @if false == map-has-key($group, $name) {
+    @warn 'Undefined Iconfont Glyph `#{$name}`!';
+    @return '';
+  }
+
+  @return map-get($group, $name);
+}
+
+// Supportive styles for the icon font
+@mixin iconfont-styles($family: nth(map-keys($iconfont-data), 1)) {
+  font-family: '#{$family}';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+
+  // For safety - reset parent styles, that can break glyph codes
+  font-variant: normal;
+  text-transform: none;
+
+  // fix buttons height
+  line-height: 1em;
+
+  // Font smoothing
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Mixin to include a font icon using CSS pseudo-elements
+// Adaptation of http://jaydenseric.com/blog/fun-with-sass-and-font-icons
+// Possible rotations: no rotation (default), left, right, flip
+// Possible positions: before (default), after, both
+// It is also possible to include any extra rules for the pseudo-element via content
+//
+// @example:
+//   .block__icon {
+//       @include icon('arrow') {
+//           position: absolute;
+//           right: 0;
+//       }
+//   }
+@mixin icon(
+  $icon: '',
+  $styles: true,
+  $rotate: false,
+  $position: before,
+  $onlyPseudo: false
+) {
+  @if $styles and not $onlyPseudo {
+    // By default, the container has the same styles as a pseudo-element
+    // but it can be rewritten from outside
+    $family: iconfont-family($icon);
+
+    @include iconfont-styles($family);
+  }
+
+  @if $position == both {
+    $position: 'before, &::after';
+  }
+
+  // Either a ::before or ::after pseudo-element, or both
+  &::#{$position} {
+    @if $icon != '' {
+      // A particular icon has been specified
+      $glyph: iconfont-item($icon);
+
+      content: '#{$glyph}';
+    }
+
+    @if $styles {
+      // Supportive icon font styles required
+      $family: iconfont-family($icon);
+
+      @include iconfont-styles($family);
+    }
+
+    @if $rotate {
+      $directions: (
+        left: rotate(-90deg),
+        right: rotate(90deg),
+        flip: rotate(180deg),
+      );
+
+      @if map-has-key($directions, $rotate) {
+        transform: map-get($directions, $rotate);
+      } @else {
+        transform: $rotate;
+      }
+    }
+
+    // Include any extra rules supplied for the pseudo-element
+    @content;
+  }
+}

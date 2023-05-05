@@ -1,0 +1,41 @@
+@import 'src/styles/constants/index';
+
+@mixin main-text(
+  $font-size: $font-normal,
+  $line-height: 1,
+  $font-weight: normal,
+  $font-family: $font-source-sans-pro-regular
+) {
+  font: $font-weight #{$font-size}/#{$line-height} $font-family;
+}
+
+// mixin for font-size: insert the sizes you need for your 'font-size' property
+// The mixin accepts from 1 to 3 values:
+//
+// Es:
+//    1 parameter returns the value for mobile devices to wide-screen devices
+//        .yourClass {
+//          @include fontSize(20px);
+//        }
+//      Return:
+//        font-size: 20px from mobile to wide-screen devices
+//
+//    2 parameters return the first value for mobile and tablet devices and the second value for desktop to wide-screen devices
+//        .yourClass {
+//          @include fontSize(20px, 30px);
+//        }
+//      Return:
+//        font-size: 20px for mobile and tablet devices
+//        font-size: 30px for desktop to wide-screen devices
+
+@mixin font-size($sizes...) {
+  @if length($sizes) == 1 {
+    font-size: nth($sizes, 1);
+  } @else if length($sizes) == 2 {
+    font-size: nth($sizes, 1);
+
+    @include media-breakpoint-up(lg) {
+      font-size: nth($sizes, 2);
+    }
+  }
+}

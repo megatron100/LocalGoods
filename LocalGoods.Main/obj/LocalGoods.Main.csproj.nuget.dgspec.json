@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj": {}
+    "C:\\Users\\Shubham_Maurya\\source\\Git Repos\\localgoods-notshowing\\LocalGoods.Main\\LocalGoods.Main.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj": {
+    "C:\\Users\\Shubham_Maurya\\source\\Git Repos\\localgoods-notshowing\\LocalGoods.Main\\LocalGoods.Main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj",
+        "projectUniqueName": "C:\\Users\\Shubham_Maurya\\source\\Git Repos\\localgoods-notshowing\\LocalGoods.Main\\LocalGoods.Main.csproj",
         "projectName": "LocalGoods.Main",
-        "projectPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\LocalGoods.Main.csproj",
+        "projectPath": "C:\\Users\\Shubham_Maurya\\source\\Git Repos\\localgoods-notshowing\\LocalGoods.Main\\LocalGoods.Main.csproj",
         "packagesPath": "C:\\Users\\Shubham_Maurya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Shubham_Maurya\\source\\repos\\megatron100\\LocalGoods\\LocalGoods.Main\\obj\\",
+        "outputPath": "C:\\Users\\Shubham_Maurya\\source\\Git Repos\\localgoods-notshowing\\LocalGoods.Main\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Shubham_Maurya\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.8.0, )"
+            },
+            "Azure.Security.KeyVault.Secrets": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
             "Azure.Storage.Blobs": {
               "target": "Package",
               "version": "[12.14.1, )"

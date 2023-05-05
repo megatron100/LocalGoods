@@ -1,7 +1,3 @@
 export class CategoryModel {
-  constructor(
-    public productCategoryName: string
-  ) {
-  }
-
+  constructor(public productCategoryName: string) {}
 }

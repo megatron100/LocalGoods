@@ -1,0 +1,18 @@
+{
+  "controls": [
+    {
+      "name": "basicInfo",
+      "label": "",
+      "value": "",
+      "type": "",
+      "validators": {}
+    },
+    {
+      "name": "address",
+      "label": "",
+      "value": "",
+      "type": "",
+      "validators": {}
+    }
+  ]
+}

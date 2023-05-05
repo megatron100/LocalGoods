@@ -1,0 +1,80 @@
+@import './colors';
+
+// Width
+$width-min: 0;
+$width-xs: 320px;
+$width-s: 480px;
+$width-md: 768px;
+$width-lg: 1024px;
+$width-xlg: 1920px;
+
+// Common
+$grid-breakpoints: (
+  min: $width-min,
+  xs: $width-xs,
+  s: $width-s,
+  md: $width-md,
+  lg: $width-lg,
+  xlg: $width-xlg,
+);
+
+// Base fonts
+$main-text: 'Open Sans', 'Arial', sans-serif !default;
+$secondary-text: 'Roboto', 'Helvetica', sans-serif !default;
+$mono-text: 'Roboto Condensed', 'Courier New', monospace !default;
+$font-sans-semibold: 'Sans Semibold', arial, sans-serif;
+$font-source-sans-pro-black: 'Source Sans Pro Black', arial, sans-serif;
+$font-source-sans-pro-regular: 'Source Sans Pro Regular', arial, sans-serif;
+$font-roboto-condensed: 'Roboto Condensed', arial, sans-serif;
+
+// Font sizes
+$font-none: 0;
+$font-micro: 10px;
+$font-small: 12px;
+$font-normal: 14px;
+$font-medium: 16px;
+$font-medium-plus: 18px;
+$font-big: 20px;
+$font-large: 24px;
+$font-large0: 30px;
+$font-large1: 32px;
+$font-large2: 36px;
+$font-large3: 42px;
+$font-large4: 48px;
+$font-large5: 53px;
+$font-large6: 66px;
+
+// font-weight
+
+$font-weight-normal: normal;
+$font-weight-bold: bold;
+
+/* Keyword values relative to the parent */
+$font-weight-lighter: lighter;
+$font-weight-bolder: bolder;
+
+/* Numeric keyword values */
+$font-weight-100: 100;
+$font-weight-200: 200;
+$font-weight-300: 300;
+$font-weight-400: 400; /* normal */
+$font-weight-500: 500;
+$font-weight-600: 600;
+$font-weight-700: 700; /* bold */
+$font-weight-800: 800;
+$font-weight-900: 900;
+
+// icon sizes
+$font-mini-icon: 8px;
+$font-small-icon: 12px;
+$font-normal-icon: 14px;
+$font-medium-icon: 16px;
+$font-big-icon: 24px;
+$min-gap: 6px;
+$medium-gap: 18px;
+$max-gap: 24px;
+$max-gap2: 28px;
+
+$input-border: 1px solid $gray40;
+$input-error-border: 1px solid $red;
+$site-content-container-width: 1392px;
