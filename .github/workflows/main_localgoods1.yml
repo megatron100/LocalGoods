@@ -17,16 +17,18 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up .NET Core
+       
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0'
+          dotnet-version: '6.0.x'
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: echo ".NET Core environment variable directory" ${{env.DOTNET_ROOT}}
+        run: dotnet build ${{env.DOTNET_ROOT}}/LocalGoods.Main --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/LocalGoods.Main
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
